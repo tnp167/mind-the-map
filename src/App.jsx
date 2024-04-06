@@ -9,21 +9,19 @@ function App() {
   const [headerColor, setHeaderColor] = useState("initialColor");
 
   const changeHeaderColorBasedOnHeroImage = (heroImage) => {
-    let color = "initialColor";
-
     if (heroImage === "bright") {
-      color = "lightColor";
+      setHeaderColor("bright");
     } else if (heroImage === "dark") {
-      color = "darkColor";
+      setHeaderColor("dark");
     }
-
-    setHeaderColor(color);
   };
 
   useEffect(() => {
     const heroImage = "bright";
     changeHeaderColorBasedOnHeroImage(heroImage);
   }, []);
+
+  
   return (
     <BrowserRouter>
       <Header headerColor={headerColor} />

@@ -3,10 +3,10 @@
 
 .header {
   &__container {
+    @include container;
     width: 100%;
     display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
+    justify-content: space-between;
     background-color: $header-color;
     height: 3rem;
   }
@@ -16,6 +16,7 @@
     margin-left: 0.5rem;
     height: 2rem;
     display: flex;
+    text-decoration: none;
   }
 
   &__logo img {
@@ -31,5 +32,20 @@
     display: flex;
     align-items: center;
     font-size: 0.7rem;
+    text-decoration: none;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: row;
+    font-size: 0.7rem;
+    color: white;
+    gap: 0.8rem;
+    margin-top: 1.3rem;
+  }
+
+  &__items {
+    color: $primary-text-color;
+    text-decoration: none;
   }
 }
