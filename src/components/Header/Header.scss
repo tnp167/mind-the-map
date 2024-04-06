@@ -1,0 +1,35 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.header {
+  &__container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    background-color: $header-color;
+    height: 3rem;
+  }
+
+  &__logo {
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+    height: 2rem;
+    display: flex;
+  }
+
+  &__logo img {
+    margin: 0;
+    padding: 0;
+  }
+
+  &__description {
+    text-transform: uppercase;
+    color: $primary-text-color;
+    margin-left: 0.5rem;
+    margin-top: 0.8rem;
+    display: flex;
+    align-items: center;
+    font-size: 0.7rem;
+  }
+}
