@@ -1,7 +1,8 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/mixins" as *;
 .menu {
-  width: 100%;
+  margin: 0 auto;
+  max-width: $desktop-breakpoint;
   &__wrap {
     width: 100%;
     display: flex;
@@ -42,6 +43,26 @@
     fill: #e7e7e7;
     &--two {
       fill: $primary-text-color;
+    }
+  }
+  &__button {
+    transition: all 1s;
+    transform-origin: 30% 50%;
+    fill: #60399e;
+    cursor: pointer;
+    &:hover {
+      transform: scale(1.2);
+    }
+    &-background {
+      fill: #60399e;
+    }
+    &-text {
+      fill: $primary-text-color;
+      font-size: 1.6rem;
+    }
+
+    &--status {
+      transform-origin: 27% 90%;
     }
   }
 }
