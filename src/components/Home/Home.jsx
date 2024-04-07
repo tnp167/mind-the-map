@@ -1,9 +1,13 @@
-import Hero from "../Hero/Hero"
+import Hero from "../Hero/Hero";
+import Menu from "../Menu/Menu";
 
 function Home() {
   return (
-    <Hero/>
-  )
+    <>
+      <Hero />
+      <Menu />
+    </>
+  );
 }
 
-export default Home
+export default Home;

@@ -6,7 +6,7 @@ import piccadilly from "../../assets/images/piccadilly-circus.png";
 import buckingham from "../../assets/images/buckingham-palace.png";
 import london from "../../assets/images/london.png";
 import { useState, useEffect } from "react";
-import { Fade } from "react-slideshow-image";
+import { Slide, Fade } from "react-slideshow-image";
 import Header from "../Header/Header";
 import "./Hero.scss";
 import "react-slideshow-image/dist/styles.css";
@@ -67,10 +67,16 @@ function Hero() {
     width: "100%",
   };
 
+  const properties = {
+    duration: 4000,
+    transitionDuration: 1000,
+    infinite: true,
+    easing: "ease",
+  };
   return (
     <div>
       <div className="slideshow">
-        <Fade>
+        <Slide {...properties}>
           {pictureSets.map((fadeImage, index) => (
             <div key={index}>
               <Header
@@ -90,7 +96,7 @@ function Hero() {
               />
             </div>
           ))}
-        </Fade>
+        </Slide>
       </div>
     </div>
   );
