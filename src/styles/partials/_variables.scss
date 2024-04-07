@@ -23,6 +23,9 @@ $colors: (
   .sub-hero__banner--#{$line} {
     background-color: $color;
   }
+  .line--#{$line} {
+    stroke: $color;
+  }
 }
 
 $header-color: #61686b;

@@ -1,29 +1,14 @@
 import "./Menu.scss";
 import { Link } from "react-router-dom";
 
-function Menu() {
-  const mobileWidth = 320;
-  const tabletWidth = 768;
-  const desktopWidth = 1280;
-  const screenWidth = window.innerWidth;
-  let viewBoxWidth;
-  if (screenWidth <= mobileWidth) {
-    viewBoxWidth = mobileWidth;
-  } else if (screenWidth <= tabletWidth) {
-    viewBoxWidth = tabletWidth;
-  } else {
-    viewBoxWidth = desktopWidth;
-  }
-  const aspectRatio = 16 / 9;
-  const viewBoxHeight = viewBoxWidth / aspectRatio;
-
+function Menu({ headerColor }) {
   return (
     <div className="menu">
-      <div className="menu__wrap">
+      <div className="menu__container">
         <svg
           id="svg"
           xmlns="http://www.w3.org/2000/svg"
-          viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}
+          viewBox={`0 0 1280 555`}
         >
           <rect x="100" y="30" width="380" height="40" fill="#0019A8" />
           <rect x="0" y="360" width="100%" height="200" fill="#e7e7e7" />

@@ -4,7 +4,7 @@ function SubHero({ headerColor, place }) {
   return (
     <>
       <div className={`sub-hero__banner sub-hero__banner--${headerColor}`}>
-        <p className={`sub-hero__place sub-hero__place--${headerColor}`}>
+        <p className={`sub-hero__place sub-hero__place--${headerColor}  `}>
           {place}
         </p>
       </div>
