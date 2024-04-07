@@ -5,26 +5,10 @@ import { useState, useEffect } from "react";
 import RoutePlanner from "./components/RoutePlanner/RoutePlanner";
 import Home from "./components/Home/Home";
 import Status from "./components/Status/Status";
-function App() {
-  const [headerColor, setHeaderColor] = useState("initialColor");
+function App({ headerColor }) {
 
-  const changeHeaderColorBasedOnHeroImage = (heroImage) => {
-    if (heroImage === "bright") {
-      setHeaderColor("bright");
-    } else if (heroImage === "dark") {
-      setHeaderColor("dark");
-    }
-  };
-
-  useEffect(() => {
-    const heroImage = "bright";
-    changeHeaderColorBasedOnHeroImage(heroImage);
-  }, []);
-
-  
   return (
     <BrowserRouter>
-      <Header headerColor={headerColor} />
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/route" element={<RoutePlanner />} />

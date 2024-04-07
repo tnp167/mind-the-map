@@ -3,25 +3,29 @@
 
 .header {
   &__container {
-    @include container;
     width: 100%;
+    background-color: $header-color;
+    height: 2.8rem;
+  }
+
+  &__wrap {
+    @include container;
     display: flex;
     justify-content: space-between;
-    background-color: $header-color;
-    height: 3rem;
+    height: 2.8rem;
   }
 
   &__logo {
     margin-top: 0.5rem;
     margin-left: 0.5rem;
-    height: 2rem;
+    height: 1.6rem;
     display: flex;
     text-decoration: none;
+    margin: auto 0;
   }
 
   &__logo img {
-    margin: 0;
-    padding: 0;
+    margin: auto 0;
   }
 
   &__description {
@@ -31,17 +35,17 @@
     margin-top: 0.8rem;
     display: flex;
     align-items: center;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     text-decoration: none;
   }
 
   &__list {
     display: flex;
     flex-direction: row;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     color: white;
     gap: 0.8rem;
-    margin-top: 1.3rem;
+    margin: auto 0;
   }
 
   &__items {

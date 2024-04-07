@@ -16,6 +16,9 @@ $colors: (
   .main__name--#{$line} {
     background-color: $color;
   }
+  .header__container--#{$line} {
+    background-color: $color;
+  }
 }
 
 $header-color: #61686b;
