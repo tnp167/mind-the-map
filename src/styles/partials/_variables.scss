@@ -1,4 +1,5 @@
 $colors: (
+  base: #2d3039,
   bakerloo: #b26300,
   central: #dc241f,
   circle: #ffc80a,
@@ -19,10 +20,14 @@ $colors: (
   .header__container--#{$line} {
     background-color: $color;
   }
+  .sub-hero__banner--#{$line} {
+    background-color: $color;
+  }
 }
 
 $header-color: #61686b;
 $primary-text-color: #ffffff;
+$secondary-text-color: #0019a8;
 
 $tablet-breakpoint: 768px;
 $desktop-breakpoint: 1280px;

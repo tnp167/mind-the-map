@@ -37,6 +37,9 @@
     align-items: center;
     font-size: 0.65rem;
     text-decoration: none;
+    &--circle {
+      color: $secondary-text-color;
+    }
   }
 
   &__list {
@@ -51,5 +54,8 @@
   &__items {
     color: $primary-text-color;
     text-decoration: none;
+    &--circle {
+      color: $secondary-text-color;
+    }
   }
 }

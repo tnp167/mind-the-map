@@ -1,0 +1,20 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.sub-hero {
+  &__banner {
+    margin: 0;
+    height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__place {
+    margin: 0;
+    text-transform: uppercase;
+    color: $primary-text-color;
+    &--circle {
+      color: $secondary-text-color;
+    }
+  }
+}

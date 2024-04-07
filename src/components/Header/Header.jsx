@@ -7,13 +7,23 @@ function Header({ headerColor, station }) {
       <div className="header__wrap">
         <Link to="/" className="header__logo">
           <img src={logo} alt="logo" className="header__logo" />
-          <h2 className="header__description">{station}</h2>
+          <h2
+            className={`header__description header__description--${headerColor}`}
+          >
+            {station}
+          </h2>
         </Link>
         <ul className="header__list">
-          <Link to="/route" className="header__items">
+          <Link
+            to="/route"
+            className={`header__items header__items--${headerColor}`}
+          >
             <li>Route Planner</li>
           </Link>
-          <Link to="/status" className="header__items">
+          <Link
+            to="/status"
+            className={`header__items header__items--${headerColor}`}
+          >
             <li>Status Updates</li>
           </Link>
         </ul>
