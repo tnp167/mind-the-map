@@ -59,7 +59,7 @@ function Home() {
     },
   ];
   const properties = {
-    duration: 3000,
+    duration: 4000,
     transitionDuration: 1000,
     infinite: true,
     easing: "ease",

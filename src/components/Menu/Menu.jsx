@@ -32,10 +32,9 @@ function Menu({ headerColor }) {
           </text>
 
           <path
-            className="theLine"
+            className={`line--${headerColor}`}
             d="M 50,50 L 50,201 L 50,451"
             fill="none"
-            stroke="#0019A8"
             strokeWidth="17.5"
           />
 
