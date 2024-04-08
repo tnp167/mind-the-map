@@ -1,5 +1,5 @@
-import Hero from "../Hero/Hero";
-import Menu from "../Menu/Menu";
+import Hero from "../../components/Hero/Hero";
+import Menu from "../../components/Menu/Menu";
 import stPaul from "../../assets/images/st-paul.png";
 import bigBen from "../../assets/images/big-ben.png";
 import towerBridge from "../../assets/images/tower-bridge.png";
@@ -7,10 +7,10 @@ import borough from "../../assets/images/borough-market.png";
 import piccadilly from "../../assets/images/piccadilly-circus.png";
 import buckingham from "../../assets/images/buckingham-palace.png";
 import london from "../../assets/images/london.png";
-import Header from "../Header/Header";
+import Header from "../../components/Header/Header";
 import "react-slideshow-image/dist/styles.css";
 import { Slide, Fade } from "react-slideshow-image";
-import SubHero from "../SubHero/SubHero";
+import SubHero from "../../components/SubHero/SubHero";
 import "./Home.scss";
 function Home() {
   const pictureSets = [

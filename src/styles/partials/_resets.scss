@@ -6,7 +6,8 @@
   box-sizing: border-box;
 }
 
-body {
+body,
+::placeholder {
   font-family: "Johnston", "Arial", "Helvetica", "sans-serif";
   margin: 0px;
   padding: 0px;

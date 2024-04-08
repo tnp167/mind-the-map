@@ -1,16 +1,20 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import mapboxgl from "mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import markerA from "../../assets/icons/marker-a.png";
 import markerB from "../../assets/icons/marker-b.png";
+import Options from "../../components/Options/Options";
+import Header from "../../components/Header/Header";
 import "./RoutePlanner.scss";
 function RoutePlanner() {
+  const mapContainerRef = useRef(null);
+  mapboxgl.accessToken = process.env.REACT_APP_MAPBOXGL_ACCESS_TOKEN;
+
   const [startPoint, setStartPoint] = useState(null);
   const [endPoint, setEndPoint] = useState(null);
-  useEffect(() => {
-    mapboxgl.accessToken = process.env.REACT_APP_MAPBOXGL_ACCESS_TOKEN;
 
+  useEffect(() => {
     const map = new mapboxgl.Map({
       container: "map",
       style: "mapbox://styles/mapbox/streets-v12",
@@ -32,6 +36,8 @@ function RoutePlanner() {
         longitude: -0.1276,
         latitude: 51.5074,
       },
+      placeholder: "Start",
+      position: "top-left",
     });
 
     const endGeocoder = new MapboxGeocoder({
@@ -43,19 +49,21 @@ function RoutePlanner() {
         longitude: -0.1276,
         latitude: 51.5074,
       },
-    });
-
-    map.loadImage(markerA, (error, image) => {
-      if (error) throw error;
-      if (!map.hasImage("markerA")) map.addImage("markerA", image);
-    });
-
-    map.loadImage(markerB, (error, image) => {
-      if (error) throw error;
-      if (!map.hasImage("markerB")) map.addImage("markerB", image);
+      placeholder: "End",
+      position: "top-left",
     });
 
     map.on("load", () => {
+      map.loadImage(markerA, (error, image) => {
+        if (error) throw error;
+        if (!map.hasImage("markerA")) map.addImage("markerA", image);
+      });
+
+      map.loadImage(markerB, (error, image) => {
+        if (error) throw error;
+        if (!map.hasImage("markerB")) map.addImage("markerB", image);
+      });
+
       map.addSource("start-point", {
         type: "geojson",
         data: {
@@ -107,8 +115,9 @@ function RoutePlanner() {
       });
     });
 
-    map.addControl(startGeocoder);
-    map.addControl(endGeocoder);
+    map.addControl(startGeocoder, "top-left");
+    map.addControl(endGeocoder, "top-left");
+    map.addControl(new mapboxgl.NavigationControl());
 
     return () => map.remove();
   }, []);
@@ -117,8 +126,14 @@ function RoutePlanner() {
   console.log(endPoint);
   return (
     <>
-      <div id="map" style={{ width: "100%", height: "400px" }}></div>
-      {startPoint && endPoint && <h3>Hello</h3>}
+      <Header headerColor={"base"} station={"Mind the Map"} />
+      <div
+        id="map"
+        ref={mapContainerRef}
+        style={{ width: "100%", height: "400px" }}
+        className="map"
+      />
+      {startPoint && endPoint && <Options />}
     </>
   );
 }
