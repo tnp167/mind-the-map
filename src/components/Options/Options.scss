@@ -2,13 +2,41 @@
 @use "../../styles/partials/mixins" as *;
 
 .options {
+  @include container;
+
+  &__title {
+    width: 9.9rem;
+    padding: 0.4rem;
+    background-color: $secondary-text-color;
+    color: $primary-text-color;
+    align-items: center;
+  }
   &__route {
     display: flex;
     flex-direction: row;
+    padding: 1rem 0;
+    border-bottom: 1px solid #e1e4e5;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    &--last {
+      border: 0;
+    }
+  }
+
+  &__methods {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  &__chevron {
+    width: 0.5rem;
+    height: 0.5rem;
+    margin: auto 0.5rem;
   }
   &__icon {
-    width: 2.5rem;
-    height: 2rem;
+    width: 2.3rem;
+    height: 1.8rem;
     margin: auto 0;
   }
   &__details {
@@ -18,10 +46,39 @@
     padding: 0.2rem;
   }
   &__tube {
-    margin-left: 0.2rem;
-    padding: 0.2rem 0.5rem;
-    padding-top: 0.31rem;
+    display: flex;
+    align-items: center;
+    margin: auto 0;
+    margin-left: 0.25rem;
+    padding: 0.3rem 0.5rem;
     border-radius: 4px;
     color: $primary-text-color;
+  }
+  &__bus {
+    display: flex;
+    align-items: center;
+    margin: auto 0;
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+    background-color: #dc241f;
+    color: $primary-text-color;
+  }
+
+  &__time {
+    font-size: 1rem;
+
+    & > span {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__walking {
+    margin: auto 0;
+    color: #000;
+    text-transform: lowercase;
+    font-size: 1rem;
+    & > span {
+      margin-left: 0.1rem;
+    }
   }
 }

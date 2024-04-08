@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./Options.scss";
+import chevron from "../../assets/icons/chevron.png";
+
 function Options({ startPoint, endPoint }) {
   const [routes, setRoutes] = useState(null);
   const modeIconMap = {
     walking: require("../../assets/icons/walking.svg").default,
     tube: require("../../assets/icons/tube.png"),
     bus: require("../../assets/icons/bus.png"),
+    "elizabeth-line": require("../../assets/icons/elizabeth-line.png"),
+    overground: require("../../assets/icons/overground.png"),
+    dlr: require("../../assets/icons/dlr.svg").default,
+    train: require("../../assets/icons/train.svg").default,
   };
 
   const getRoute = async () => {
@@ -15,21 +21,53 @@ function Options({ startPoint, endPoint }) {
         `https://api.tfl.gov.uk/Journey/JourneyResults/${startPoint[1]},${startPoint[0]}/to/${endPoint[1]},${endPoint[0]}`
       );
       setRoutes(data);
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getRoute();
   }, [startPoint, endPoint]);
 
+  const durationInHoursAndMinutes = (duration) => {
+    const hours = Math.floor(duration / 60);
+    const minutes = duration % 60;
+    if (hours > 0) {
+      return (
+        <>
+          <span>{hours}</span> hr <span>{minutes}</span> min
+        </>
+      );
+    } else {
+      return (
+        <>
+          <span>{minutes}</span> min
+        </>
+      );
+    }
+  };
+
   return (
-    <>
-      {routes?.journeys?.map((route) => (
-        <div className="options__route" key={route.id}>
-          {route?.legs.map((leg) => (
-            <div className="options__method">
+    <section className="options">
+      <h3 className="options__title">Suggested Routes</h3>
+      {routes?.journeys?.map((route, index) => (
+        <div
+          className={`options__route ${
+            index === routes.journeys.length - 1 ? "options__route--last" : ""
+          }`}
+        >
+          <div className="options__methods">
+            {route?.legs.map((leg, index) => (
               <div className="options__details">
+                {index !== 0 && (
+                  <img
+                    src={chevron}
+                    alt="chevron"
+                    className="options__chevron"
+                  />
+                )}
                 <img
                   src={modeIconMap[leg.mode.id]}
                   alt={leg.mode.id}
@@ -42,13 +80,23 @@ function Options({ startPoint, endPoint }) {
                     {leg.routeOptions[0].name.slice(0, 3)}
                   </p>
                 )}
+                {leg.mode.id === "bus" && (
+                  <p className={`options__bus`}>{leg.routeOptions[0].name}</p>
+                )}
+                {leg.mode.id === "walking" && (
+                  <p className="options__walking">
+                    {durationInHoursAndMinutes(leg.duration)}
+                  </p>
+                )}
               </div>
-              <h3>{leg.duration}</h3>
-            </div>
-          ))}
+            ))}
+          </div>
+          <p className="options__time">
+            {durationInHoursAndMinutes(route.duration)}
+          </p>
         </div>
       ))}
-    </>
+    </section>
   );
 }
 

@@ -34,11 +34,18 @@ $desktop-breakpoint: 1280px;
     stroke: $color;
   }
   .options__tube--#{$line} {
-    border: 1px solid $color;
     background-color: $color;
   }
 
-  @if $line == center {
+  @if $line ==
+    circle or
+    $line ==
+    "hammersmith-city" or
+    $line ==
+    "victoria" or
+    $line ==
+    "waterloo-city"
+  {
     .options__tube--#{$line} {
       color: $secondary-text-color;
     }
