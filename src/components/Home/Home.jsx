@@ -11,7 +11,6 @@ import Header from "../Header/Header";
 import "react-slideshow-image/dist/styles.css";
 import { Slide, Fade } from "react-slideshow-image";
 import SubHero from "../SubHero/SubHero";
-import { useEffect, useState } from "react";
 import "./Home.scss";
 function Home() {
   const pictureSets = [
