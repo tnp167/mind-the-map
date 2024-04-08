@@ -1,0 +1,27 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.options {
+  &__route {
+    display: flex;
+    flex-direction: row;
+  }
+  &__icon {
+    width: 2.5rem;
+    height: 2rem;
+    margin: auto 0;
+  }
+  &__details {
+    display: flex;
+    flex-direction: row;
+    text-transform: uppercase;
+    padding: 0.2rem;
+  }
+  &__tube {
+    margin-left: 0.2rem;
+    padding: 0.2rem 0.5rem;
+    padding-top: 0.31rem;
+    border-radius: 4px;
+    color: $primary-text-color;
+  }
+}

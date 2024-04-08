@@ -122,8 +122,6 @@ function RoutePlanner() {
     return () => map.remove();
   }, []);
 
-  console.log(startPoint);
-  console.log(endPoint);
   return (
     <>
       <Header headerColor={"base"} station={"Mind the Map"} />
@@ -133,7 +131,9 @@ function RoutePlanner() {
         style={{ width: "100%", height: "400px" }}
         className="map"
       />
-      {startPoint && endPoint && <Options />}
+      {startPoint && endPoint && (
+        <Options startPoint={startPoint} endPoint={endPoint} />
+      )}
     </>
   );
 }

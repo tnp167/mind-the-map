@@ -13,6 +13,13 @@ $colors: (
   waterloo-city: #76d0bd,
 );
 
+$header-color: #61686b;
+$primary-text-color: #ffffff;
+$secondary-text-color: #0019a8;
+
+$tablet-breakpoint: 768px;
+$desktop-breakpoint: 1280px;
+
 @each $line, $color in $colors {
   .main__name--#{$line} {
     background-color: $color;
@@ -26,11 +33,14 @@ $colors: (
   .line--#{$line} {
     stroke: $color;
   }
+  .options__tube--#{$line} {
+    border: 1px solid $color;
+    background-color: $color;
+  }
+
+  @if $line == center {
+    .options__tube--#{$line} {
+      color: $secondary-text-color;
+    }
+  }
 }
-
-$header-color: #61686b;
-$primary-text-color: #ffffff;
-$secondary-text-color: #0019a8;
-
-$tablet-breakpoint: 768px;
-$desktop-breakpoint: 1280px;
