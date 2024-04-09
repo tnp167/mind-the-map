@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./Options.scss";
 import chevron from "../../assets/icons/chevron.png";
+import { v4 as uuidv4 } from "uuid";
 
 function Options({ startPoint, endPoint }) {
   const [routes, setRoutes] = useState(null);
@@ -12,7 +13,8 @@ function Options({ startPoint, endPoint }) {
     "elizabeth-line": require("../../assets/icons/elizabeth-line.png"),
     overground: require("../../assets/icons/overground.png"),
     dlr: require("../../assets/icons/dlr.svg").default,
-    train: require("../../assets/icons/train.svg").default,
+    "national-rail": require("../../assets/icons/train.svg").default,
+    "cable-car": require("../../assets/icons/cable-car.png"),
   };
 
   const getRoute = async () => {
@@ -30,6 +32,16 @@ function Options({ startPoint, endPoint }) {
   useEffect(() => {
     getRoute();
   }, [startPoint, endPoint]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      getRoute();
+    }, 10000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  });
 
   const durationInHoursAndMinutes = (duration) => {
     const hours = Math.floor(duration / 60);
@@ -54,13 +66,14 @@ function Options({ startPoint, endPoint }) {
       <h3 className="options__title">Suggested Routes</h3>
       {routes?.journeys?.map((route, index) => (
         <div
+          key={uuidv4()}
           className={`options__route ${
             index === routes.journeys.length - 1 ? "options__route--last" : ""
           }`}
         >
           <div className="options__methods">
             {route?.legs.map((leg, index) => (
-              <div className="options__details">
+              <div className="options__details" key={uuidv4()}>
                 {index !== 0 && (
                   <img
                     src={chevron}

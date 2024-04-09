@@ -5,11 +5,7 @@ function Menu({ headerColor }) {
   return (
     <div className="menu">
       <div className="menu__container">
-        <svg
-          id="svg"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox={`0 0 1280 555`}
-        >
+        <svg id="svg" viewBox={`0 0 1280 555`} className="menu__svg">
           <rect x="100" y="30" width="380" height="40" fill="#0019A8" />
           <rect x="0" y="360" width="100%" height="200" fill="#e7e7e7" />
           <text className="menu__title menu__title--first" x="110" y="60">
@@ -33,7 +29,7 @@ function Menu({ headerColor }) {
 
           <path
             className={`line--${headerColor}`}
-            d="M 50,50 L 50,201 L 50,451"
+            d="M 50,50 L 50,201 L 50,450"
             fill="none"
             strokeWidth="17.5"
           />

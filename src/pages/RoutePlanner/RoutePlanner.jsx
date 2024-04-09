@@ -8,6 +8,7 @@ import Options from "../../components/Options/Options";
 import Header from "../../components/Header/Header";
 import "./RoutePlanner.scss";
 function RoutePlanner() {
+  const mapRef = useRef(null);
   const mapContainerRef = useRef(null);
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOXGL_ACCESS_TOKEN;
 
@@ -26,6 +27,8 @@ function RoutePlanner() {
         [0.334, 51.6919],
       ],
     });
+
+    mapRef.current = map;
 
     const startGeocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
@@ -104,13 +107,11 @@ function RoutePlanner() {
 
       startGeocoder.on("result", (event) => {
         map.getSource("start-point").setData(event.result.geometry);
-        console.log(event.result.geometry);
         setStartPoint(event.result.geometry.coordinates);
       });
 
       endGeocoder.on("result", (event) => {
         map.getSource("end-point").setData(event.result.geometry);
-        console.log(event.result.geometry.coordinates);
         setEndPoint(event.result.geometry.coordinates);
       });
     });
@@ -121,6 +122,16 @@ function RoutePlanner() {
 
     return () => map.remove();
   }, []);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (map && startPoint && endPoint) {
+      const bounds = new mapboxgl.LngLatBounds()
+        .extend(startPoint)
+        .extend(endPoint);
+      map.fitBounds(bounds, { padding: 50 });
+    }
+  }, [startPoint, endPoint]);
 
   return (
     <>
