@@ -38,11 +38,9 @@ $desktop-breakpoint: 1280px;
   }
 
   @if $line ==
-    circle or
+    "circle" or
     $line ==
     "hammersmith-city" or
-    $line ==
-    "victoria" or
     $line ==
     "waterloo-city"
   {

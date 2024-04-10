@@ -1,0 +1,17 @@
+.route {
+  &__departure {
+    display: flex;
+  }
+  &__arrival {
+    display: flex;
+  }
+  &__details {
+    display: flex;
+
+    &-icon {
+      width: 1.8rem;
+      height: 1.4rem;
+      margin: auto 0;
+    }
+  }
+}

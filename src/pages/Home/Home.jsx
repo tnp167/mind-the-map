@@ -12,7 +12,9 @@ import "react-slideshow-image/dist/styles.css";
 import { Slide, Fade } from "react-slideshow-image";
 import SubHero from "../../components/SubHero/SubHero";
 import "./Home.scss";
+import { useState } from "react";
 function Home() {
+  const [index, setIndex] = useState(0);
   const pictureSets = [
     {
       pictures: london,
@@ -64,9 +66,12 @@ function Home() {
     easing: "ease",
   };
 
+  const handleChange = (oldIndex, newIndex) => {
+    setIndex(newIndex);
+  };
   return (
     <>
-      <Fade {...properties}>
+      <Fade {...properties} onChange={handleChange}>
         {pictureSets.map((fadeImage, index) => (
           <div key={index}>
             <Header
@@ -78,10 +83,10 @@ function Home() {
               headerColor={fadeImage.headerColor}
               place={fadeImage.place}
             />
-            <Menu headerColor={fadeImage.headerColor} />
           </div>
         ))}
       </Fade>
+      <Menu headerColor={pictureSets[index].headerColor} />
     </>
   );
 }
