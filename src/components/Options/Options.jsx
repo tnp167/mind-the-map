@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./Options.scss";
-import chevron from "../../assets/icons/chevron.png";
 import { v4 as uuidv4 } from "uuid";
-import { Link } from "react-router-dom";
 import Route from "../Route/Route";
 
 function Options({ startPoint, endPoint, setSelectedRoute }) {
@@ -42,16 +40,6 @@ function Options({ startPoint, endPoint, setSelectedRoute }) {
     <section className="options">
       <h3 className="options__title">Suggested Routes</h3>
       {routes?.journeys?.map((route, index) => (
-        // <Link
-        //   key={uuidv4()}
-        //   to={{
-        //     pathname: "/route-details",
-        //   }}
-        //   state={route}
-        //   style={{ textDecoration: "none", color: "black" }}
-        // >
-        //   <Route route={route} />
-        // </Link>
         <div key={uuidv4()} onClick={() => handleRouteClick(route)}>
           <Route route={route} />
         </div>

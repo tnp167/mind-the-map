@@ -96,7 +96,7 @@ function RouteDetails({ route }) {
 
         <Route route={route} />
         {route.legs.map((leg, index) => (
-          <div className="route__list">
+          <div className="route__list" key={index}>
             {index === 0 && (
               <div className="route__departure" key={leg.departurePoint.id}>
                 <div className="route__departure-first">
@@ -148,7 +148,7 @@ function RouteDetails({ route }) {
                     leg.mode.name !== "national-rail" && leg.mode.name !== "bus"
                       ? `route__line--${leg.routeOptions[0].name
                           .toLowerCase()
-                          .replace(/ /g, "-")}`
+                          .replace(/[\s&]/g, "-")}`
                       : `route__line--${leg.mode.name}`
                   } ${
                     leg.mode.name === "walking" ? "route__line--walking" : ""
@@ -162,7 +162,7 @@ function RouteDetails({ route }) {
                         leg.mode.name !== "bus"
                           ? `route__color--${leg.routeOptions[0].name
                               .toLowerCase()
-                              .replace(/ /g, "-")}`
+                              .replace(/[\s&]/g, "-")}`
                           : `route__color--${leg.mode.name}`
                       }`}
                     >

@@ -5,6 +5,7 @@ $colors: (
   circle: #ffc80a,
   district: #007d32,
   hammersmith-city: #f589a6,
+  hammersmith---city: #f589a6,
   jubilee: #838d93,
   metropolitan: #9b0058,
   northern: #000000,
@@ -13,6 +14,7 @@ $colors: (
   waterloo-city: #76d0bd,
   bus: #dc241f,
   london-overground: #fa7b05,
+  overground: #fa7b05,
   elizabeth-line: #60399e,
   national-rail: #000000,
   cable-car: #dc241f,
@@ -20,12 +22,38 @@ $colors: (
   dlr: #00afad,
 );
 
+:root {
+  --central: #dc241f;
+  --bakerloo: #b26300;
+  --central: #dc241f;
+  --circle: #ffc80a;
+  --district: #007d32;
+  --hammersmith-city: #f589a6;
+  --hammersmith---city: #f589a6;
+  --jubilee: #838d93;
+  --metropolitan: #9b0058;
+  --northern: #000000;
+  --piccadilly: #0019a8;
+  --victoria: #039be5;
+  --waterloo-city: #76d0bd;
+  --bus: #dc241f;
+  --london-overground: #fa7b05;
+  --overground: #fa7b05;
+  --elizabeth-line: #60399e;
+  --national-rail: #000000;
+  --cable-car: #dc241f;
+  --coach: #ffa600;
+  --dlr: #00afad;
+  --walking: #0019a8;
+}
+
 $header-color: #61686b;
 $primary-text-color: #ffffff;
 $secondary-text-color: #0019a8;
 $sub-text: #677680;
 
 $warning: #f5d800;
+
 $tablet-breakpoint: 768px;
 $desktop-breakpoint: 1280px;
 
@@ -58,7 +86,9 @@ $desktop-breakpoint: 1280px;
     $line ==
     "hammersmith-city" or
     $line ==
-    "waterloo-city"
+    "waterloo-city" or
+    $line ==
+    "hammersmith---city"
   {
     .options__tube--#{$line} {
       color: $secondary-text-color;
