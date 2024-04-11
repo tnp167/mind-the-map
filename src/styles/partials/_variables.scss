@@ -11,12 +11,19 @@ $colors: (
   piccadilly: #0019a8,
   victoria: #039be5,
   waterloo-city: #76d0bd,
+  bus: #dc241f,
+  london-overground: #fa7b05,
+  elizabeth-line: #60399e,
+  national-rail: #000000,
+  cable-car: #dc241f,
+  coach: #ffa600,
+  dlr: #00afad,
 );
 
 $header-color: #61686b;
 $primary-text-color: #ffffff;
 $secondary-text-color: #0019a8;
-
+$sub-text: #677680;
 $tablet-breakpoint: 768px;
 $desktop-breakpoint: 1280px;
 
@@ -37,6 +44,13 @@ $desktop-breakpoint: 1280px;
     background-color: $color;
   }
 
+  .route__color--#{$line} {
+    background-color: $color;
+  }
+
+  .route__line--#{$line} {
+    border-left: solid $color 5px;
+  }
   @if $line ==
     "circle" or
     $line ==
@@ -45,6 +59,9 @@ $desktop-breakpoint: 1280px;
     "waterloo-city"
   {
     .options__tube--#{$line} {
+      color: $secondary-text-color;
+    }
+    .route__color--#{$line} {
       color: $secondary-text-color;
     }
   }

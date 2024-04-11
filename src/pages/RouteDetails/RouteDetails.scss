@@ -1,17 +1,117 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
 .route {
+  @include container;
+
+  &__title {
+    margin-bottom: 0;
+    &-place {
+      font-weight: 400;
+      line-height: 2rem;
+      margin-left: 0.5rem;
+    }
+    &-from,
+    &-to {
+      color: $sub-text;
+    }
+  }
+
   &__departure {
     display: flex;
+
+    &-first {
+      width: 15%;
+    }
+    &-second {
+      display: flex;
+      width: 75%;
+    }
+    &-name {
+      font-weight: 600;
+    }
   }
+
   &__arrival {
     display: flex;
+    &-first {
+      width: 15%;
+    }
+    &-second {
+      width: 75%;
+      font-weight: 600;
+      span {
+        font-weight: 400;
+      }
+    }
   }
+
   &__details {
     display: flex;
-
+    color: $sub-text;
+    font-size: 0.95rem;
     &-icon {
-      width: 1.8rem;
-      height: 1.4rem;
-      margin: auto 0;
+      width: 15%;
+      &--img {
+        width: 1.6rem;
+        height: 1.2rem;
+        margin-top: 1.3rem;
+        margin-left: 1rem;
+      }
+      &--walking {
+        margin-top: 0.7rem;
+      }
+    }
+    &-text {
+      position: relative;
+      width: 85%;
+      margin-left: 0.6rem;
+      &--top {
+        display: flex;
+        margin-left: 0.4rem;
+      }
+    }
+  }
+
+  &__color {
+    display: flex;
+    align-items: center;
+    margin-right: 0.5rem;
+    justify-content: center;
+    padding: 0.3rem 0.5rem;
+    padding-top: 0.4rem;
+    color: $primary-text-color;
+  }
+
+  &__towards {
+    margin-top: 1.3rem;
+  }
+
+  &__sub-details {
+    margin-top: 1.3rem;
+    margin-bottom: 0;
+  }
+
+  &__point {
+    position: relative;
+    width: 0.9rem;
+    height: 0.9rem;
+    left: -1.6rem;
+    top: 2%;
+    margin-top: 0.9rem;
+  }
+
+  &__line {
+    position: absolute;
+    top: -29%;
+    left: -1.83rem;
+    bottom: -28%;
+    z-index: -1;
+
+    &--walking {
+      border-left: dotted $secondary-text-color 5px;
+      top: -29%;
+      bottom: -48%;
     }
   }
 }
