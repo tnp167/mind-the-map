@@ -64,7 +64,7 @@ function Route({ route }) {
         ))}
       </div>
       <p className="options__time">
-        {durationInHoursAndMinutes(route.duration)}
+        {durationInHoursAndMinutes(route?.duration)}
       </p>
     </div>
   );

@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Link } from "react-router-dom";
 import Route from "../Route/Route";
 
-function Options({ startPoint, endPoint }) {
+function Options({ startPoint, endPoint, setSelectedRoute }) {
   const [routes, setRoutes] = useState(null);
   const getRoute = async () => {
     try {
@@ -18,6 +18,10 @@ function Options({ startPoint, endPoint }) {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleRouteClick = (route) => {
+    setSelectedRoute(route);
   };
 
   useEffect(() => {
@@ -38,55 +42,19 @@ function Options({ startPoint, endPoint }) {
     <section className="options">
       <h3 className="options__title">Suggested Routes</h3>
       {routes?.journeys?.map((route, index) => (
-        <Link
-          key={uuidv4()}
-          to={{
-            pathname: "/route-details",
-          }}
-          state={route}
-          // className={`options__route ${
-          //   index === routes.journeys.length - 1 ? "options__route--last" : ""
-          // }`}
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          {/* <div className="options__methods">
-            {route?.legs.map((leg, index) => (
-              <div className="options__details" key={uuidv4()}>
-                {index !== 0 && (
-                  <img
-                    src={chevron}
-                    alt="chevron"
-                    className="options__chevron"
-                  />
-                )}
-                <img
-                  src={modeIconMap[leg.mode.id]}
-                  alt={leg.mode.id}
-                  className="options__icon"
-                />
-                {leg.mode.id === "tube" && (
-                  <p
-                    className={`options__tube options__tube--${leg.routeOptions[0].lineIdentifier.id}`}
-                  >
-                    {leg.routeOptions[0].name.slice(0, 3)}
-                  </p>
-                )}
-                {leg.mode.id === "bus" && (
-                  <p className={`options__bus`}>{leg.routeOptions[0].name}</p>
-                )}
-                {leg.mode.id === "walking" && (
-                  <p className="options__walking">
-                    {durationInHoursAndMinutes(leg.duration)}
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
-          <p className="options__time">
-            {durationInHoursAndMinutes(route.duration)}
-          </p> */}
+        // <Link
+        //   key={uuidv4()}
+        //   to={{
+        //     pathname: "/route-details",
+        //   }}
+        //   state={route}
+        //   style={{ textDecoration: "none", color: "black" }}
+        // >
+        //   <Route route={route} />
+        // </Link>
+        <div key={uuidv4()} onClick={() => handleRouteClick(route)}>
           <Route route={route} />
-        </Link>
+        </div>
       ))}
     </section>
   );

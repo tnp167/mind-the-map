@@ -1,12 +1,9 @@
-import { useLocation } from "react-router-dom";
-import Header from "../../components/Header/Header";
-import Route from "../../components/Route/Route";
+import Route from "../Route/Route";
 import "./RouteDetails.scss";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import point from "../../assets/icons/point.png";
-function RouteDetails() {
-  const { state: route } = useLocation();
+function RouteDetails({ route }) {
   const [crowdedDepartureStatuses, setCrowdedDepartureStatuses] = useState([]);
   const [crowdedArrivalStatuses, setCrowdedArrivalStatuses] = useState([]);
 
@@ -81,7 +78,6 @@ function RouteDetails() {
   }, [route]);
   return (
     <>
-      <Header headerColor={"base"} station={"Mind the Map"} />
       <div className="route">
         <h2 className="route__title">
           {convertToAMPM(route.startDateTime) +
@@ -205,7 +201,7 @@ function RouteDetails() {
                 <span>
                   {" "}
                   {leg.arrivalPoint.naptanId
-                    ? ` (Crowded: ${
+                    ? ` (Crowded Status: ${
                         crowdedArrivalStatuses[index] !== null
                           ? crowdedArrivalStatuses[index]
                           : "Data not available"

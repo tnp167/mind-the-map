@@ -7,6 +7,9 @@ import markerB from "../../assets/icons/marker-b.png";
 import Options from "../../components/Options/Options";
 import Header from "../../components/Header/Header";
 import "./RoutePlanner.scss";
+import RouteDetails from "../../components/RouteDetails/RouteDetails";
+import backChevron from "../../assets/icons/chevron-back.png";
+
 function RoutePlanner() {
   const mapRef = useRef(null);
   const mapContainerRef = useRef(null);
@@ -14,6 +17,7 @@ function RoutePlanner() {
 
   const [startPoint, setStartPoint] = useState(null);
   const [endPoint, setEndPoint] = useState(null);
+  const [selectedRoute, setSelectedRoute] = useState(null);
 
   useEffect(() => {
     const map = new mapboxgl.Map({
@@ -133,17 +137,35 @@ function RoutePlanner() {
     }
   }, [startPoint, endPoint]);
 
+  const handleRouteBack = () => {
+    setSelectedRoute(null);
+  };
   return (
     <>
       <Header headerColor={"base"} station={"Mind the Map"} />
+      {selectedRoute && (
+        <>
+          <div className="back">
+            <div className="back-container" onClick={handleRouteBack}>
+              <img src={backChevron} alt="" className="back__icon" />
+              <p className="back__text">Way out</p>
+            </div>
+          </div>
+          <RouteDetails route={selectedRoute} />
+        </>
+      )}
       <div
         id="map"
         ref={mapContainerRef}
         style={{ width: "100%", height: "400px" }}
         className="map"
       />
-      {startPoint && endPoint && (
-        <Options startPoint={startPoint} endPoint={endPoint} />
+      {startPoint && endPoint && !selectedRoute && (
+        <Options
+          startPoint={startPoint}
+          endPoint={endPoint}
+          setSelectedRoute={setSelectedRoute}
+        />
       )}
     </>
   );

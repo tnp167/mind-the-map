@@ -5,6 +5,28 @@
   display: flex;
 }
 
+.back {
+  @include container;
+  background-color: map-get($colors, northern);
+
+  &-container {
+    display: flex;
+    align-items: center;
+    height: 4rem;
+  }
+
+  &__icon {
+    width: 1.8rem;
+    height: 1.8rem;
+    align-items: center;
+  }
+  &__text {
+    color: $warning;
+    font-size: 2rem;
+    margin: 0.8rem 1rem 0.4rem;
+    align-items: center;
+  }
+}
 // .suggestions-wrapper:nth-child(3) .suggestions {
 //   margin-top: 3rem;
 // }

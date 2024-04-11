@@ -38,6 +38,7 @@
       width: 15%;
     }
     &-second {
+      position: relative;
       width: 75%;
       font-weight: 600;
       span {
@@ -105,13 +106,27 @@
     position: absolute;
     top: -29%;
     left: -1.83rem;
-    bottom: -28%;
+    bottom: -24%;
     z-index: -1;
 
     &--walking {
       border-left: dotted $secondary-text-color 5px;
-      top: -29%;
+      top: -40%;
       bottom: -48%;
+    }
+
+    &--second {
+      position: absolute;
+      left: -2.22rem;
+      bottom: -4rem;
+      top: -50%;
+      z-index: -3;
+      &--walking {
+        border-left: dotted $secondary-text-color 5px;
+        top: -40%;
+        bottom: -48%;
+        z-index: -4;
+      }
     }
   }
 }
