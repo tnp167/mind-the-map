@@ -15,7 +15,7 @@ import List from "../../components/List/List";
 import london from "../../assets/images/london.png";
 import Rating from "@mui/material/Rating";
 import ReactDOMServer from "react-dom/server";
-import restaurant from "../../assets/icons/restaurant.png";
+
 function RoutePlanner() {
   const mapRef = useRef(null);
   const mapContainerRef = useRef(null);
@@ -28,6 +28,13 @@ function RoutePlanner() {
   const [selectedRoute, setSelectedRoute] = useState("");
   const [places, setPlaces] = useState("");
   const [markers, setMarkers] = useState([]);
+
+  const scrollToRestaurant = (index) => {
+    const restaurantElement = document.getElementById(`restaurant-${index}`);
+    if (restaurantElement) {
+      restaurantElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   useEffect(() => {
     if (mapRef.current) return;
@@ -181,10 +188,10 @@ function RoutePlanner() {
         }
       }
 
-      if (startGeo.current) {
+      if (startGeo) {
         map.removeControl(startGeo.current);
       }
-      if (endGeo.current) {
+      if (endGeo) {
         map.removeControl(endGeo.current);
       }
 
@@ -256,16 +263,13 @@ function RoutePlanner() {
     setMarkers([]);
 
     if (places) {
-      places?.data?.forEach((place) => {
+      places?.data?.forEach((place, index) => {
         const latitude = parseFloat(place.latitude);
         const longitude = parseFloat(place.longitude);
 
         if (!isNaN(latitude) && !isNaN(longitude) && place.name) {
           const markerElement = document.createElement("div");
           markerElement.className = "custom-marker";
-          // markerElement.style.backgroundImage = `url(${restaurant})`;
-          // markerElement.style.width = "1rem";
-          // markerElement.style.height = "1rem";
 
           const popupContent = ReactDOMServer.renderToString(
             <div>
@@ -281,6 +285,15 @@ function RoutePlanner() {
             .setLngLat([place.longitude, place.latitude])
             .setPopup(new mapboxgl.Popup().setHTML(popupContent))
             .addTo(map);
+
+          marker.getPopup().on("open", () => {
+            marker
+              .getPopup()
+              .getElement()
+              .addEventListener("click", () => {
+                scrollToRestaurant(index);
+              });
+          });
 
           setMarkers((prevMarkers) => [...prevMarkers, marker]);
         }

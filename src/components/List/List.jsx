@@ -12,8 +12,7 @@ import axios from "axios";
 import "./List.scss";
 import PlaceDetails from "../PlaceDetails/PlaceDetails";
 
-function List({ startPoint, setPlaces, places }) {
-  //const [places, setPlaces] = useState("");
+function List({ startPoint, setPlaces, places, scrollToRestaurant }) {
   const [rating, setRating] = useState("");
 
   const URL =
@@ -59,7 +58,7 @@ function List({ startPoint, setPlaces, places }) {
       </FormControl>
       <Grid container spacing={3} className="list__card">
         {places?.data?.map((place, index) => (
-          <Grid item key={index} xs={12}>
+          <Grid item key={index} xs={12} id={`restaurant-${index}`}>
             <PlaceDetails place={place} />
           </Grid>
         ))}
