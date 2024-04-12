@@ -27,6 +27,18 @@
     align-items: center;
   }
 }
+.image {
+  width: 100%;
+  height: 8rem;
+  background-size: cover;
+}
+
+.custom-marker {
+  background-image: url("../../assets/icons/restaurant.png");
+  width: 2rem;
+  height: 2rem;
+  background-size: cover;
+}
 // .suggestions-wrapper:nth-child(3) .suggestions {
 //   margin-top: 3rem;
 // }

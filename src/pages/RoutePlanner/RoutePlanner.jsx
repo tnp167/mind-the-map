@@ -12,6 +12,10 @@ import backChevron from "../../assets/icons/chevron-back.png";
 import "../../styles/partials/_variables.scss";
 import { Grid } from "@mui/material";
 import List from "../../components/List/List";
+import london from "../../assets/images/london.png";
+import Rating from "@mui/material/Rating";
+import ReactDOMServer from "react-dom/server";
+import restaurant from "../../assets/icons/restaurant.png";
 function RoutePlanner() {
   const mapRef = useRef(null);
   const mapContainerRef = useRef(null);
@@ -19,9 +23,11 @@ function RoutePlanner() {
   const endGeo = useRef(null);
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOXGL_ACCESS_TOKEN;
 
-  const [startPoint, setStartPoint] = useState(null);
-  const [endPoint, setEndPoint] = useState(null);
-  const [selectedRoute, setSelectedRoute] = useState(null);
+  const [startPoint, setStartPoint] = useState("");
+  const [endPoint, setEndPoint] = useState("");
+  const [selectedRoute, setSelectedRoute] = useState("");
+  const [places, setPlaces] = useState("");
+  const [markers, setMarkers] = useState([]);
 
   useEffect(() => {
     if (mapRef.current) return;
@@ -153,11 +159,11 @@ function RoutePlanner() {
 
     // map.on("load", () => {
     if (selectedRoute) {
-      // for (let i = 0; i < selectedRoute.legs.length; i++) {
-      //   const legId = `route-line-${i}`;
-      //   map.getSource(legId) && map.removeSource(legId);
-      //   map.getLayer(legId) && map.removeLayer(legId);
-      // }
+      for (let i = 0; i < selectedRoute.legs.length; i++) {
+        const legId = `route-line-${i}`;
+        map.getSource(legId) && map.removeSource(legId);
+        map.getLayer(legId) && map.removeLayer(legId);
+      }
 
       const style = map.getStyle();
       if (style) {
@@ -175,8 +181,12 @@ function RoutePlanner() {
         }
       }
 
-      map.removeControl(startGeo.current);
-      map.removeControl(endGeo.current);
+      if (startGeo.current) {
+        map.removeControl(startGeo.current);
+      }
+      if (endGeo.current) {
+        map.removeControl(endGeo.current);
+      }
 
       for (let i = 0; i < selectedRoute.legs.length; i++) {
         const leg = selectedRoute.legs[i];
@@ -224,10 +234,59 @@ function RoutePlanner() {
           },
         });
       }
+
+      // places?.data?.forEach((place) => {
+      //   let marker = new mapboxgl.Marker()
+      //     .setLngLat([Number(place.latitude), Number(place.longitude)])
+      //     .setPopup(new mapboxgl.Popup().setHTML("<h3>" + place.name + "</h3>"))
+      //     .addTo(map);
+      // });
+      //console.log(places && places);
     }
     // });
     return () => {};
   }, [selectedRoute]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+
+    markers.forEach((marker) => marker.remove());
+
+    setMarkers([]);
+
+    if (places) {
+      places?.data?.forEach((place) => {
+        const latitude = parseFloat(place.latitude);
+        const longitude = parseFloat(place.longitude);
+
+        if (!isNaN(latitude) && !isNaN(longitude) && place.name) {
+          const markerElement = document.createElement("div");
+          markerElement.className = "custom-marker";
+          // markerElement.style.backgroundImage = `url(${restaurant})`;
+          // markerElement.style.width = "1rem";
+          // markerElement.style.height = "1rem";
+
+          const popupContent = ReactDOMServer.renderToString(
+            <div>
+              <img
+                src={`${place.photo ? place.photo.images.small.url : london}`}
+                className="image"
+              />
+              <p>{place.name}</p>
+              <Rating value={Number(place.rating)} precision={0.5} readOnly />
+            </div>
+          );
+          const marker = new mapboxgl.Marker(markerElement)
+            .setLngLat([place.longitude, place.latitude])
+            .setPopup(new mapboxgl.Popup().setHTML(popupContent))
+            .addTo(map);
+
+          setMarkers((prevMarkers) => [...prevMarkers, marker]);
+        }
+      });
+    }
+  }, [places]);
 
   const handleRouteBack = () => {
     setSelectedRoute(null);
@@ -238,6 +297,11 @@ function RoutePlanner() {
       map.getSource(legId) && map.removeSource(legId);
       map.getLayer(legId) && map.removeLayer(legId);
     }
+
+    markers.forEach((marker) => marker.remove());
+
+    setMarkers([]);
+
     map.addControl(startGeo.current, "top-left");
     map.addControl(endGeo.current, "top-left");
   };
@@ -266,7 +330,11 @@ function RoutePlanner() {
         <>
           <Grid container spacing={3} style={{ width: "100%" }}>
             <Grid item xs={12} md={4}>
-              <List startPoint={startPoint} />
+              <List
+                startPoint={startPoint}
+                setPlaces={setPlaces}
+                places={places}
+              />
             </Grid>
           </Grid>
         </>

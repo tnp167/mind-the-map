@@ -12,8 +12,8 @@ import axios from "axios";
 import "./List.scss";
 import PlaceDetails from "../PlaceDetails/PlaceDetails";
 
-function List({ startPoint }) {
-  const [places, setPlaces] = useState("");
+function List({ startPoint, setPlaces, places }) {
+  //const [places, setPlaces] = useState("");
   const [rating, setRating] = useState("");
 
   const URL =
