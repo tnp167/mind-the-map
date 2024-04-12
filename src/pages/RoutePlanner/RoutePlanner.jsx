@@ -297,7 +297,7 @@ function RoutePlanner() {
               .getPopup()
               .getElement()
               .addEventListener("click", () => {
-                scrollToRestaurant(index);
+                scrollToRestaurant(place.location_id);
               });
           });
 
@@ -355,6 +355,7 @@ function RoutePlanner() {
                 places={places}
                 setRatingFilter={setRatingFilter}
                 ratingFilter={ratingFilter}
+                selectedRoute={selectedRoute}
               />
             </Grid>
           </Grid>

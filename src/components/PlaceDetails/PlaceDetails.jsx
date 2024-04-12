@@ -16,7 +16,7 @@ import london from "../../assets/images/london.png";
 import "./PlaceDetails.scss";
 
 function PlaceDetails({ place }) {
-  console.log(place);
+  //console.log(place);
   return (
     <>
       {place.name && (
