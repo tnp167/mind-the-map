@@ -1,0 +1,31 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.place {
+  &__chip {
+    margin: 0.2rem 0.2rem 0.2rem 0;
+  }
+
+  &__rating {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__box {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__detail {
+    width: 70%;
+    display: flex;
+    justify-content: flex-end;
+    text-align: right;
+    color: $header-color;
+  }
+
+  &__icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

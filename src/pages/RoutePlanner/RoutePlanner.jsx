@@ -10,8 +10,8 @@ import "./RoutePlanner.scss";
 import RouteDetails from "../../components/RouteDetails/RouteDetails";
 import backChevron from "../../assets/icons/chevron-back.png";
 import "../../styles/partials/_variables.scss";
-import { v4 as uuidv4 } from "uuid";
-
+import { Grid } from "@mui/material";
+import List from "../../components/List/List";
 function RoutePlanner() {
   const mapRef = useRef(null);
   const mapContainerRef = useRef(null);
@@ -262,6 +262,15 @@ function RoutePlanner() {
         style={{ width: "100%", height: "400px" }}
         className="map"
       />
+      {selectedRoute && (
+        <>
+          <Grid container spacing={3} style={{ width: "100%" }}>
+            <Grid item xs={12} md={4}>
+              <List startPoint={startPoint} />
+            </Grid>
+          </Grid>
+        </>
+      )}
       {startPoint && endPoint && !selectedRoute && (
         <Options
           startPoint={startPoint}
