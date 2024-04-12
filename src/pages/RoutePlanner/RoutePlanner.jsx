@@ -28,6 +28,7 @@ function RoutePlanner() {
   const [selectedRoute, setSelectedRoute] = useState("");
   const [places, setPlaces] = useState("");
   const [markers, setMarkers] = useState([]);
+  const [ratingFilter, setRatingFilter] = useState(0);
 
   const scrollToRestaurant = (index) => {
     const restaurantElement = document.getElementById(`restaurant-${index}`);
@@ -188,12 +189,12 @@ function RoutePlanner() {
         }
       }
 
-      if (startGeo) {
-        map.removeControl(startGeo.current);
-      }
-      if (endGeo) {
-        map.removeControl(endGeo.current);
-      }
+      // if (startGeo) {
+      //   map.removeControl(startGeo.current);
+      // }
+      // if (endGeo) {
+      //   map.removeControl(endGeo.current);
+      // }
 
       for (let i = 0; i < selectedRoute.legs.length; i++) {
         const leg = selectedRoute.legs[i];
@@ -262,8 +263,13 @@ function RoutePlanner() {
 
     setMarkers([]);
 
-    if (places) {
-      places?.data?.forEach((place, index) => {
+    const filteredPlaces = places?.data?.filter(
+      (place) => Number(place.rating) > ratingFilter
+    );
+
+    console.log(filteredPlaces);
+    if (filteredPlaces) {
+      filteredPlaces?.forEach((place, index) => {
         const latitude = parseFloat(place.latitude);
         const longitude = parseFloat(place.longitude);
 
@@ -299,7 +305,7 @@ function RoutePlanner() {
         }
       });
     }
-  }, [places]);
+  }, [places, ratingFilter]);
 
   const handleRouteBack = () => {
     setSelectedRoute(null);
@@ -347,6 +353,8 @@ function RoutePlanner() {
                 startPoint={startPoint}
                 setPlaces={setPlaces}
                 places={places}
+                setRatingFilter={setRatingFilter}
+                ratingFilter={ratingFilter}
               />
             </Grid>
           </Grid>

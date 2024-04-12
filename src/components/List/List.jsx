@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
-  CirularProgress,
+  CircularProgress,
   Grid,
-  Typography,
   InputLabel,
   MenuItem,
   FormControl,
@@ -12,9 +11,14 @@ import axios from "axios";
 import "./List.scss";
 import PlaceDetails from "../PlaceDetails/PlaceDetails";
 
-function List({ startPoint, setPlaces, places, scrollToRestaurant }) {
-  const [rating, setRating] = useState("");
-
+function List({
+  startPoint,
+  setPlaces,
+  places,
+  ratingFilter,
+  setRatingFilter,
+}) {
+  const [filteredPlaces, setFilteredPlaces] = useState([]);
   const URL =
     "https://travel-advisor.p.rapidapi.com/restaurants/list-by-latlng";
   const options = {
@@ -40,15 +44,28 @@ function List({ startPoint, setPlaces, places, scrollToRestaurant }) {
     getRestaurant();
   }, []);
 
+  useEffect(() => {
+    const filteredRestaurants = places?.data?.filter(
+      (place) => place.rating > ratingFilter
+    );
+
+    setFilteredPlaces(filteredRestaurants);
+  }, [ratingFilter, places]);
+
+  const handleRatingFilterChange = (event) => {
+    setRatingFilter(event.target.value);
+  };
+
+  console.log(filteredPlaces);
   return (
     <div className="list__container">
       <h2>Restaurants</h2>
       <FormControl>
         <InputLabel>Rating</InputLabel>
         <Select
-          value={rating}
+          value={ratingFilter}
           className="list__form"
-          onChange={(e) => setRating(e.target.value)}
+          onChange={handleRatingFilterChange}
         >
           <MenuItem value={0}>All</MenuItem>
           <MenuItem value={3}>Above 3</MenuItem>
@@ -57,11 +74,23 @@ function List({ startPoint, setPlaces, places, scrollToRestaurant }) {
         </Select>
       </FormControl>
       <Grid container spacing={3} className="list__card">
-        {places?.data?.map((place, index) => (
-          <Grid item key={index} xs={12} id={`restaurant-${index}`}>
+        {/* {filteredPlaces?.length
+          ? filteredPlaces?.map((place, index) => (
+              <Grid item key={index} xs={12} id={`restaurant-${index}`}>
+                <PlaceDetails place={place} />
+              </Grid>
+            ))
+          : places?.data?.map((place, index) => (
+              <Grid item key={index} xs={12} id={`restaurant-${index}`}>
+                <PlaceDetails place={place} />
+              </Grid>
+            ))} */}
+        {filteredPlaces?.map((place, index) => (
+          <Grid item key={index} xs={12}>
             <PlaceDetails place={place} />
           </Grid>
         ))}
+        {!filteredPlaces && <CircularProgress />}
       </Grid>
     </div>
   );
