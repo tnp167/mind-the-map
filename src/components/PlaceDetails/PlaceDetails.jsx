@@ -104,12 +104,6 @@ function PlaceDetails({ place, type }) {
             />
             <CardContent>
               <h5>{place.name}</h5>
-              {place.comment && (
-                <Box className="place__box">
-                  <p>Comment</p>
-                  <p className="place__detail">{place.comment}</p>
-                </Box>
-              )}
               {place.directions && (
                 <div className="place__icon-container">
                   <p>Direction</p>
@@ -123,6 +117,12 @@ function PlaceDetails({ place, type }) {
                     {place.street}, {place.state}
                   </p>
                 </div>
+              )}
+              {place.comment && (
+                <Box className="place__box">
+                  <p>Comment</p>
+                  <p className="place__detail">{place.comment}</p>
+                </Box>
               )}
               {place.unisex && (
                 <Chip

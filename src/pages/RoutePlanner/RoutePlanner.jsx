@@ -10,7 +10,7 @@ import "./RoutePlanner.scss";
 import RouteDetails from "../../components/RouteDetails/RouteDetails";
 import backChevron from "../../assets/icons/chevron-back.png";
 import "../../styles/partials/_variables.scss";
-import { Switch, Grid } from "@mui/material";
+import { Chip, Switch, Grid } from "@mui/material";
 import List from "../../components/List/List";
 import london from "../../assets/images/london.png";
 import Rating from "@mui/material/Rating";
@@ -27,6 +27,7 @@ function RoutePlanner() {
   const [endPoint, setEndPoint] = useState("");
   const [selectedRoute, setSelectedRoute] = useState("");
   const [places, setPlaces] = useState("");
+  const [toilets, setToilets] = useState("");
   const [markers, setMarkers] = useState([]);
   const [ratingFilter, setRatingFilter] = useState(0);
   const [type, setType] = useState("Restaurants");
@@ -47,8 +48,8 @@ function RoutePlanner() {
     }
   };
 
-  const scrollToRestaurant = (index) => {
-    const restaurantElement = document.getElementById(`restaurant-${index}`);
+  const scrollToItem = (index) => {
+    const restaurantElement = document.getElementById(`item-${index}`);
     if (restaurantElement) {
       restaurantElement.scrollIntoView({ behavior: "smooth" });
     }
@@ -285,11 +286,11 @@ function RoutePlanner() {
       filteredPlaces = places?.data?.filter(
         (place) => Number(place.rating) > ratingFilter
       );
-    } else if (type === "Restaurants") {
-      filteredPlaces = places?.data?.filter((place) => place.unisex == true);
+    } else if (type === "Toilets") {
+      filteredPlaces = toilets?.data?.filter((place) => place.unisex == true);
     }
 
-    console.log(filteredPlaces);
+    //console.log(filteredPlaces);
     if (filteredPlaces) {
       filteredPlaces?.forEach((place, index) => {
         const latitude = parseFloat(place.latitude);
@@ -297,8 +298,11 @@ function RoutePlanner() {
 
         if (!isNaN(latitude) && !isNaN(longitude) && place.name) {
           const markerElement = document.createElement("div");
-          markerElement.className = "custom-marker";
-          markerElement.id = `marker-${place.location_id}`;
+          markerElement.className =
+            type === "Restaurants" ? "restaurants-marker" : "toilets-marker";
+          markerElement.id = `marker-${
+            place.location_id ? place.location_id : place.id
+          }`;
 
           const popupContent = ReactDOMServer.renderToString(
             <div>
@@ -307,7 +311,16 @@ function RoutePlanner() {
                 className="image"
               />
               <p>{place.name}</p>
-              <Rating value={Number(place.rating)} precision={0.5} readOnly />
+              {place.rating && (
+                <Rating value={Number(place.rating)} precision={0.5} readOnly />
+              )}
+              {place.accessible !== undefined && (
+                <Chip
+                  size="small"
+                  label={place.accessible ? "✓ accessible" : "✕ accessible"}
+                  className="place__chip"
+                />
+              )}
             </div>
           );
           const marker = new mapboxgl.Marker(markerElement)
@@ -318,11 +331,12 @@ function RoutePlanner() {
             .addTo(map);
 
           marker.getPopup().on("open", () => {
+            const locationId = place.location_id ? place.location_id : place.id;
             marker
               .getPopup()
               .getElement()
               .addEventListener("click", () => {
-                scrollToRestaurant(place.location_id);
+                scrollToItem(locationId);
               });
           });
 
@@ -330,7 +344,7 @@ function RoutePlanner() {
         }
       });
     }
-  }, [places, ratingFilter]);
+  }, [places, ratingFilter, toilets]);
 
   const handleRouteBack = () => {
     setSelectedRoute(null);
@@ -384,6 +398,8 @@ function RoutePlanner() {
                 startPoint={startPoint}
                 setPlaces={setPlaces}
                 places={places}
+                setToilets={setToilets}
+                toilets={toilets}
                 setRatingFilter={setRatingFilter}
                 ratingFilter={ratingFilter}
                 selectedRoute={selectedRoute}

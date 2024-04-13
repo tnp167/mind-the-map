@@ -33,9 +33,16 @@
   background-size: cover;
 }
 
-.custom-marker {
+.restaurants-marker {
   background-image: url("../../assets/icons/restaurant.png");
   width: 2rem;
+  height: 2rem;
+  background-size: cover;
+}
+
+.toilets-marker {
+  background-image: url("../../assets/icons/toilet.svg");
+  width: 2.5rem;
   height: 2rem;
   background-size: cover;
 }

@@ -17,6 +17,8 @@ function List({
   startPoint,
   setPlaces,
   places,
+  setToilets,
+  toilets,
   ratingFilter,
   setRatingFilter,
   selectedRoute,
@@ -26,8 +28,11 @@ function List({
   const travel_accessToken = process.env.REACT_APP_TRAVEL_ADVISOR_ACCESS_TOKEN;
   const toilet_accessToken =
     process.env.REACT_APP_PUBLIC_BATHROOMS_ACCESS_TOKEN;
+
   let selectedRouteCoordinates = [];
   const [convertedPlaceData, setConvertedPlaceData] = useState("");
+  const [convertedToiletData, setConvertedToiletData] = useState("");
+
   selectedRoute.legs.map((leg) => {
     if (leg.mode.id === "walking") {
       const coordinates = JSON.parse(leg.path.lineString);
@@ -44,76 +49,92 @@ function List({
   });
 
   const [filteredPlaces, setFilteredPlaces] = useState([]);
-  let URL;
-  let options;
-  // if (type === "Restaurants") {
-  //   URL = "https://travel-advisor.p.rapidapi.com/restaurants/list-by-latlng";
-  //   options = selectedRouteCoordinates.map((option) => ({
-  //     params: {
-  //       latitude: option[0],
-  //       longitude: option[1],
-  //       distance: "0.5",
-  //     },
-  //     headers: {
-  //       "X-RapidAPI-Key": travel_accessToken,
-  //       "X-RapidAPI-Host": "travel-advisor.p.rapidapi.com",
-  //     },
-  //   }));
-  // } else if (type === "Toilet")
-  // {
-  URL = "https://public-bathrooms.p.rapidapi.com/location";
+  const [filteredToilets, setFilteredToilets] = useState([]);
+  //R
+  // const URL_Restaurant = "https://travel-advisor.p.rapidapi.com/restaurants/list-by-latlng";
+  // const optionsRestaurant = selectedRouteCoordinates.map((option) => ({
+  //   params: {
+  //     latitude: option[0],
+  //     longitude: option[1],
+  //     distance: "0.5",
+  //   },
+  //   headers: {
+  //     "X-RapidAPI-Key": travel_accessToken,
+  //     "X-RapidAPI-Host": "travel-advisor.p.rapidapi.com",
+  //   },
+  // }));
+  // const getToilet = async () => {
+  //   const placesArray = [];
+  //   try {
+  //     for (let i = 0; i < options.length; i++) {
+  //       const { data } = await axios(URL_Restaurant, optionsRestaurant[i]);
+  //       placesArray.push(data);
+  //     }
+  //     setConvertedToiletData(placesArray);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   getToilet();
+  // }, []);
 
-  options = selectedRouteCoordinates.map((option) => ({
+  // console.log(convertedToiletData);
+  // useEffect(() => {
+  //   if (convertedPlaceData) {
+  //     if (type === "Restaurants") {
+  //       const combinedDataArray = convertedPlaceData.reduce(
+  //         (acc, curr) => acc.concat(curr.data),
+  //         []
+  //       );
+  //       const combinedObject = { data: combinedDataArray };
+  //       const uniqueIds = new Set();
+  //       const uniqueData = combinedObject.data.filter((obj) => {
+  //         if (!uniqueIds.has(obj.location_id)) {
+  //           uniqueIds.add(obj.location_id);
+  //           return true;
+  //         }
+  //         return false;
+  //       });
+
+  //       const combinedObjectWithUniqueIds = { data: uniqueData };
+  //       console.log(combinedObjectWithUniqueIds);
+  //       setPlaces(combinedObjectWithUniqueIds);
+  //     }
+
+  //T
+  const URL_Toilet = "https://public-bathrooms.p.rapidapi.com/location";
+  const optionsToilet = selectedRouteCoordinates.map((option) => ({
     params: {
       lat: option[0],
       lng: option[1],
     },
     headers: {
-      "X-RapidAPI-Key": "4196f2e639msh6f8ec59aa20330ep1e7b94jsn324a5c1fa5ad",
+      "X-RapidAPI-Key": toilet_accessToken,
       "X-RapidAPI-Host": "public-bathrooms.p.rapidapi.com",
     },
   }));
-  //}
 
-  const getRestaurant = async () => {
+  const getToilet = async () => {
     const placesArray = [];
     try {
-      for (let i = 0; i < options.length; i++) {
-        const { data } = await axios(URL, options[i]);
+      for (let i = 0; i < optionsToilet.length; i++) {
+        const { data } = await axios(URL_Toilet, optionsToilet[i]);
         placesArray.push(data);
       }
-      setConvertedPlaceData(placesArray);
+      setConvertedToiletData(placesArray);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    getRestaurant();
+    getToilet();
   }, []);
 
-  console.log(convertedPlaceData);
+  console.log(convertedToiletData);
   useEffect(() => {
-    if (convertedPlaceData) {
-      // if (type === "Restaurants") {
-      //   const combinedDataArray = convertedPlaceData.reduce(
-      //     (acc, curr) => acc.concat(curr.data),
-      //     []
-      //   );
-      //   const combinedObject = { data: combinedDataArray };
-      //   const uniqueIds = new Set();
-      //   const uniqueData = combinedObject.data.filter((obj) => {
-      //     if (!uniqueIds.has(obj.location_id)) {
-      //       uniqueIds.add(obj.location_id);
-      //       return true;
-      //     }
-      //     return false;
-      //   });
-
-      //   const combinedObjectWithUniqueIds = { data: uniqueData };
-      //   console.log(combinedObjectWithUniqueIds);
-      //   setPlaces(combinedObjectWithUniqueIds);
-      // }
-      const flattenedArray = convertedPlaceData?.reduce(
+    if (convertedToiletData) {
+      const flattenedArray = convertedToiletData?.reduce(
         (acc, curr) => acc.concat(curr),
         []
       );
@@ -127,33 +148,31 @@ function List({
         data: uniqueObjectsArray,
       };
 
-      setPlaces(obj);
+      setToilets(obj);
     }
-  }, [convertedPlaceData]);
+  }, [convertedToiletData]);
 
-  console.log(places);
+  console.log(toilets);
 
   useEffect(() => {
-    let filteredRestaurants;
+    let filteredObj;
     if (type === "Restaurants") {
-      filteredRestaurants = places?.data?.filter(
+      filteredObj = places?.data?.filter(
         (place) => place.rating > ratingFilter
       );
+      setFilteredPlaces(filteredObj);
     } else if (type === "Toilets") {
-      filteredRestaurants = places?.data?.filter(
-        (place) => place.unisex == true
-      );
+      filteredObj = toilets?.data?.filter((place) => place.unisex == true);
+      setFilteredToilets(filteredObj);
     }
-
-    setFilteredPlaces(filteredRestaurants);
-  }, [ratingFilter, places]);
+  }, [ratingFilter, places, toilets]);
 
   const handleRatingFilterChange = (event) => {
     setRatingFilter(event.target.value);
   };
 
   console.log(type);
-  console.log(filteredPlaces);
+  console.log(filteredToilets);
   return (
     <>
       {type === "Restaurants" ? (
@@ -189,7 +208,7 @@ function List({
                 item
                 key={index}
                 xs={12}
-                id={`restaurant-${place.location_id}`}
+                id={`item-${place.location_id}`}
                 onClick={() => handlePlaceClick(place.location_id)}
                 type={type}
               >
@@ -206,23 +225,23 @@ function List({
           <FormControl>
             <InputLabel>Unisex</InputLabel>
             <Checkbox
-              onChange={handleRatingFilterChange}
+              //onChange={handleRatingFilterChange}
               inputProps={{ "aria-label": "controlled" }}
             />
           </FormControl>
           <Grid container spacing={3} className="list__card">
-            {filteredPlaces?.map((place, index) => (
+            {filteredToilets?.map((place, index) => (
               <Grid
                 item
                 key={index}
                 xs={12}
-                id={`toilets-${place.id}`}
+                id={`item-${place.id}`}
                 onClick={() => handlePlaceClick(place.id)}
               >
                 <PlaceDetails place={place} type={type} />
               </Grid>
             ))}
-            {!filteredPlaces && <CircularProgress />}
+            {!filteredToilets && <CircularProgress />}
           </Grid>
         </div>
       ) : null}
