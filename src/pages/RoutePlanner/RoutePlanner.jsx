@@ -10,7 +10,7 @@ import "./RoutePlanner.scss";
 import RouteDetails from "../../components/RouteDetails/RouteDetails";
 import backChevron from "../../assets/icons/chevron-back.png";
 import "../../styles/partials/_variables.scss";
-import { Grid } from "@mui/material";
+import { Switch, Grid } from "@mui/material";
 import List from "../../components/List/List";
 import london from "../../assets/images/london.png";
 import Rating from "@mui/material/Rating";
@@ -29,6 +29,23 @@ function RoutePlanner() {
   const [places, setPlaces] = useState("");
   const [markers, setMarkers] = useState([]);
   const [ratingFilter, setRatingFilter] = useState(0);
+  const [type, setType] = useState("Restaurants");
+  const handleChange = () => {
+    setType((prevType) =>
+      prevType === "Restaurants" ? "Toilets" : "Restaurants"
+    );
+  };
+  const handlePlaceClick = (id) => {
+    markers.forEach((marker) => {
+      marker.getPopup().remove();
+    });
+    const marker = markers.find(
+      (marker) => marker.getElement().id === `marker-${id}`
+    );
+    if (marker) {
+      marker.togglePopup();
+    }
+  };
 
   const scrollToRestaurant = (index) => {
     const restaurantElement = document.getElementById(`restaurant-${index}`);
@@ -263,9 +280,14 @@ function RoutePlanner() {
 
     setMarkers([]);
 
-    const filteredPlaces = places?.data?.filter(
-      (place) => Number(place.rating) > ratingFilter
-    );
+    let filteredPlaces;
+    if (type === "Restaurants") {
+      filteredPlaces = places?.data?.filter(
+        (place) => Number(place.rating) > ratingFilter
+      );
+    } else if (type === "Restaurants") {
+      filteredPlaces = places?.data?.filter((place) => place.unisex == true);
+    }
 
     console.log(filteredPlaces);
     if (filteredPlaces) {
@@ -276,6 +298,7 @@ function RoutePlanner() {
         if (!isNaN(latitude) && !isNaN(longitude) && place.name) {
           const markerElement = document.createElement("div");
           markerElement.className = "custom-marker";
+          markerElement.id = `marker-${place.location_id}`;
 
           const popupContent = ReactDOMServer.renderToString(
             <div>
@@ -289,7 +312,9 @@ function RoutePlanner() {
           );
           const marker = new mapboxgl.Marker(markerElement)
             .setLngLat([place.longitude, place.latitude])
-            .setPopup(new mapboxgl.Popup().setHTML(popupContent))
+            .setPopup(
+              new mapboxgl.Popup({ closeButton: false }).setHTML(popupContent)
+            )
             .addTo(map);
 
           marker.getPopup().on("open", () => {
@@ -325,6 +350,8 @@ function RoutePlanner() {
     map.addControl(endGeo.current, "top-left");
   };
 
+  console.log(type);
+
   return (
     <>
       <Header headerColor={"base"} station={"Mind the Map"} />
@@ -347,6 +374,10 @@ function RoutePlanner() {
       />
       {selectedRoute && (
         <>
+          <Switch
+            onChange={handleChange}
+            inputProps={{ "aria-label": "controlled" }}
+          />
           <Grid container spacing={3} style={{ width: "100%" }}>
             <Grid item xs={12} md={4}>
               <List
@@ -356,6 +387,8 @@ function RoutePlanner() {
                 setRatingFilter={setRatingFilter}
                 ratingFilter={ratingFilter}
                 selectedRoute={selectedRoute}
+                handlePlaceClick={handlePlaceClick}
+                type={type}
               />
             </Grid>
           </Grid>
