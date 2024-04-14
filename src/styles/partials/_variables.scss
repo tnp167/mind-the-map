@@ -15,6 +15,7 @@ $colors: (
   bus: #dc241f,
   london-overground: #fa7b05,
   overground: #fa7b05,
+  elizabeth: #60399e,
   elizabeth-line: #60399e,
   national-rail: #000000,
   cable-car: #dc241f,
@@ -39,6 +40,7 @@ $colors: (
   --bus: #dc241f;
   --london-overground: #fa7b05;
   --overground: #fa7b05;
+  --elizabeth: #60399e;
   --elizabeth-line: #60399e;
   --national-rail: #000000;
   --cable-car: #dc241f;
@@ -80,6 +82,10 @@ $desktop-breakpoint: 1280px;
 
   .route__line--#{$line} {
     border-left: solid $color 5px;
+  }
+
+  .table__name--#{$line} {
+    background-color: $color;
   }
   @if $line ==
     "circle" or

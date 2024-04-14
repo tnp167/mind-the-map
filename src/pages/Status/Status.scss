@@ -1,0 +1,27 @@
+.status {
+  &-container {
+    margin: 3rem 0;
+  }
+  &__title {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__update {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+  }
+  &__loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__circular {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    width: 13%;
+  }
+}

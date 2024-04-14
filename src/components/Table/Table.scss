@@ -1,0 +1,96 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+.table {
+  &__title {
+    margin: auto;
+    text-transform: uppercase;
+    color: white;
+    font-size: 1.8rem;
+    justify-content: center;
+    margin-top: 0.7rem;
+  }
+  &__update {
+    text-align: center;
+  }
+
+  &__table {
+    margin-top: 2rem;
+  }
+
+  &__container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 0.3rem;
+  }
+  &__line {
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+  }
+
+  &__name {
+    margin: 0;
+    padding: 1rem 0;
+    width: 60%;
+    border-top: 3px solid white;
+    border-bottom: 3px solid white;
+    border-right: 2px solid white;
+    text-align: center;
+    &--piccadilly,
+    &--metropolitan,
+    &--northern,
+    &--victoria,
+    &--elizabeth {
+      color: $primary-text-color;
+    }
+
+    &--waterloo-city,
+    &--hammersmith-city {
+      color: $secondary-text-color;
+    }
+  }
+
+  &__status {
+    width: 40%;
+    margin: 0;
+    padding: 1rem 0;
+    text-align: center;
+    border-top: 3px solid white;
+    border-bottom: 3px solid white;
+    border-left: 2px solid white;
+    &--good {
+      background-color: green;
+    }
+    &--delay {
+      background-color: orange;
+    }
+  }
+
+  &__popup {
+    width: 70%;
+    display: flex;
+    background-color: rgb(255, 214, 157);
+    padding: 2rem;
+    border-radius: 5px;
+    margin: 0 auto;
+  }
+
+  &__icon {
+    padding: 0rem 1rem;
+    flex-wrap: wrap;
+    background-color: red;
+    width: 7rem;
+    text-align: center;
+    border: 1px solid white;
+    border-radius: 5px;
+  }
+
+  &__con {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}

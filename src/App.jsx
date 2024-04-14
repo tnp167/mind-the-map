@@ -4,7 +4,7 @@ import "./App.scss";
 import { useState, useEffect } from "react";
 import RoutePlanner from "./pages/RoutePlanner/RoutePlanner";
 import Home from "./pages/Home/Home";
-import Status from "./components/Status/Status";
+import Status from "./pages/Status/Status";
 
 function App() {
   return (
