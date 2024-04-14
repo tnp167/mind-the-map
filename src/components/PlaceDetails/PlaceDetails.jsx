@@ -16,7 +16,6 @@ import london from "../../assets/images/london.png";
 import "./PlaceDetails.scss";
 
 function PlaceDetails({ place, type }) {
-  //console.log(place);
   return (
     <>
       <>
@@ -118,12 +117,7 @@ function PlaceDetails({ place, type }) {
                   </p>
                 </div>
               )}
-              {place.comment && (
-                <Box className="place__box">
-                  <p>Comment</p>
-                  <p className="place__detail">{place.comment}</p>
-                </Box>
-              )}
+
               {place.unisex && (
                 <Chip
                   size="small"

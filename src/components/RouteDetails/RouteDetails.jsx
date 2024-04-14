@@ -145,7 +145,9 @@ function RouteDetails({ route }) {
               <div className="route__details-text">
                 <div
                   className={`route__line ${
-                    leg.mode.name !== "national-rail" && leg.mode.name !== "bus"
+                    leg.mode.name !== "national-rail" &&
+                    leg.mode.name !== "bus" &&
+                    leg.mode.name !== "coach"
                       ? `route__line--${leg.routeOptions[0].name
                           .toLowerCase()
                           .replace(/[\s&]/g, "-")}`
@@ -159,7 +161,8 @@ function RouteDetails({ route }) {
                     <p
                       className={`route__color ${
                         leg.mode.name !== "national-rail" &&
-                        leg.mode.name !== "bus"
+                        leg.mode.name !== "bus" &&
+                        leg.mode.name !== "coach"
                           ? `route__color--${leg.routeOptions[0].name
                               .toLowerCase()
                               .replace(/[\s&]/g, "-")}`

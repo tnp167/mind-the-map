@@ -29,7 +29,9 @@ function RoutePlanner() {
   const [places, setPlaces] = useState("");
   const [toilets, setToilets] = useState("");
   const [markers, setMarkers] = useState([]);
+  const [isChecked, setIsChecked] = useState(false);
   const [ratingFilter, setRatingFilter] = useState(0);
+  const [filteredToilets, setFilteredToilets] = useState([]);
   const [type, setType] = useState("Restaurants");
   const handleChange = () => {
     setType((prevType) =>
@@ -287,10 +289,15 @@ function RoutePlanner() {
         (place) => Number(place.rating) > ratingFilter
       );
     } else if (type === "Toilets") {
-      filteredPlaces = toilets?.data?.filter((place) => place.unisex == true);
+      if (isChecked) {
+        filteredPlaces = toilets?.data?.filter(
+          (place) => place.accessible === true && place.distance < 2
+        );
+      } else {
+        filteredPlaces = toilets?.data?.filter((place) => place.distance < 2);
+      }
     }
 
-    //console.log(filteredPlaces);
     if (filteredPlaces) {
       filteredPlaces?.forEach((place, index) => {
         const latitude = parseFloat(place.latitude);
@@ -344,7 +351,7 @@ function RoutePlanner() {
         }
       });
     }
-  }, [places, ratingFilter, toilets]);
+  }, [places, ratingFilter, toilets, isChecked, type]);
 
   const handleRouteBack = () => {
     setSelectedRoute(null);
@@ -363,8 +370,6 @@ function RoutePlanner() {
     map.addControl(startGeo.current, "top-left");
     map.addControl(endGeo.current, "top-left");
   };
-
-  console.log(type);
 
   return (
     <>
@@ -388,10 +393,14 @@ function RoutePlanner() {
       />
       {selectedRoute && (
         <>
-          <Switch
-            onChange={handleChange}
-            inputProps={{ "aria-label": "controlled" }}
-          />
+          <div className="switch-container">
+            <h3>Restaurants</h3>
+            <Switch
+              onChange={handleChange}
+              inputProps={{ "aria-label": "controlled" }}
+            />
+            <h3>Toilets</h3>
+          </div>
           <Grid container spacing={3} style={{ width: "100%" }}>
             <Grid item xs={12} md={4}>
               <List
@@ -400,8 +409,12 @@ function RoutePlanner() {
                 places={places}
                 setToilets={setToilets}
                 toilets={toilets}
+                isChecked={isChecked}
+                setIsChecked={setIsChecked}
                 setRatingFilter={setRatingFilter}
                 ratingFilter={ratingFilter}
+                setFilteredToilets={setFilteredToilets}
+                filteredToilets={filteredToilets}
                 selectedRoute={selectedRoute}
                 handlePlaceClick={handlePlaceClick}
                 type={type}

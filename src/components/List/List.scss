@@ -16,4 +16,10 @@
     height: 75vh;
     overflow: auto;
   }
+
+  &__filter {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
 }

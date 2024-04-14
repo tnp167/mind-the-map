@@ -14,13 +14,16 @@ import PlaceDetails from "../PlaceDetails/PlaceDetails";
 import Rating from "@mui/material/Rating";
 
 function List({
-  startPoint,
   setPlaces,
   places,
   setToilets,
   toilets,
   ratingFilter,
   setRatingFilter,
+  isChecked,
+  setIsChecked,
+  filteredToilets,
+  setFilteredToilets,
   selectedRoute,
   handlePlaceClick,
   type,
@@ -49,60 +52,56 @@ function List({
   });
 
   const [filteredPlaces, setFilteredPlaces] = useState([]);
-  const [filteredToilets, setFilteredToilets] = useState([]);
-  //R
-  // const URL_Restaurant = "https://travel-advisor.p.rapidapi.com/restaurants/list-by-latlng";
-  // const optionsRestaurant = selectedRouteCoordinates.map((option) => ({
-  //   params: {
-  //     latitude: option[0],
-  //     longitude: option[1],
-  //     distance: "0.5",
-  //   },
-  //   headers: {
-  //     "X-RapidAPI-Key": travel_accessToken,
-  //     "X-RapidAPI-Host": "travel-advisor.p.rapidapi.com",
-  //   },
-  // }));
-  // const getToilet = async () => {
-  //   const placesArray = [];
-  //   try {
-  //     for (let i = 0; i < options.length; i++) {
-  //       const { data } = await axios(URL_Restaurant, optionsRestaurant[i]);
-  //       placesArray.push(data);
-  //     }
-  //     setConvertedToiletData(placesArray);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   getToilet();
-  // }, []);
 
-  // console.log(convertedToiletData);
-  // useEffect(() => {
-  //   if (convertedPlaceData) {
-  //     if (type === "Restaurants") {
-  //       const combinedDataArray = convertedPlaceData.reduce(
-  //         (acc, curr) => acc.concat(curr.data),
-  //         []
-  //       );
-  //       const combinedObject = { data: combinedDataArray };
-  //       const uniqueIds = new Set();
-  //       const uniqueData = combinedObject.data.filter((obj) => {
-  //         if (!uniqueIds.has(obj.location_id)) {
-  //           uniqueIds.add(obj.location_id);
-  //           return true;
-  //         }
-  //         return false;
-  //       });
+  const URL_place =
+    "https://travel-advisor.p.rapidapi.com/restaurants/list-by-latlng";
+  const optionsRestaurants = selectedRouteCoordinates.map((option) => ({
+    params: {
+      latitude: option[0],
+      longitude: option[1],
+      distance: "0.5",
+    },
+    headers: {
+      "X-RapidAPI-Key": "4196f2e639msh6f8ec59aa20330ep1e7b94jsn324a5c1fa5ad",
+      "X-RapidAPI-Host": "travel-advisor.p.rapidapi.com",
+    },
+  }));
 
-  //       const combinedObjectWithUniqueIds = { data: uniqueData };
-  //       console.log(combinedObjectWithUniqueIds);
-  //       setPlaces(combinedObjectWithUniqueIds);
-  //     }
+  const getRestaurant = async () => {
+    const placesArray = [];
+    try {
+      for (let i = 0; i < optionsRestaurants.length; i++) {
+        const { data } = await axios(URL_place, optionsRestaurants[i]);
+        placesArray.push(data);
+      }
+      setConvertedPlaceData(placesArray);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  //T
+  useEffect(() => {
+    if (convertedPlaceData) {
+      const combinedDataArray = convertedPlaceData.reduce(
+        (acc, curr) => acc.concat(curr.data),
+        []
+      );
+      const combinedObject = { data: combinedDataArray };
+      const uniqueIds = new Set();
+      const uniqueData = combinedObject.data.filter((obj) => {
+        if (!uniqueIds.has(obj.location_id)) {
+          uniqueIds.add(obj.location_id);
+          return true;
+        }
+        return false;
+      });
+
+      const combinedObjectWithUniqueIds = { data: uniqueData };
+      console.log(combinedObjectWithUniqueIds);
+      setPlaces(combinedObjectWithUniqueIds);
+    }
+  }, [convertedPlaceData]);
+
   const URL_Toilet = "https://public-bathrooms.p.rapidapi.com/location";
   const optionsToilet = selectedRouteCoordinates.map((option) => ({
     params: {
@@ -128,10 +127,10 @@ function List({
     }
   };
   useEffect(() => {
+    getRestaurant();
     getToilet();
   }, []);
 
-  console.log(convertedToiletData);
   useEffect(() => {
     if (convertedToiletData) {
       const flattenedArray = convertedToiletData?.reduce(
@@ -152,8 +151,6 @@ function List({
     }
   }, [convertedToiletData]);
 
-  console.log(toilets);
-
   useEffect(() => {
     let filteredObj;
     if (type === "Restaurants") {
@@ -162,16 +159,27 @@ function List({
       );
       setFilteredPlaces(filteredObj);
     } else if (type === "Toilets") {
-      filteredObj = toilets?.data?.filter((place) => place.unisex == true);
+      let filteredObj;
+      if (isChecked) {
+        filteredObj = toilets?.data?.filter(
+          (place) => place.accessible === true && place.distance < 2
+        );
+      } else {
+        filteredObj = toilets?.data?.filter((place) => place.distance < 2);
+      }
       setFilteredToilets(filteredObj);
     }
-  }, [ratingFilter, places, toilets]);
+  }, [ratingFilter, places, toilets, isChecked]);
 
   const handleRatingFilterChange = (event) => {
     setRatingFilter(event.target.value);
   };
 
-  console.log(type);
+  const handleAccessibleFilterChange = (event) => {
+    setIsChecked(event.target.checked);
+  };
+
+  console.log(filteredPlaces);
   console.log(filteredToilets);
   return (
     <>
@@ -179,7 +187,7 @@ function List({
         <div className="list__container">
           <h2>Restaurants</h2>
           <FormControl>
-            <InputLabel>Unisex</InputLabel>
+            <InputLabel>Rating</InputLabel>
             <Select
               value={ratingFilter}
               className="list__form"
@@ -203,45 +211,68 @@ function List({
             </Select>
           </FormControl>
           <Grid container spacing={3} className="list__card">
-            {filteredPlaces?.map((place, index) => (
-              <Grid
-                item
-                key={index}
-                xs={12}
-                id={`item-${place.location_id}`}
-                onClick={() => handlePlaceClick(place.location_id)}
-                type={type}
-              >
-                <PlaceDetails place={place} />
-              </Grid>
-            ))}
-            {!filteredPlaces && <CircularProgress />}
+            {filteredPlaces
+              ? filteredPlaces.map((place, index) => (
+                  <Grid
+                    item
+                    key={index}
+                    xs={12}
+                    id={`item-${place.location_id}`}
+                    onClick={() => handlePlaceClick(place.location_id)}
+                  >
+                    <PlaceDetails place={place} type={type} />
+                  </Grid>
+                ))
+              : places?.data?.map((place, index) => (
+                  <Grid
+                    item
+                    key={index}
+                    xs={12}
+                    id={`item-${place.location_id}`}
+                    onClick={() => handlePlaceClick(place.location_id)}
+                  >
+                    <PlaceDetails place={place} type={type} />
+                  </Grid>
+                ))}
+            {!places && !filteredPlaces && <CircularProgress />}
           </Grid>
         </div>
       ) : null}
       {type === "Toilets" ? (
         <div className="list__container">
           <h2>Toilets</h2>
-          <FormControl>
-            <InputLabel>Unisex</InputLabel>
+          <div className="list__filter">
+            <InputLabel>Accessible Only</InputLabel>
             <Checkbox
-              //onChange={handleRatingFilterChange}
+              onChange={handleAccessibleFilterChange}
               inputProps={{ "aria-label": "controlled" }}
             />
-          </FormControl>
+          </div>
           <Grid container spacing={3} className="list__card">
-            {filteredToilets?.map((place, index) => (
-              <Grid
-                item
-                key={index}
-                xs={12}
-                id={`item-${place.id}`}
-                onClick={() => handlePlaceClick(place.id)}
-              >
-                <PlaceDetails place={place} type={type} />
-              </Grid>
-            ))}
-            {!filteredToilets && <CircularProgress />}
+            {filteredToilets
+              ? filteredToilets.map((place, index) => (
+                  <Grid
+                    item
+                    key={index}
+                    xs={12}
+                    id={`item-${place.id}`}
+                    onClick={() => handlePlaceClick(place.id)}
+                  >
+                    <PlaceDetails place={place} type={type} />
+                  </Grid>
+                ))
+              : toilets?.data?.map((place, index) => (
+                  <Grid
+                    item
+                    key={index}
+                    xs={12}
+                    id={`item-${place.id}`}
+                    onClick={() => handlePlaceClick(place.id)}
+                  >
+                    <PlaceDetails place={place} type={type} />
+                  </Grid>
+                ))}
+            {!toilets && !filteredToilets && <CircularProgress />}
           </Grid>
         </div>
       ) : null}
