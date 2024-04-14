@@ -8,6 +8,7 @@ import axios from "axios";
 import "./Status.scss";
 import { CircularProgress } from "@mui/material";
 function Status() {
+  const [mode, setMode] = useState("tube,overground,dlr,elizabeth-line");
   const [status, setStatus] = useState("");
   const [statusDate, setStatusDate] = useState(new Date());
 
@@ -15,7 +16,7 @@ function Status() {
     try {
       const currentDate = new Date();
       const { data } = await axios.get(
-        "https://api.tfl.gov.uk/line/mode/tube,overground,dlr,elizabeth-line/status"
+        `https://api.tfl.gov.uk/line/mode/${mode}/status`
       );
       setStatus(data);
       setStatusDate(currentDate);
@@ -30,19 +31,39 @@ function Status() {
     }, 5000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [mode]);
 
+  const handleModeToggle = () => {
+    setMode((prevMode) =>
+      prevMode === "tube,overground,dlr,elizabeth-line"
+        ? "national-rail"
+        : "tube,overground,dlr,elizabeth-line"
+    );
+    console.log("Hi");
+  };
   return (
     <>
       <Header headerColor={"base"} station={"Mind the Map"} />
       <Hero fadeImage={map} />
       <SubHero headerColor={"base"} place={"Line Status"} />
+      <button onClick={handleModeToggle}>Toggle Mode</button>
       <h3 className="status__update">Last updated: {statusDate.toString()}</h3>
       <div className="status-container">
         {status ? (
-          status.map((line) => {
-            return <Table key={line.id} line={line} />;
-          })
+          mode.includes("tube") && status[0].modeName === "tube" ? (
+            status.map((line) => {
+              return <Table key={line.id} line={line} mode={mode} />;
+            })
+          ) : mode.includes("national-rail") &&
+            status[0].modeName === "national-rail" ? (
+            status.map((line) => {
+              return <Table key={line.id} line={line} mode={mode} />;
+            })
+          ) : (
+            <div className="status__loading">
+              <CircularProgress className="status__circular" size="5rem" />
+            </div>
+          )
         ) : (
           <div className="status__loading">
             <CircularProgress className="status__circular" size="5rem" />
