@@ -28,10 +28,7 @@ function List({
   handlePlaceClick,
   type,
 }) {
-  const travel_accessToken = process.env.REACT_APP_TRAVEL_ADVISOR_ACCESS_TOKEN;
-  const toilet_accessToken =
-    process.env.REACT_APP_PUBLIC_BATHROOMS_ACCESS_TOKEN;
-
+  const rapid_accessToken = process.env.REACT_APP_RAPID_API_ACCESS_TOKEN;
   let selectedRouteCoordinates = [];
   const [convertedPlaceData, setConvertedPlaceData] = useState("");
   const [convertedToiletData, setConvertedToiletData] = useState("");
@@ -62,7 +59,7 @@ function List({
       distance: "0.5",
     },
     headers: {
-      "X-RapidAPI-Key": "4196f2e639msh6f8ec59aa20330ep1e7b94jsn324a5c1fa5ad",
+      "X-RapidAPI-Key": rapid_accessToken,
       "X-RapidAPI-Host": "travel-advisor.p.rapidapi.com",
     },
   }));
@@ -97,7 +94,6 @@ function List({
       });
 
       const combinedObjectWithUniqueIds = { data: uniqueData };
-      console.log(combinedObjectWithUniqueIds);
       setPlaces(combinedObjectWithUniqueIds);
     }
   }, [convertedPlaceData]);
@@ -109,7 +105,7 @@ function List({
       lng: option[1],
     },
     headers: {
-      "X-RapidAPI-Key": toilet_accessToken,
+      "X-RapidAPI-Key": rapid_accessToken,
       "X-RapidAPI-Host": "public-bathrooms.p.rapidapi.com",
     },
   }));
@@ -169,7 +165,7 @@ function List({
       }
       setFilteredToilets(filteredObj);
     }
-  }, [ratingFilter, places, toilets, isChecked]);
+  }, [ratingFilter, places, toilets, isChecked, type]);
 
   const handleRatingFilterChange = (event) => {
     setRatingFilter(event.target.value);
@@ -179,8 +175,6 @@ function List({
     setIsChecked(event.target.checked);
   };
 
-  console.log(filteredPlaces);
-  console.log(filteredToilets);
   return (
     <>
       {type === "Restaurants" ? (
@@ -234,7 +228,15 @@ function List({
                     <PlaceDetails place={place} type={type} />
                   </Grid>
                 ))}
-            {!places && !filteredPlaces && <CircularProgress />}
+            {!places && !filteredPlaces && (
+              <Grid item xs={12} className="list__loading">
+                <CircularProgress
+                  className="list__circular"
+                  size="md"
+                  color="warning"
+                />
+              </Grid>
+            )}
           </Grid>
         </div>
       ) : null}
@@ -272,7 +274,11 @@ function List({
                     <PlaceDetails place={place} type={type} />
                   </Grid>
                 ))}
-            {!toilets && !filteredToilets && <CircularProgress />}
+            {!toilets && !filteredToilets && (
+              <Grid item xs={12} className="list__loading">
+                <CircularProgress className="list__circular" size="md" />
+              </Grid>
+            )}
           </Grid>
         </div>
       ) : null}

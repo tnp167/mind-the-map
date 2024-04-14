@@ -22,4 +22,17 @@
     align-items: center;
     margin-bottom: 2rem;
   }
+
+  &__loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__circular {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    width: 13%;
+  }
 }

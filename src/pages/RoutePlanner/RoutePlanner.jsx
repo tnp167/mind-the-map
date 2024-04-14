@@ -46,6 +46,9 @@ function RoutePlanner() {
       (marker) => marker.getElement().id === `marker-${id}`
     );
     if (marker) {
+      const mapContainer = document.getElementById("map");
+      mapContainer.scrollIntoView({ behavior: "smooth" });
+
       marker.togglePopup();
     }
   };
@@ -291,10 +294,10 @@ function RoutePlanner() {
     } else if (type === "Toilets") {
       if (isChecked) {
         filteredPlaces = toilets?.data?.filter(
-          (place) => place.accessible === true && place.distance < 2
+          (place) => place.accessible === true && place.distance < 1
         );
       } else {
-        filteredPlaces = toilets?.data?.filter((place) => place.distance < 2);
+        filteredPlaces = toilets?.data?.filter((place) => place.distance < 1);
       }
     }
 
@@ -395,10 +398,20 @@ function RoutePlanner() {
         <>
           <div className="switch-container">
             <h3>Restaurants</h3>
-            <Switch
-              onChange={handleChange}
-              inputProps={{ "aria-label": "controlled" }}
-            />
+            <div class="toggle-cont">
+              <input
+                class="toggle-input"
+                id="toggle"
+                name="toggle"
+                type="checkbox"
+                onChange={handleChange}
+              />
+              <label class="toggle-label" for="toggle">
+                <div class="cont-label-play">
+                  <span class="label-play"></span>
+                </div>
+              </label>
+            </div>
             <h3>Toilets</h3>
           </div>
           <Grid container spacing={3} style={{ width: "100%" }}>
