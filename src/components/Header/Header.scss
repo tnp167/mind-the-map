@@ -5,20 +5,20 @@
   &__container {
     width: 100%;
     background-color: $header-color;
-    height: 2.8rem;
+    height: 4rem;
   }
 
   &__wrap {
     @include container;
     display: flex;
     justify-content: space-between;
-    height: 2.8rem;
+    height: 100%;
   }
 
   &__logo {
     margin-top: 0.5rem;
     margin-left: 0.5rem;
-    height: 1.6rem;
+    height: 2rem;
     display: flex;
     text-decoration: none;
     margin: auto 0;
@@ -49,6 +49,9 @@
     color: white;
     gap: 0.8rem;
     margin: auto 0;
+    @include tablet {
+      font-size: 0.8rem;
+    }
   }
 
   &__items {

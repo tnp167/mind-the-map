@@ -3,6 +3,7 @@ import axios from "axios";
 import "./Options.scss";
 import { v4 as uuidv4 } from "uuid";
 import Route from "../Route/Route";
+import { Box, CircularProgress } from "@mui/material";
 
 function Options({ startPoint, endPoint, setSelectedRoute }) {
   const [routes, setRoutes] = useState(null);
@@ -44,6 +45,11 @@ function Options({ startPoint, endPoint, setSelectedRoute }) {
           <Route route={route} />
         </div>
       ))}
+      {!routes && (
+        <Box className="options__loading">
+          <CircularProgress />
+        </Box>
+      )}
     </section>
   );
 }

@@ -54,6 +54,50 @@
 //   margin-top: 0;
 // }
 
+.map {
+  width: 100%;
+  height: 30rem;
+  @include tablet {
+    height: 35rem;
+  }
+  @include desktop {
+    height: 100vh;
+  }
+  &__container {
+    @include desktop {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+}
+
+.mapboxgl-ctrl-top-left {
+  @include tablet {
+    display: flex;
+    flex-direction: row;
+  }
+}
+.mapboxgl-ctrl-top-left .mapboxgl-ctrl-geocoder:nth-child(1) {
+  .suggestions {
+    margin: 3.8rem 0 0 0;
+    @include tablet {
+      margin: 0;
+    }
+  }
+}
+
+.mapboxgl-ctrl-top-left .mapboxgl-ctrl-geocoder:nth-child(2) {
+  @include tablet {
+    margin-left: 2rem;
+  }
+}
+
+.mapboxgl-canvas {
+  height: 30rem;
+  @include tablet {
+    height: 35rem;
+  }
+}
 .switch-container {
   display: flex;
   justify-content: center;

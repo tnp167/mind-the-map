@@ -265,14 +265,6 @@ function RoutePlanner() {
           },
         });
       }
-
-      // places?.data?.forEach((place) => {
-      //   let marker = new mapboxgl.Marker()
-      //     .setLngLat([Number(place.latitude), Number(place.longitude)])
-      //     .setPopup(new mapboxgl.Popup().setHTML("<h3>" + place.name + "</h3>"))
-      //     .addTo(map);
-      // });
-      //console.log(places && places);
     }
     // });
     return () => {};
@@ -388,61 +380,58 @@ function RoutePlanner() {
           <RouteDetails route={selectedRoute} />
         </>
       )}
-      <div
-        id="map"
-        ref={mapContainerRef}
-        style={{ width: "100%", height: "400px" }}
-        className="map"
-      />
-      {selectedRoute && (
-        <>
-          <div className="switch-container">
-            <h3>Restaurants</h3>
-            <div class="toggle-cont">
-              <input
-                class="toggle-input"
-                id="toggle"
-                name="toggle"
-                type="checkbox"
-                onChange={handleChange}
-              />
-              <label class="toggle-label" for="toggle">
-                <div class="cont-label-play">
-                  <span class="label-play"></span>
-                </div>
-              </label>
+      <div className="map__container">
+        <div id="map" ref={mapContainerRef} className="map" />
+        {selectedRoute && (
+          <>
+            <div className="switch-container">
+              <h3>Restaurants</h3>
+              <div class="toggle-cont">
+                <input
+                  class="toggle-input"
+                  id="toggle"
+                  name="toggle"
+                  type="checkbox"
+                  onChange={handleChange}
+                />
+                <label class="toggle-label" for="toggle">
+                  <div class="cont-label-play">
+                    <span class="label-play"></span>
+                  </div>
+                </label>
+              </div>
+              <h3>Toilets</h3>
             </div>
-            <h3>Toilets</h3>
-          </div>
-          <Grid container spacing={3} style={{ width: "100%" }}>
-            <Grid item xs={12} md={4}>
-              <List
-                startPoint={startPoint}
-                setPlaces={setPlaces}
-                places={places}
-                setToilets={setToilets}
-                toilets={toilets}
-                isChecked={isChecked}
-                setIsChecked={setIsChecked}
-                setRatingFilter={setRatingFilter}
-                ratingFilter={ratingFilter}
-                setFilteredToilets={setFilteredToilets}
-                filteredToilets={filteredToilets}
-                selectedRoute={selectedRoute}
-                handlePlaceClick={handlePlaceClick}
-                type={type}
-              />
+            <Grid container spacing={3} style={{ width: "100%" }}>
+              <Grid item xs={12} md={4}>
+                <List
+                  startPoint={startPoint}
+                  setPlaces={setPlaces}
+                  places={places}
+                  setToilets={setToilets}
+                  toilets={toilets}
+                  isChecked={isChecked}
+                  setIsChecked={setIsChecked}
+                  setRatingFilter={setRatingFilter}
+                  ratingFilter={ratingFilter}
+                  setFilteredToilets={setFilteredToilets}
+                  filteredToilets={filteredToilets}
+                  selectedRoute={selectedRoute}
+                  handlePlaceClick={handlePlaceClick}
+                  type={type}
+                />
+              </Grid>
             </Grid>
-          </Grid>
-        </>
-      )}
-      {startPoint && endPoint && !selectedRoute && (
-        <Options
-          startPoint={startPoint}
-          endPoint={endPoint}
-          setSelectedRoute={setSelectedRoute}
-        />
-      )}
+          </>
+        )}
+        {startPoint && endPoint && !selectedRoute && (
+          <Options
+            startPoint={startPoint}
+            endPoint={endPoint}
+            setSelectedRoute={setSelectedRoute}
+          />
+        )}
+      </div>
     </>
   );
 }

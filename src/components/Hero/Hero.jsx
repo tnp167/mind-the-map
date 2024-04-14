@@ -1,21 +1,13 @@
 import "./Hero.scss";
 function Hero({ fadeImage }) {
-  const divStyle = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    height: "18rem",
-    width: "100%",
-  };
-
   return (
     <div>
       <div className="slideshow">
         <div
           style={{
-            ...divStyle,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            width: "100%",
             backgroundImage: `url(${fadeImage})`,
           }}
           className="hero__picture"
