@@ -9,13 +9,16 @@ import "./Status.scss";
 import { CircularProgress } from "@mui/material";
 function Status() {
   const [status, setStatus] = useState("");
+  const [statusDate, setStatusDate] = useState(new Date());
 
   const getTubeStatus = async () => {
     try {
+      const currentDate = new Date();
       const { data } = await axios.get(
         "https://api.tfl.gov.uk/line/mode/tube,overground,dlr,elizabeth-line/status"
       );
       setStatus(data);
+      setStatusDate(currentDate);
     } catch (error) {
       console.log(error);
     }
@@ -24,7 +27,7 @@ function Status() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       getTubeStatus();
-    }, 10000);
+    }, 5000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -34,7 +37,7 @@ function Status() {
       <Header headerColor={"base"} station={"Mind the Map"} />
       <Hero fadeImage={map} />
       <SubHero headerColor={"base"} place={"Line Status"} />
-      <h3 className="status__update">Last updated: ###</h3>
+      <h3 className="status__update">Last updated: {statusDate.toString()}</h3>
       <div className="status-container">
         {status ? (
           status.map((line) => {
