@@ -7,6 +7,9 @@ import Table from "../../components/Table/Table";
 import axios from "axios";
 import "./Status.scss";
 import { CircularProgress } from "@mui/material";
+import rail from "../../assets/icons/train.svg";
+import tube from "../../assets/icons/tube.png";
+import railMap from "../../assets/images/rail-map.jpg";
 function Status() {
   const [mode, setMode] = useState("tube,overground,dlr,elizabeth-line");
   const [status, setStatus] = useState("");
@@ -44,9 +47,27 @@ function Status() {
   return (
     <>
       <Header headerColor={"base"} station={"Mind the Map"} />
-      <Hero fadeImage={map} />
-      <SubHero headerColor={"base"} place={"Line Status"} />
-      <button onClick={handleModeToggle}>Toggle Mode</button>
+      <Hero fadeImage={mode === "national-rail" ? railMap : map} />
+      <SubHero headerColor={"base"} place={mode.replace(/,/g, " - ")} />
+      <div className="status__button-container">
+        <button
+          onClick={handleModeToggle}
+          className={`status__button status__button--${
+            mode === "national-rail" ? "tube" : "rail"
+          }`}
+        >
+          <img
+            src={mode !== "national-rail" ? rail : tube}
+            alt={mode !== "national-rail" ? "tube" : "rail"}
+            className="status__logo"
+          />
+          <p>
+            {mode !== "national-rail"
+              ? "Switch to National Rail"
+              : "Switch to Tube, Overground, DLR, and Elizabeth Line"}
+          </p>
+        </button>
+      </div>
       <h3 className="status__update">Last updated: {statusDate.toString()}</h3>
       <div className="status-container">
         {status ? (

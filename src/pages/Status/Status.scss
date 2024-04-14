@@ -1,3 +1,5 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
 .status {
   &-container {
     margin: 3rem 0;
@@ -23,5 +25,36 @@
     flex-direction: column;
     height: auto;
     width: 13%;
+  }
+  &__logo {
+    width: 2rem;
+  }
+  &__button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  &__button {
+    display: flex;
+    align-items: center;
+    background-color: black;
+    color: $primary-text-color;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 0 0.4rem;
+    &--rail {
+      background-color: black;
+    }
+
+    &--tube {
+      background-color: map-get($colors, victoria);
+    }
+    p {
+      margin: 0.5rem 0;
+    }
+  }
+  &__logo {
+    margin-right: 0.5rem;
   }
 }

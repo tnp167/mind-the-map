@@ -50,7 +50,7 @@ function Table({ line, mode }) {
           </p>
         ) : (
           <a
-            href={line.lineStatuses[0].reason} // External link
+            href={line.lineStatuses[0].reason}
             className={`table__status ${
               line.lineStatuses[0].statusSeverity === 10
                 ? "table__status--good"
