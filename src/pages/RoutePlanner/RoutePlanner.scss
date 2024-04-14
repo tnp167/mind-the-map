@@ -97,18 +97,28 @@
   @include tablet {
     height: 35rem;
   }
-}
-.switch-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 2rem;
+  @include desktop {
+    height: 100vh;
+  }
 }
 
+.switch-outer {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  @include desktop {
+    width: auto;
+  }
+}
 .toggle-cont {
-  width: 6rem;
+  width: 7rem;
   height: 3.1rem;
   border-radius: 5rem;
   margin: 0 2rem;
+  top: 0%;
+  @include tablet {
+    width: 6rem;
+  }
 }
 
 .toggle-cont .toggle-input {
@@ -139,7 +149,10 @@
 
 .toggle-cont .toggle-input:checked + .toggle-label .cont-label-play {
   background: #ffffff;
-  transform: translateX(50px);
+  transform: translateX(58px);
+  @include tablet {
+    transform: translateX(50px);
+  }
 }
 
 .toggle-cont .toggle-label .label-play {
@@ -163,4 +176,45 @@
   background-position: 65% 60%;
   background-size: 2.1rem;
   background-repeat: no-repeat;
+}
+
+.list__container {
+  @include desktop {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+  }
+}
+
+.switch {
+  &__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0 auto;
+    margin-top: 2rem;
+  }
+
+  &__grid {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__outer {
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    @include desktop {
+      width: auto;
+    }
+  }
+}
+
+.grid {
+  @include desktop {
+    display: flex;
+    justify-content: flex-start;
+  }
 }

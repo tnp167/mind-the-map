@@ -4,6 +4,10 @@
 .list {
   &__container {
     padding: 2rem;
+    width: 100vw;
+    @include desktop {
+      width: 30vw;
+    }
   }
   &__form {
     width: 12rem;

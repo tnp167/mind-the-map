@@ -158,10 +158,10 @@ function List({
       let filteredObj;
       if (isChecked) {
         filteredObj = toilets?.data?.filter(
-          (place) => place.accessible === true && place.distance < 2
+          (place) => place.accessible === true && place.distance < 1
         );
       } else {
-        filteredObj = toilets?.data?.filter((place) => place.distance < 2);
+        filteredObj = toilets?.data?.filter((place) => place.distance < 1);
       }
       setFilteredToilets(filteredObj);
     }

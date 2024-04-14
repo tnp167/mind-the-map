@@ -212,12 +212,12 @@ function RoutePlanner() {
         }
       }
 
-      // if (startGeo) {
-      //   map.removeControl(startGeo.current);
-      // }
-      // if (endGeo) {
-      //   map.removeControl(endGeo.current);
-      // }
+      if (startGeo) {
+        map.removeControl(startGeo.current);
+      }
+      if (endGeo) {
+        map.removeControl(endGeo.current);
+      }
 
       for (let i = 0; i < selectedRoute.legs.length; i++) {
         const leg = selectedRoute.legs[i];
@@ -382,27 +382,41 @@ function RoutePlanner() {
       )}
       <div className="map__container">
         <div id="map" ref={mapContainerRef} className="map" />
+        {startPoint && endPoint && !selectedRoute && (
+          <Options
+            startPoint={startPoint}
+            endPoint={endPoint}
+            setSelectedRoute={setSelectedRoute}
+          />
+        )}
         {selectedRoute && (
-          <>
-            <div className="switch-container">
-              <h3>Restaurants</h3>
-              <div class="toggle-cont">
-                <input
-                  class="toggle-input"
-                  id="toggle"
-                  name="toggle"
-                  type="checkbox"
-                  onChange={handleChange}
-                />
-                <label class="toggle-label" for="toggle">
-                  <div class="cont-label-play">
-                    <span class="label-play"></span>
-                  </div>
-                </label>
+          <div className="switch__grid">
+            <div className="switch__outer">
+              <div className="switch__container">
+                <h3>Restaurants</h3>
+                <div class="toggle-cont">
+                  <input
+                    class="toggle-input"
+                    id="toggle"
+                    name="toggle"
+                    type="checkbox"
+                    onChange={handleChange}
+                  />
+                  <label class="toggle-label" for="toggle">
+                    <div class="cont-label-play">
+                      <span class="label-play"></span>
+                    </div>
+                  </label>
+                </div>
+                <h3>Toilets</h3>
               </div>
-              <h3>Toilets</h3>
             </div>
-            <Grid container spacing={3} style={{ width: "100%" }}>
+            <Grid
+              container
+              spacing={3}
+              style={{ width: "100%" }}
+              className="grid"
+            >
               <Grid item xs={12} md={4}>
                 <List
                   startPoint={startPoint}
@@ -422,14 +436,7 @@ function RoutePlanner() {
                 />
               </Grid>
             </Grid>
-          </>
-        )}
-        {startPoint && endPoint && !selectedRoute && (
-          <Options
-            startPoint={startPoint}
-            endPoint={endPoint}
-            setSelectedRoute={setSelectedRoute}
-          />
+          </div>
         )}
       </div>
     </>

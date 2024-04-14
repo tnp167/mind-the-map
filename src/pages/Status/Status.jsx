@@ -68,7 +68,11 @@ function Status() {
           </p>
         </button>
       </div>
-      <h3 className="status__update">Last updated: {statusDate.toString()}</h3>
+      <div className="status__update-container">
+        <h3 className="status__update">
+          Last updated: {statusDate.toString()}
+        </h3>
+      </div>
       <div className="status-container">
         {status ? (
           mode.includes("tube") && status[0].modeName === "tube" ? (

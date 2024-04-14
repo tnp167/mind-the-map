@@ -201,7 +201,7 @@ function RouteDetails({ route }) {
                 {leg.arrivalPoint.stopLetter
                   ? ` (Stop ${leg.arrivalPoint.stopLetter})`
                   : ""}{" "}
-                <span>
+                <span style={{ display: "block" }}>
                   {" "}
                   {leg.arrivalPoint.naptanId
                     ? ` (Crowded Status: ${
