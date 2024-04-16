@@ -6,6 +6,10 @@
     width: 100%;
     background-color: $header-color;
     height: 4rem;
+
+    @include desktop {
+      height: 5.5rem;
+    }
   }
 
   &__wrap {
@@ -13,6 +17,9 @@
     display: flex;
     justify-content: space-between;
     height: 100%;
+    @include desktop {
+      padding: 0 2rem;
+    }
   }
 
   &__logo {
@@ -22,6 +29,9 @@
     display: flex;
     text-decoration: none;
     margin: auto 0;
+    @include desktop {
+      height: 2.5rem;
+    }
   }
 
   &__logo img {
@@ -51,6 +61,10 @@
     margin: auto 0;
     @include tablet {
       font-size: 0.8rem;
+    }
+    @include desktop {
+      gap: 2rem;
+      font-size: 1rem;
     }
   }
 

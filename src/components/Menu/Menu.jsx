@@ -1,11 +1,11 @@
 import "./Menu.scss";
 import { Link } from "react-router-dom";
-
+import point from "../../assets/icons/point.png";
 function Menu({ headerColor }) {
   return (
     <div className="menu">
       <div className="menu__container">
-        <svg id="svg" viewBox={`0 0 1280 555`} className="menu__svg">
+        {/* <svg id="svg" viewBox={`0 0 1280 555`} className="menu__svg">
           <rect x="100" y="30" width="380" height="40" fill="#0019A8" />
           <rect x="0" y="360" width="100%" height="200" fill="#e7e7e7" />
           <text className="menu__title menu__title--first" x="110" y="60">
@@ -103,7 +103,37 @@ function Menu({ headerColor }) {
               </text>
             </Link>
           </g>
-        </svg>
+        </svg> */}
+        <div className="menu__first">
+          <img className="menu__point" src={point} alt="point" />
+          <p className="menu__detail menu__detail--first">
+            Set it. Search it. Sorted
+          </p>
+        </div>
+        <div className="menu__second">
+          <div className="menu__left">
+            <img className="menu__point" src={point} alt="point" />
+            <p className="menu__detail">Route Planner</p>
+            <Link to="/route" className="menu__link">
+              Enter
+            </Link>
+          </div>
+          <div className={`menu__line line--${headerColor}`}></div>
+          <p className="menu__zone">1</p>
+        </div>
+
+        <div className="menu__outer">
+          <div className="menu__third">
+            <div className="menu__left">
+              <img className="menu__point" src={point} alt="point" />
+              <p className="menu__detail">Status Updates</p>
+              <Link to="/status" className="menu__link">
+                Enter
+              </Link>
+            </div>
+            <p className="menu__zone menu__zone--second">2</p>
+          </div>
+        </div>
       </div>
     </div>
   );

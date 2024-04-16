@@ -11,6 +11,9 @@
     @include tablet {
       height: 2.5rem;
     }
+    @include desktop {
+      height: 3rem;
+    }
   }
   &__place {
     margin: 0;

@@ -125,7 +125,7 @@ function List({
   useEffect(() => {
     getRestaurant();
     getToilet();
-  }, []);
+  }, [selectedRoute]);
 
   useEffect(() => {
     if (convertedToiletData) {

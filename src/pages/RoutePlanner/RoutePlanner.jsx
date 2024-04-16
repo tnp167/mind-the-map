@@ -361,6 +361,9 @@ function RoutePlanner() {
     markers.forEach((marker) => marker.remove());
 
     setMarkers([]);
+    setType("Restaurants");
+    setPlaces("");
+    setToilets("");
 
     map.addControl(startGeo.current, "top-left");
     map.addControl(endGeo.current, "top-left");

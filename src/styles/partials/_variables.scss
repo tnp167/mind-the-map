@@ -70,6 +70,7 @@ $desktop-breakpoint: 1280px;
     background-color: $color;
   }
   .line--#{$line} {
+    background-color: $color;
     stroke: $color;
   }
   .options__tube--#{$line} {

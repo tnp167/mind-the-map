@@ -3,55 +3,135 @@
 .menu {
   // margin: 0 auto;
   // max-width: $desktop-breakpoint;
-  &__container {
-    width: 100%;
-    height: 25rem;
+  // &__container {
+  //   width: 100%;
+  //   height: 25rem;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: flex-start;
+  //   @include tablet {
+  //     height: 34rem;
+  //   }
+  // }
+
+  // &__svg {
+  //   width: 100%;
+  //   height: auto;
+  // }
+  // &__title {
+  //   fill: black;
+  //   font-size: 2.2rem;
+
+  //   &--first {
+  //     fill: $primary-text-color;
+  //   }
+  // }
+
+  // &__number {
+  //   font-size: 5rem;
+  //   fill: #e7e7e7;
+  //   &--two {
+  //     fill: $primary-text-color;
+  //   }
+  // }
+  // &__button {
+  //   transition: all 1s;
+  //   transform-origin: 32% 45%;
+  //   fill: #60399e;
+  //   cursor: pointer;
+  //   &:hover {
+  //     transform: scale(1.2);
+  //   }
+  //   &-background {
+  //     fill: #60399e;
+  //   }
+  //   &-text {
+  //     fill: $primary-text-color;
+  //     font-size: 1.6rem;
+  //   }
+
+  //   &--status {
+  //     transform-origin: 33% 80%;
+  //   }
+  // }
+
+  &__outer {
+    background-color: lightgray;
+  }
+  &__first,
+  &__second,
+  &__third {
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    @include tablet {
-      height: 34rem;
-    }
+    flex-direction: row;
+    align-items: center;
+    position: relative;
   }
 
-  &__svg {
-    width: 100%;
-    height: auto;
+  &__second,
+  &__third {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
   }
-  &__title {
-    fill: black;
-    font-size: 2.2rem;
+  &__third {
+    background-color: lightgray;
+  }
 
+  &__left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  &__point {
+    position: relative;
+    width: 2.5rem;
+    height: 2.5rem;
+    left: 2rem;
+    margin-top: 0.9rem;
+    z-index: 4;
+  }
+
+  &__detail {
+    margin-top: 2.5rem;
+    margin-left: 4rem;
+    font-size: 1.3rem;
     &--first {
-      fill: $primary-text-color;
+      background-color: $secondary-text-color;
+      color: $primary-text-color;
+      padding: 0.5rem 1rem;
+      font-size: 1.25rem;
     }
   }
-
-  &__number {
-    font-size: 5rem;
-    fill: #e7e7e7;
-    &--two {
-      fill: $primary-text-color;
-    }
-  }
-  &__button {
-    transition: all 1s;
-    transform-origin: 32% 45%;
-    fill: #60399e;
-    cursor: pointer;
+  &__link {
+    margin-top: 0.8rem;
+    margin-left: 1.5rem;
+    padding: 0.5rem 3rem;
+    color: $primary-text-color;
+    text-decoration: none;
+    background-color: map-get($colors, elizabeth);
+    transform: scale(1);
+    transition: transform 0.3s ease-in-out;
     &:hover {
       transform: scale(1.2);
     }
-    &-background {
-      fill: #60399e;
+  }
+  &__zone {
+    margin-right: 2rem;
+    color: lightgray;
+    font-size: 4.5rem;
+    position: relative;
+    &--second {
+      color: $primary-text-color;
     }
-    &-text {
-      fill: $primary-text-color;
-      font-size: 1.6rem;
-    }
+  }
 
-    &--status {
-      transform-origin: 33% 80%;
-    }
+  &__line {
+    position: absolute;
+    width: 0.7rem;
+    top: -31%;
+    left: 2.9rem;
+    bottom: -62%;
+    z-index: 3;
   }
 }

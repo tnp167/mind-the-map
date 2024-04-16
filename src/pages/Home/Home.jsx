@@ -3,7 +3,7 @@ import Menu from "../../components/Menu/Menu";
 import stPaul from "../../assets/images/st-paul.png";
 import bigBen from "../../assets/images/big-ben.png";
 import towerBridge from "../../assets/images/tower-bridge.png";
-import borough from "../../assets/images/borough-market.png";
+import borough from "../../assets/images/borough-market.jpg";
 import piccadilly from "../../assets/images/piccadilly-circus.png";
 import buckingham from "../../assets/images/buckingham-palace.png";
 import london from "../../assets/images/london.png";
