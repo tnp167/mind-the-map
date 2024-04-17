@@ -1,15 +1,34 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/mixins" as *;
 .menu {
-  width: 65rem;
+  width: 60rem;
+  margin: 5rem 0;
   margin: 0 auto;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  background-color: white;
+  width: 25rem;
+  height: auto;
+  align-items: center;
+  @include tablet {
+    width: 35rem;
+    height: auto;
+  }
+  @include desktop {
+    width: 60rem;
+    height: auto;
+  }
   &__logo {
-    width: 5rem;
+    width: 3.5rem;
+    margin-left: 2rem;
+    @include desktop {
+      width: 5.5rem;
+    }
   }
   &__outer {
     background-color: lightgray;
   }
+
   &__first,
   &__second,
   &__third {
@@ -17,6 +36,18 @@
     flex-direction: row;
     align-items: center;
     position: relative;
+    height: 8rem;
+
+    @include desktop {
+      height: 13rem;
+    }
+  }
+
+  &__first {
+    height: 7rem;
+    @include desktop {
+      height: 12rem;
+    }
   }
 
   &__second,
@@ -28,6 +59,8 @@
   }
   &__third {
     background-color: lightgray;
+
+    margin-left: 3rem;
   }
 
   &__left {
@@ -37,53 +70,183 @@
   }
   &__point {
     position: relative;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.2rem;
+    height: 2.2rem;
     left: 2rem;
     margin-top: 0.9rem;
     z-index: 4;
+    &--second {
+      left: 1.4rem;
+    }
+
+    @include desktop {
+      width: 2.8rem;
+      height: 2.8rem;
+      &--second {
+        left: 2.15rem;
+      }
+    }
   }
 
   &__detail {
     margin-top: 2.5rem;
-    margin-left: 4rem;
-    font-size: 1.3rem;
-    &--first {
+    margin-left: 2rem;
+    font-size: 1.2rem;
+
+    &--zero {
       background-color: $secondary-text-color;
       color: $primary-text-color;
-      padding: 0.5rem 1rem;
-      font-size: 1.25rem;
+      padding: 0.1rem 0.2rem;
+      padding-top: 0.2rem;
+      margin-left: 3rem;
+      font-size: 1.2rem;
+    }
+
+    &--first {
+      margin-left: 2.5rem;
+      margin-right: 0.55rem;
+    }
+
+    @include desktop {
+      font-size: 1.8rem;
+      margin-left: 4rem;
+      margin-right: 0.5rem;
+      &--zero {
+        padding: 0.5rem 1rem;
+        padding-top: 0.9rem;
+        font-size: 2rem;
+      }
+      &--first {
+        margin-left: 3.8rem;
+        margin-right: 1.5rem;
+      }
     }
   }
   &__link {
-    margin-top: 0.8rem;
-    margin-left: 1.5rem;
-    padding: 0.5rem 3rem;
+    margin-top: 1rem;
+    margin-right: 1rem;
+    margin-left: 0.5rem;
+    padding: 0.3rem 2.2rem;
     color: $primary-text-color;
     text-decoration: none;
+    font-size: 1rem;
     background-color: map-get($colors, elizabeth);
     transform: scale(1);
     transition: transform 0.3s ease-in-out;
+    cursor: pointer;
     &:hover {
       transform: scale(1.2);
+    }
+
+    @include desktop {
+      margin-left: 1.5rem;
+      padding: 0.5rem 4.5rem;
+      font-size: 1.5rem;
+      background-color: map-get($colors, elizabeth);
+      transform: scale(1);
+      transition: transform 0.3s ease-in-out;
     }
   }
   &__zone {
     margin-right: 2rem;
     color: lightgray;
-    font-size: 4.5rem;
     position: relative;
+    display: none;
     &--second {
       color: $primary-text-color;
+    }
+
+    @include tablet {
+      display: block;
+      font-size: 3rem;
+    }
+
+    @include desktop {
+      font-size: 4.5rem;
     }
   }
 
   &__line {
     position: absolute;
     width: 0.7rem;
-    top: -31%;
-    left: 2.9rem;
-    bottom: -62%;
+    top: 50%;
+    left: 2.7rem;
+    bottom: -60%;
     z-index: 3;
+    &--second {
+      left: 2.15rem;
+      top: -39%;
+      bottom: 55%;
+    }
+
+    @include desktop {
+      top: 50%;
+      left: 3.04rem;
+      bottom: -60%;
+      &--second {
+        left: 3.2rem;
+        top: -39%;
+        bottom: 55%;
+      }
+    }
+  }
+
+  &__title {
+    display: flex;
+    flex-direction: row;
+    color: $secondary-text-color;
+    font-size: 1.6rem;
+    gap: 3rem;
+    margin-top: 1rem;
+    @include desktop {
+      font-size: 2.8rem;
+    }
+  }
+
+  &__date,
+  &__time {
+    color: $secondary-text-color;
+    margin-left: 8.5rem;
+    font-size: 1.4rem;
+    span {
+      color: black;
+      font-size: 1.2rem;
+    }
+
+    @include desktop {
+      font-size: 2rem;
+      margin-left: 10rem;
+      span {
+        font-size: 1.8rem;
+      }
+    }
+  }
+  &__interchange {
+    position: relative;
+    height: 2.2rem;
+    left: 2rem;
+    margin-top: 0.9rem;
+    z-index: 4;
+    @include desktop {
+      height: 2.8rem;
+    }
+  }
+}
+
+.background {
+  background-image: url("../../assets/images/tube-background.jpg");
+  backdrop-filter: blur(10px);
+  background-repeat: no-repeat;
+  display: flex;
+  background-size: cover;
+  width: 100%;
+  height: 37rem;
+  justify-content: center;
+  align-items: center;
+  @include tablet {
+    height: 42rem;
+  }
+  @include desktop {
+    height: 60rem;
   }
 }

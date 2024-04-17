@@ -15,6 +15,7 @@ import List from "../../components/List/List";
 import london from "../../assets/images/london.png";
 import Rating from "@mui/material/Rating";
 import ReactDOMServer from "react-dom/server";
+import Bike from "../../components/Bike/Bike";
 
 function RoutePlanner() {
   const mapRef = useRef(null);
@@ -381,6 +382,16 @@ function RoutePlanner() {
             </div>
           </div>
           <RouteDetails route={selectedRoute} />
+          <Grid
+            container
+            spacing={3}
+            style={{ width: "100%" }}
+            className="grid"
+          >
+            <Grid item xs={12} md={4}>
+              <Bike route={selectedRoute} />
+            </Grid>
+          </Grid>
         </>
       )}
       <div className="map__container">

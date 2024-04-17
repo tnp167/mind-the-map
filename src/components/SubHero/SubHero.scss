@@ -4,15 +4,15 @@
 .sub-hero {
   &__banner {
     margin: 0;
-    height: 2.3rem;
+    height: 2.4rem;
     display: flex;
     justify-content: center;
     align-items: center;
     @include tablet {
-      height: 2.5rem;
+      height: 2.7rem;
     }
     @include desktop {
-      height: 3.5rem;
+      height: 3.7rem;
     }
   }
   &__place {
@@ -21,6 +21,10 @@
     color: $primary-text-color;
     &--circle {
       color: $secondary-text-color;
+    }
+    font-size: 1rem;
+    @include desktop {
+      font-size: 1.5rem;
     }
   }
 }
