@@ -75,6 +75,16 @@ function RoutePlanner() {
       ],
     });
 
+    const geolocateControl = new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
+      },
+      trackUserLocation: true,
+      showUserLocation: true,
+      position: "bottom-left",
+    });
+    map.addControl(geolocateControl);
+
     const startGeocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
       mapboxgl: mapboxgl,
@@ -89,6 +99,26 @@ function RoutePlanner() {
     });
 
     startGeo.current = startGeocoder;
+
+    geolocateControl.on("geolocate", async function (e) {
+      let userLocation = e.coords;
+      if (userLocation) {
+        const lngLat = [userLocation.longitude, userLocation.latitude];
+
+        try {
+          const response = await fetch(
+            `https://api.mapbox.com/geocoding/v5/mapbox.places/${lngLat[0]},${lngLat[1]}.json?access_token=${mapboxgl.accessToken}`
+          );
+          const data = await response.json();
+
+          const locationName = data.features[0].place_name;
+          console.log("Location Name:", locationName);
+          startGeocoder.query(locationName);
+        } catch (error) {
+          console.error("Error retrieving location name:", error);
+        }
+      }
+    });
 
     const endGeocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
