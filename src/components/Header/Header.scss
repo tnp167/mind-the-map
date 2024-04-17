@@ -76,8 +76,15 @@
   &__items {
     color: $primary-text-color;
     text-decoration: none;
+    padding: 2.1rem 0;
     &--circle {
       color: $secondary-text-color;
+    }
+    &:hover {
+      border-bottom: 2px solid $primary-text-color;
+    }
+    &--selected {
+      border-bottom: 2px solid map-get($colors, circle);
     }
   }
 }
