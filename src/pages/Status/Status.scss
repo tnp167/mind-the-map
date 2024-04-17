@@ -21,6 +21,14 @@
     font-size: 0.9rem;
     line-height: 1rem;
     width: 100%;
+
+    @include tablet {
+      font-size: 1.2rem;
+    }
+
+    @include desktop {
+      font-size: 1.3rem;
+    }
   }
   &__loading {
     display: flex;
@@ -61,6 +69,15 @@
     }
     p {
       margin: 0.5rem 0;
+    }
+
+    @include tablet {
+      padding: 0.2rem 0.7rem;
+      font-size: 1.1rem;
+    }
+    @include desktop {
+      padding: 0.3rem 0.8rem;
+      font-size: 1.25rem;
     }
   }
   &__logo {

@@ -28,6 +28,10 @@
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
+
+    @include desktop {
+      width: 80%;
+    }
   }
 
   &__name {
@@ -51,6 +55,10 @@
     &--hammersmith-city {
       color: $secondary-text-color;
     }
+
+    @include desktop {
+      font-size: 1.25rem;
+    }
   }
 
   &__status {
@@ -67,6 +75,9 @@
     &--delay {
       background-color: orange;
     }
+    @include desktop {
+      font-size: 1.25rem;
+    }
   }
 
   &__popup {
@@ -76,6 +87,9 @@
     padding: 2rem;
     border-radius: 5px;
     margin: 0 auto;
+    @include desktop {
+      width: 80%;
+    }
   }
 
   &__icon {
