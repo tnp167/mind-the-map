@@ -1,109 +1,24 @@
 import "./Menu.scss";
 import { Link } from "react-router-dom";
 import point from "../../assets/icons/point.png";
+import logo from "../../assets/logos/logo.svg";
 function Menu({ headerColor }) {
+  function formatDate(date) {
+    const options = { day: "numeric", month: "long", year: "numeric" };
+    return new Date(date).toLocaleDateString("en-GB", options);
+  }
+  function formatTime(date) {
+    const options = { hour: "2-digit", minute: "2-digit", second: "2-digit" };
+    return new Date(date).toLocaleTimeString("en-BG", options);
+  }
+
   return (
     <div className="menu">
+      <img src={logo} alt="logo" className="menu__logo" />
+      <p className="menu__text">Service Information</p>
+      <p className="menu__date">{formatDate(new Date())}</p>
+      <p className="menu__time">{formatTime(new Date())}</p>
       <div className="menu__container">
-        {/* <svg id="svg" viewBox={`0 0 1280 555`} className="menu__svg">
-          <rect x="100" y="30" width="380" height="40" fill="#0019A8" />
-          <rect x="0" y="360" width="100%" height="200" fill="#e7e7e7" />
-          <text className="menu__title menu__title--first" x="110" y="60">
-            Set it. Search it. Sorted.
-          </text>
-
-          <text className="menu__title" x="100" y="260">
-            Route Planner
-          </text>
-
-          <text className="menu__title" x="100" y="460">
-            Status Updates
-          </text>
-
-          <text className="menu__number" x="1200" y="270">
-            1
-          </text>
-          <text className="menu__number menu__number--two" x="1200" y="470">
-            2
-          </text>
-
-          <path
-            className={`line--${headerColor}`}
-            d="M 50,50 L 50,201 L 50,450"
-            fill="none"
-            strokeWidth="17.5"
-          />
-
-          <circle
-            cx="50"
-            cy="50"
-            r="25"
-            fill="white"
-            stroke="black"
-            strokeWidth="8"
-            className="menu__point1"
-          />
-          <circle
-            className="menu__point2"
-            r="25"
-            cx="50"
-            cy="250"
-            fill="white"
-            stroke="black"
-            strokeWidth="8"
-          ></circle>
-          <circle
-            className="menu__point3"
-            r="25"
-            cx="50"
-            cy="450"
-            fill="white"
-            stroke="black"
-            strokeWidth="8"
-          ></circle>
-          <g className="menu__button">
-            <Link to="/route">
-              <rect
-                x="350"
-                y="230"
-                width="150"
-                height="40"
-                fill="lightgray"
-                className="menu__button-background"
-              />
-              <text
-                x="420"
-                y="250"
-                dominantBaseline="middle"
-                textAnchor="middle"
-                className="menu__button-text"
-              >
-                Enter
-              </text>
-            </Link>
-          </g>
-          <g className="menu__button menu__button--status">
-            <Link to="/status">
-              <rect
-                x="350"
-                y="430"
-                width="150"
-                height="40"
-                fill="lightgray"
-                className="menu__button-background"
-              />
-              <text
-                x="420"
-                y="450"
-                dominantBaseline="middle"
-                textAnchor="middle"
-                className="menu__button-text"
-              >
-                Enter
-              </text>
-            </Link>
-          </g>
-        </svg> */}
         <div className="menu__first">
           <img className="menu__point" src={point} alt="point" />
           <p className="menu__detail menu__detail--first">

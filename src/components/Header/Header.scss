@@ -30,7 +30,7 @@
     text-decoration: none;
     margin: auto 0;
     @include desktop {
-      height: 2.5rem;
+      height: 3rem;
     }
   }
 
@@ -49,6 +49,11 @@
     text-decoration: none;
     &--circle {
       color: $secondary-text-color;
+    }
+
+    @include desktop {
+      margin-left: 1rem;
+      font-size: 1rem;
     }
   }
 

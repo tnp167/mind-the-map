@@ -13,6 +13,7 @@ import { Slide, Fade } from "react-slideshow-image";
 import SubHero from "../../components/SubHero/SubHero";
 import "./Home.scss";
 import { useState } from "react";
+import LogoSlider from "../../components/LogoSlider/LogoSlider";
 function Home() {
   const [index, setIndex] = useState(0);
   const pictureSets = [
@@ -86,6 +87,7 @@ function Home() {
           </div>
         ))}
       </Fade>
+      <LogoSlider />
       <Menu headerColor={pictureSets[index].headerColor} />
     </>
   );
