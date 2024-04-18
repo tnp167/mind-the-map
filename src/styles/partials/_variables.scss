@@ -23,6 +23,34 @@ $colors: (
   dlr: #00afad,
 );
 
+$nr: (
+  avanti-west-coast: #004354,
+  c2c: #b7007c,
+  chiltern-railways: #00bfff,
+  cross-country: #660f21,
+  east-midlands-railway: #713563,
+  first-hull-trains: #de005c,
+  first-transpennine-express: #010385,
+  gatwick-express: #eb1e2d,
+  grand-central: #1d1d1b,
+  greater-anglia: #d70428,
+  great-northern: #0099ff,
+  great-western-railway: #0a493e,
+  heathrow-express: #532e63,
+  island-line: #1e90ff,
+  london-north-eastern-railway: #00bf6f,
+  lumo: #2b6ef5,
+  merseyrail: #fff200,
+  northern-rail: #262262,
+  scotrail: #1e467d,
+  southeastern: #389cff,
+  southern: #8cc63e,
+  south-western-railway: #24398c,
+  thameslink: #ff5aa4,
+  transport-for-wales: #ff0000,
+  west-midlands-trains: #ff8300,
+);
+
 :root {
   --central: #dc241f;
   --bakerloo: #b26300;
@@ -102,6 +130,35 @@ $desktop-breakpoint: 1280px;
     }
     .route__color--#{$line} {
       color: $secondary-text-color;
+    }
+  }
+}
+
+@each $line, $color in $nr {
+  .table__name--#{$line} {
+    background-color: $color;
+    @if $line ==
+      "avanti-west-coast" or
+      $line ==
+      "cross-country" or
+      $line ==
+      "east-midlands-railway" or
+      $line ==
+      "first-transpennine-express" or
+      $line ==
+      "grand-central" or
+      $line ==
+      "great-western-railway" or
+      $line ==
+      "heathrow-express" or
+      $line ==
+      "northern-rail" or
+      $line ==
+      "scotrail" or
+      $line ==
+      "south-western-railway"
+    {
+      color: $primary-text-color;
     }
   }
 }

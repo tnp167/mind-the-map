@@ -15,19 +15,7 @@ function Table({ line, mode }) {
   return (
     <div className="table__container">
       <div className="table__line">
-        {mode !== "national-rail" ? (
-          <p className={`table__name table__name--${line.id}`}>{line.name}</p>
-        ) : (
-          <a
-            href={line.lineStatuses[0].reason}
-            className={`table__name table__name--national-rail`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ textDecoration: "none" }}
-          >
-            {line.name}
-          </a>
-        )}
+        <p className={`table__name table__name--${line.id}`}>{line.name}</p>
         {mode !== "national-rail" ? (
           <p
             className={`table__status ${

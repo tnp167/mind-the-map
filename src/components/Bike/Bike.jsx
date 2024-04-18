@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 function Bike({ route }) {
   const URL = "https://api.tfl.gov.uk/bikepoint";
   let selectedRouteCoordinates = [];
+  const [bike, setBike] = useState([]);
   route.legs.map((leg) => {
     if (leg.mode.id === "walking") {
       const coordinates = JSON.parse(leg.path.lineString);
@@ -20,8 +21,14 @@ function Bike({ route }) {
   const getBikePoint = async () => {
     try {
       const { data } = await axios(URL);
-    } catch {}
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    getBikePoint();
+  }, [route]);
   return <div></div>;
 }
 
