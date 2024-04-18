@@ -9,6 +9,7 @@
   background-color: map-get($colors, northern);
 
   &-container {
+    padding-left: 3rem !important;
     @include container;
     display: flex;
     align-items: center;
@@ -61,6 +62,7 @@
     height: 35rem;
   }
   @include desktop {
+    margin-left: 6rem;
     height: 100vh;
   }
   &__container {
@@ -217,4 +219,17 @@
     display: flex;
     justify-content: flex-start;
   }
+}
+
+.block {
+  display: flex;
+}
+
+#route {
+  margin-left: 0;
+  width: 80%;
+}
+.weather {
+  margin-left: 0;
+  width: 20%;
 }

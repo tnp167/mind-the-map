@@ -16,6 +16,7 @@ import london from "../../assets/images/london.png";
 import Rating from "@mui/material/Rating";
 import ReactDOMServer from "react-dom/server";
 import Bike from "../../components/Bike/Bike";
+import Weather from "../../components/Weather/Weather";
 
 function RoutePlanner() {
   const mapRef = useRef(null);
@@ -202,7 +203,7 @@ function RoutePlanner() {
     mapRef.current = map;
 
     // return () => map.remove();
-  }, []);
+  }, [startPoint, endPoint]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -411,8 +412,15 @@ function RoutePlanner() {
               <p className="back__text">Way out</p>
             </div>
           </div>
-          <RouteDetails route={selectedRoute} />
-          <Grid
+          <div className="block">
+            <RouteDetails route={selectedRoute} className="route" id="route" />
+            <Weather
+              startPoint={startPoint}
+              endPoint={endPoint}
+              className="weather"
+            />
+          </div>
+          {/* <Grid
             container
             spacing={3}
             style={{ width: "100%" }}
@@ -421,7 +429,7 @@ function RoutePlanner() {
             <Grid item xs={12} md={4}>
               <Bike route={selectedRoute} />
             </Grid>
-          </Grid>
+          </Grid> */}
         </>
       )}
       <div className="map__container">
