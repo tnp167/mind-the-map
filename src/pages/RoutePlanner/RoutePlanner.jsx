@@ -432,7 +432,11 @@ function RoutePlanner() {
           </Grid> */}
         </>
       )}
-      <div className="map__container">
+      <div
+        className={`map__container map__container--${
+          selectedRoute ? "selected" : ""
+        }`}
+      >
         <div id="map" ref={mapContainerRef} className="map" />
         {startPoint && endPoint && !selectedRoute && (
           <Options

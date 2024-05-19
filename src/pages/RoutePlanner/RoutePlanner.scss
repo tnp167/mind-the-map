@@ -62,13 +62,15 @@
     height: 35rem;
   }
   @include desktop {
-    margin-left: 6rem;
     height: 100vh;
   }
   &__container {
     @include desktop {
       display: flex;
       flex-direction: row;
+      &--selected {
+        margin-left: 5rem;
+      }
     }
   }
 }

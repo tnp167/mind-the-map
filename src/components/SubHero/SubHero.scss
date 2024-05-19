@@ -4,7 +4,7 @@
 .sub-hero {
   &__banner {
     margin: 0;
-    height: 2.4rem;
+    height: 2.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,7 +12,7 @@
       height: 2.7rem;
     }
     @include desktop {
-      height: 3.7rem;
+      height: 3.9rem;
     }
   }
   &__place {
