@@ -4,10 +4,12 @@ import "./Weather.scss";
 function Weather({ startPoint, endPoint }) {
   const [weather, setWeather] = useState(null);
   const [endWeather, setEndWeather] = useState(null);
+  const openweather_accesstoken =
+    process.env.REACT_APP_OPENWEATHER_ACCESS_TOKEN;
   const getWeather = async () => {
     try {
       const { data } = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${startPoint[1]}&lon=${startPoint[0]}&appid=8b63fcc69beb810e7ce4fc83bfcf0ba3
+        `https://api.openweathermap.org/data/2.5/weather?lat=${startPoint[1]}&lon=${startPoint[0]}&appid=${openweather_accesstoken}
         `
       );
       setWeather(data);
@@ -16,7 +18,7 @@ function Weather({ startPoint, endPoint }) {
   const getEndWeather = async () => {
     try {
       const { data } = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${endPoint[1]}&lon=${endPoint[0]}&appid=8b63fcc69beb810e7ce4fc83bfcf0ba3
+        `https://api.openweathermap.org/data/2.5/weather?lat=${endPoint[1]}&lon=${endPoint[0]}&appid=${openweather_accesstoken}
           `
       );
       setEndWeather(data);
