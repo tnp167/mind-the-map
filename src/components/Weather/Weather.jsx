@@ -38,13 +38,14 @@ function Weather({ startPoint, endPoint }) {
             <img
               src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
               alt="icon"
+              className="weather__icon"
             />
-            <p className="weather__description">
+            <p className="weather__description weather__description--first">
               {weather.weather[0].description}
             </p>
             <p className="weather__description">{weather.name}</p>
             <p className="weather__temp">
-              {Math.round(weather.main.temp - 273)} Celcius
+              {Math.round(weather.main.temp - 273)} °C
             </p>
           </div>
           {endWeather.name != weather.name && (
@@ -52,13 +53,14 @@ function Weather({ startPoint, endPoint }) {
               <img
                 src={`https://openweathermap.org/img/wn/${endWeather.weather[0].icon}@2x.png`}
                 alt="icon"
+                className="weather__icon"
               />
-              <p className="weather__description">
+              <p className="weather__description weather__description--first">
                 {endWeather.weather[0].description}
               </p>
               <p className="weather__description">{endWeather.name}</p>
               <p className="weather__temp">
-                {Math.round(endWeather.main.temp - 273)} Celcius
+                {Math.round(endWeather.main.temp - 273)} °C
               </p>
             </div>
           )}

@@ -9,23 +9,32 @@
   background-color: map-get($colors, northern);
 
   &-container {
-    padding-left: 3rem !important;
     @include container;
     display: flex;
     align-items: center;
     height: 4rem;
+    @include desktop {
+      padding: 0 2rem;
+    }
   }
 
   &__icon {
-    width: 1.8rem;
-    height: 1.8rem;
+    width: 1.45rem;
+    height: 1.45rem;
     align-items: center;
+    @include tablet {
+      width: 1.8rem;
+      height: 1.8rem;
+    }
   }
   &__text {
     color: $warning;
-    font-size: 2rem;
+    font-size: 1.6rem;
     margin: 0.8rem 1rem 0.4rem;
     align-items: center;
+    @include tablet {
+      font-size: 2rem;
+    }
   }
 }
 .image {
@@ -47,13 +56,6 @@
   height: 2rem;
   background-size: cover;
 }
-// .suggestions-wrapper:nth-child(3) .suggestions {
-//   margin-top: 3rem;
-// }
-
-// .suggestions-wrapper:nth-child(21) .suggestions {
-//   margin-top: 0;
-// }
 
 .map {
   width: 100%;
@@ -224,7 +226,10 @@
 }
 
 .block {
-  display: flex;
+  @include tablet {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 #route {
