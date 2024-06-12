@@ -1,0 +1,18 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.signup-form {
+  &__valid {
+    color: green;
+    &:before {
+      content: "✔";
+    }
+  }
+  &__invalid {
+    color: red;
+    &:before {
+      position: relative;
+      content: "✖";
+    }
+  }
+}

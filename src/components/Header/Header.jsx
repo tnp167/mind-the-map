@@ -9,6 +9,8 @@ function Header({ headerColor, station }) {
     const routes = [
       { path: "/route", index: 0, select: "--selected" },
       { path: "/status", index: 1, select: "--selected" },
+      { path: "/login", index: 2, select: "--selected" },
+      { path: "/register", index: 3, select: "--selected" },
     ];
 
     const matchedRoute = routes.find((route) => {
@@ -47,6 +49,24 @@ function Header({ headerColor, station }) {
             )}`}
           >
             <li>Status Updates</li>
+          </Link>
+          <Link
+            to="/login"
+            className={`header__items header__items--${headerColor} header__items${getNavbarColor(
+              currentRoute,
+              2
+            )}`}
+          >
+            <li>Login</li>
+          </Link>
+          <Link
+            to="/register"
+            className={`header__items header__items--${headerColor} header__items${getNavbarColor(
+              currentRoute,
+              3
+            )}`}
+          >
+            <li>Register</li>
           </Link>
         </ul>
       </div>
