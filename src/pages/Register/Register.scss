@@ -1,12 +1,29 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/mixins" as *;
 
+.block {
+  display: flex;
+  justify-content: center;
+}
 .pic {
   background-image: url("../../assets/images/underground-bg.jpg");
-  width: 65%;
+  display: flex;
+  @include tablet {
+    width: 50%;
+  }
+  @include desktop {
+    width: 60%;
+  }
   background-repeat: no-repeat;
 }
 .register {
-  margin: 3rem;
-  width: 35%;
+  width: 80%;
+  margin: 1rem;
+  @include tablet {
+    margin: 3rem;
+    width: 50%;
+  }
+  @include desktop {
+    width: 40%;
+  }
 }

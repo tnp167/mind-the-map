@@ -8,7 +8,12 @@
   width: 100%;
   &__title {
     font-weight: 500;
-    font-size: 3rem;
+    font-size: 2rem;
+    margin: 1.8rem auto 2rem;
+    @include tablet {
+      font-size: 3rem;
+      margin: 2rem 0 3rem;
+    }
   }
 
   &__group {
@@ -63,14 +68,17 @@
   &__valid,
   &__invalid {
     line-height: 0.7rem;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    @include tablet {
+      font-size: 0.9rem;
+    }
   }
 
   &__button {
     margin-top: 0.5rem;
     border-radius: 8px;
     font-size: 1rem;
-    padding: 1.2rem;
+    padding: 1rem;
     color: white;
     background-color: map-get($map: $colors, $key: base);
     border: none;
@@ -79,6 +87,9 @@
     cursor: pointer;
     &:hover {
       background-color: black;
+    }
+    @include tablet {
+      padding: 1.2rem;
     }
   }
 
@@ -96,12 +107,6 @@
   }
 
   &__modal {
-    // top: 50%;
-    // left: 50%;
-    // right: auto;
-    // bottom: auto;
-    // margin-right: -50%;
-    // transform: translate(-50%, -50%);
     display: flex;
     background-color: white;
     justify-content: center;
@@ -111,5 +116,41 @@
 
   &__message {
     top: 50%;
+  }
+
+  &__login {
+    margin: 1rem auto;
+    font-size: 0.9rem;
+    @include tablet {
+      font-size: 1rem;
+    }
+  }
+
+  &__link {
+    color: blue;
+  }
+
+  &__icon {
+    float: right;
+    position: relative;
+    cursor: pointer;
+    filter: opacity(0.5);
+    @include tablet {
+    }
+  }
+
+  &__checkbox {
+    color: #616161;
+    font-size: 0.75rem;
+    @include tablet {
+      font-size: 0.85rem;
+    }
+  }
+
+  &__label {
+    font-size: 0.9rem;
+    @include tablet {
+      font-size: 1rem;
+    }
   }
 }

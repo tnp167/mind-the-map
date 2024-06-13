@@ -3,10 +3,17 @@ import "./RegisterForm.scss";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
+import { Link } from "react-router-dom";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
 
 function RegisterForm() {
   const navigate = useNavigate();
   const [successMessage, setSuccessMessage] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [modal, setModal] = useState(false);
   const [data, setData] = useState({
     firstname: "",
@@ -26,6 +33,10 @@ function RegisterForm() {
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
   };
 
   const handleSubmit = async (e) => {
@@ -179,13 +190,20 @@ function RegisterForm() {
           className={`signup-form__input ${
             errors.password && "signup-form__input--error"
           }`}
-          type="password"
+          type={showPassword ? "text" : "password"}
           name="password"
           id="password"
           placeholder="Password"
           onChange={handleChange}
           value={data.password}
         ></input>
+        <div className="signup-form__checkbox">
+          <input type="checkbox" onClick={togglePasswordVisibility} />
+          Show Password
+        </div>
+        {/* <div onClick={togglePasswordVisibility} className="signup-form__icon">
+          {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+        </div> */}
         {errors.password && (
           <p className="signup-form__error">{errors.password}</p>
         )}
@@ -269,6 +287,13 @@ function RegisterForm() {
       <button type="submit" className="signup-form__button">
         Register
       </button>
+      <p className="signup-form__login">
+        Already have an account?{" "}
+        <Link to="/login" className="signup-form__link">
+          Login
+        </Link>{" "}
+        using your account
+      </p>
       {successMessage && (
         <Modal
           isOpen={modal}
