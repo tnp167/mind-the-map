@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import "./RegisterForm.scss";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Modal from "react-modal";
 
 function RegisterForm() {
   const navigate = useNavigate();
   const [successMessage, setSuccessMessage] = useState(false);
+  const [modal, setModal] = useState(false);
   const [data, setData] = useState({
     firstname: "",
     lastname: "",
@@ -34,6 +36,7 @@ function RegisterForm() {
     } else {
       setErrors({});
       setSuccessMessage(true);
+      setModal(true);
       setTimeout(() => {
         navigate("/login");
       }, 2000);
@@ -79,6 +82,11 @@ function RegisterForm() {
       errors.confirmPassword = "Passwords do not match";
     }
 
+    const passwordValidated = validatePassword(data.password);
+    if (Object.values(passwordValidated).includes(false)) {
+      errors.password = "Password does not meet the requirements";
+    }
+
     return errors;
   };
 
@@ -92,66 +100,96 @@ function RegisterForm() {
     };
 
     setPasswordValidation(validation);
-    setErrors({ ...errors, password: validation });
+    //setErrors({ ...errors, password: validation });
+    return validation;
   };
 
   useEffect(() => {
     validatePassword(data.password);
   }, [data.password]);
 
+  useEffect(() => {
+    console.log(passwordValidation);
+  });
   return (
     <form className="signup-form" onSubmit={handleSubmit}>
-      <label className="signup-form__label" htmlFor="firstname">
-        First Name
-      </label>
-      <input
-        className={`signup-form__input signu`}
-        type="text"
-        name="firstname"
-        id="firstname"
-        placeholder="First Name"
-        onChange={handleChange}
-        value={data.firstname}
-      ></input>
-      {errors.firstname && <p>{errors.firstname}</p>}
-      <label className="signup-form__label" htmlFor="lastname">
-        Last Name
-      </label>
-      <input
-        className="signup-form__input"
-        type="text"
-        name="lastname"
-        id="lastname"
-        placeholder="Last Name"
-        onChange={handleChange}
-        value={data.lastname}
-      ></input>
-      {errors.lastname && <p>{errors.lastname}</p>}
-      <label className="signup-form__label" htmlFor="email">
-        Email address
-      </label>
-      {errors.email && <p>{errors.email}</p>}
-      <input
-        className="signup-form__input"
-        type="email"
-        name="email"
-        id="email"
-        placeholder="Email"
-        onChange={handleChange}
-        value={data.email}
-      ></input>
-      <label className="signup-form__label" htmlFor="password">
-        Create password
-      </label>
-      <input
-        className="signup-form__input"
-        type="password"
-        name="password"
-        id="password"
-        placeholder="Password"
-        onChange={handleChange}
-        value={data.password}
-      ></input>
+      <p className="signup-form__title">Register</p>
+      <div className="signup-form__group signup-form__group--name">
+        <div className="signup-form__name">
+          <label className="signup-form__label" htmlFor="firstname">
+            First Name
+          </label>
+          <input
+            className={`signup-form__input ${
+              errors.firstname && "signup-form__input--error"
+            }`}
+            type="text"
+            name="firstname"
+            id="firstname"
+            placeholder="First Name"
+            onChange={handleChange}
+            value={data.firstname}
+          ></input>
+          {errors.firstname && (
+            <p className="signup-form__error">{errors.firstname}</p>
+          )}
+        </div>
+        <div className="signup-form__name">
+          <label className="signup-form__label" htmlFor="lastname">
+            Last Name
+          </label>
+          <input
+            className={`signup-form__input ${
+              errors.lastname && "signup-form__input--error"
+            }`}
+            type="text"
+            name="lastname"
+            id="lastname"
+            placeholder="Last Name"
+            onChange={handleChange}
+            value={data.lastname}
+          ></input>
+          {errors.lastname && (
+            <p className="signup-form__error">{errors.lastname}</p>
+          )}
+        </div>
+      </div>
+      <div className="signup-form__group">
+        <label className="signup-form__label" htmlFor="email">
+          Email address
+        </label>
+        <input
+          className={`signup-form__input ${
+            errors.email && "signup-form__input--error"
+          }`}
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Email"
+          onChange={handleChange}
+          value={data.email}
+        ></input>
+        {errors.email && <p className="signup-form__error">{errors.email}</p>}
+      </div>
+      <div className="signup-form__group">
+        <label className="signup-form__label" htmlFor="password">
+          Create password
+        </label>
+        <input
+          className={`signup-form__input ${
+            errors.password && "signup-form__input--error"
+          }`}
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          onChange={handleChange}
+          value={data.password}
+        ></input>
+        {errors.password && (
+          <p className="signup-form__error">{errors.password}</p>
+        )}
+      </div>
       <p
         className={`${
           passwordValidation.length
@@ -202,21 +240,44 @@ function RegisterForm() {
         {" "}
         Contains a special character
       </p>
-      <label className="signup-form__label" htmlFor="conPassword">
-        Confirm password
-      </label>
-      <input
-        className="signup-form__input"
-        type="password"
-        name="confirmPassword"
-        id="confirmPassword"
-        placeholder="Confirm Password"
-        onChange={handleChange}
-        value={data.confirmPassword}
-      ></input>
-      {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-      <button type="submit">Register</button>
-      {successMessage && <p>Successfully registered!</p>}
+      <div className={`signup-form__group signup-form__group--confirm`}>
+        <label className="signup-form__label" htmlFor="conPassword">
+          Confirm password
+        </label>
+        <input
+          className={`signup-form__input ${
+            errors.confirmPassword && "signup-form__input--error"
+          }`}
+          type="password"
+          name="confirmPassword"
+          id="confirmPassword"
+          placeholder="Confirm Password"
+          onChange={handleChange}
+          value={data.confirmPassword}
+        ></input>
+        {errors.confirmPassword && (
+          <p className="signup-form__error">{errors.confirmPassword}</p>
+        )}
+      </div>
+      {/* {successMessage ? (
+        <p className="signup-form__success">Successfully registered!</p>
+      ) : (
+        <button type="submit" className="signup-form__button">
+          Register
+        </button>
+      )} */}
+      <button type="submit" className="signup-form__button">
+        Register
+      </button>
+      {successMessage && (
+        <Modal
+          isOpen={modal}
+          contentLabel="Success Modal"
+          className="signup-form__modal"
+        >
+          <h2 className="signup-form__message">Successfully registered!</h2>
+        </Modal>
+      )}
     </form>
   );
 }

@@ -1,2 +1,12 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/mixins" as *;
+
+.pic {
+  background-image: url("../../assets/images/underground-bg.jpg");
+  width: 65%;
+  background-repeat: no-repeat;
+}
+.register {
+  margin: 3rem;
+  width: 35%;
+}

@@ -7,7 +7,12 @@ function Register() {
   return (
     <>
       <Header headerColor={"base"} station={"Mind the Map"} />
-      <RegisterForm></RegisterForm>
+      <div className="block">
+        <div className="pic"></div>
+        <div className="register">
+          <RegisterForm></RegisterForm>
+        </div>
+      </div>
     </>
   );
 }
