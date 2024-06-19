@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import "./LoginForm.scss";
 import { AuthContext } from "../../contexts/AuthContext";
 function LoginForm() {
-  const { login } = useContext(AuthContext);
+  const { login, auth } = useContext(AuthContext);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({
@@ -46,11 +46,15 @@ function LoginForm() {
       setErrors({});
       try {
         const response = await axios.post(
-          `${process.env.REACT_APP_BASE_URL}/user/login`,
+          `${process.env.REACT_APP_API_BASE_URL}/user/login`,
           data
         );
-        localStorage.setItem("authToken", response.data.authToken);
-        login(data);
+        login(response.data.token);
+        setData({
+          email: "",
+          password: "",
+        });
+        console.log(auth);
       } catch (error) {
         console.log(error);
       }

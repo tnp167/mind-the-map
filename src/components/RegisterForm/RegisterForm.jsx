@@ -4,11 +4,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { Link } from "react-router-dom";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
 
 function RegisterForm() {
   const navigate = useNavigate();
@@ -46,26 +41,27 @@ function RegisterForm() {
       setErrors(formErrors);
     } else {
       setErrors({});
-      setSuccessMessage(true);
-      setModal(true);
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
+      try {
+        await axios.post(
+          `${process.env.REACT_APP_API_BASE_URL}/user/register`,
+          data
+        );
+        setData({
+          firstname: "",
+          lastname: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        });
+        setSuccessMessage(true);
+        setModal(true);
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+      } catch (error) {
+        console.log(error);
+      }
     }
-
-    // try {
-    //   await axios.post(`${process.env.REACT_APP_BASE_URL}/register`, data);
-    //   setData({
-    //     firstname: "",
-    //     lastname: "",
-    //     email: "",
-    //     password: "",
-    //     confirmPassword: "",
-    //   });
-    //   navigate("/login");
-    // } catch (error) {
-    //   console.log(error);
-    // }
   };
 
   const validateForm = () => {
