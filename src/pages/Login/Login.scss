@@ -1,2 +1,30 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/mixins" as *;
+
+.block {
+  display: flex;
+  justify-content: center;
+}
+.pic {
+  background-image: url("../../assets/images/underground-bg.jpg");
+  background-position: 62% 100%;
+  transform: scaleX(-1);
+  display: flex;
+  @include tablet {
+    width: 50%;
+  }
+  @include desktop {
+    width: 60%;
+  }
+}
+.login {
+  width: 80%;
+  margin: 1rem;
+  @include tablet {
+    margin: auto 3rem;
+    width: 50%;
+  }
+  @include desktop {
+    width: 40%;
+  }
+}
