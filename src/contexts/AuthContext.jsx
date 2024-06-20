@@ -30,10 +30,10 @@ function AuthProvider({ children }) {
 
       setAuth({
         isAuthenticated: true,
-        user: data,
+        data,
       });
     } catch (error) {
-      console.error("Error fetching user profile:", error);
+      console.error("Error fetching user:", error);
     }
   };
 
