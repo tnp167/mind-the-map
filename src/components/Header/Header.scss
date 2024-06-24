@@ -244,6 +244,9 @@
       @include desktop {
         width: 20rem;
         top: 10.2%;
+        &--open {
+          max-height: 15rem;
+        }
       }
     }
   }

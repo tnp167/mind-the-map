@@ -4,10 +4,12 @@ import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useContext, useState } from "react";
 import user from "../../assets/icons/user.png";
+import EditProfile from "../EditProfile/EditProfile";
 
 function Header({ headerColor, station }) {
   const { auth, logout } = useContext(AuthContext);
   const [isToggled, setIsToggled] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const location = useLocation();
   const currentRoute = location.pathname;
@@ -29,6 +31,11 @@ function Header({ headerColor, station }) {
   const toggleMenu = () => {
     setIsToggled(!isToggled);
   };
+
+  const handleOpenModal = () => setModalIsOpen(true);
+
+  const handleCloseModal = () => setModalIsOpen(false);
+
   return (
     <nav className={`header__container header__container--${headerColor}`}>
       <div className="header__wrap">
@@ -86,10 +93,15 @@ function Header({ headerColor, station }) {
                     </p>
                   </div>
                   <div className="header__line"></div>
-                  <a href="" className="header__link">
+                  <a className="header__link" onClick={handleOpenModal}>
                     <p className="header__link-text">Edit Profile</p>
                     <span className="header__link-arrow">&gt;</span>
                   </a>
+                  <EditProfile
+                    handleOpenModal={handleOpenModal}
+                    modalIsOpen={modalIsOpen}
+                    handleCloseModal={handleCloseModal}
+                  />
                   <a
                     href=""
                     onClick={() => {
