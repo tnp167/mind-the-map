@@ -115,9 +115,9 @@ function RegisterForm() {
     validatePassword(data.password);
   }, [data.password]);
 
-  useEffect(() => {
-    console.log(passwordValidation);
-  });
+  // useEffect(() => {
+  //   console.log(passwordValidation);
+  // });
   return (
     <form className="signup-form" onSubmit={handleSubmit}>
       <p className="signup-form__title">Register</p>

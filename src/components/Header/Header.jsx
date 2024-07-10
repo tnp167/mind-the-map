@@ -89,7 +89,15 @@ function Header({ headerColor, station }) {
                       className="header__info-pic"
                     ></img>
                     <p className="header__info-text">
-                      {auth.data?.user.firstname} {auth.data?.user.lastname}
+                      {!auth.user?.user.username && (
+                        <>
+                          {auth.user?.user.first_name}{" "}
+                          {auth.user?.user.last_name}
+                        </>
+                      )}
+                      {auth.user?.user.username && (
+                        <>{auth.user?.user.username}</>
+                      )}
                     </p>
                   </div>
                   <div className="header__line"></div>

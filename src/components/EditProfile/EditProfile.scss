@@ -16,11 +16,12 @@
     top: 20%;
     left: 5%;
     max-width: 88%;
-    height: 18rem;
-    @include desktop {
-      width: 60%;
-      left: 20%;
-    }
+    height: 28rem;
+    padding: 1.5rem;
+  }
+  @include desktop {
+    width: 60%;
+    left: 20%;
   }
 
   &__icon {
@@ -34,10 +35,11 @@
     width: 1.5rem;
     height: 1.5rem;
   }
+
   &__container {
     height: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-direction: column;
     @include tablet {
     }
@@ -45,8 +47,9 @@
 
   &__title {
     font-size: 1.5rem;
+    margin: 2.5rem 0;
     @include tablet {
-      margin: 0;
+      margin: -0.5rem 0 2.5rem;
       font-size: 2rem;
     }
   }
@@ -85,6 +88,92 @@
       height: 5rem;
       justify-content: flex-end;
       align-items: center;
+    }
+  }
+  &__user {
+    width: 8rem;
+    height: 8rem;
+    margin-right: 0.6rem;
+    border-radius: 50%;
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__label {
+    font-size: 0.9rem;
+    @include tablet {
+      font-size: 1rem;
+    }
+  }
+
+  &__input {
+    border-radius: 3px;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 2px solid #e0e0e0;
+    letter-spacing: 0.01rem;
+    padding: 0.3rem 0.3rem 0.3rem 0.5rem;
+    height: 2.8rem;
+    &--error {
+      border: 2px solid red;
+    }
+    &::placeholder {
+      font-size: 0.95rem;
+    }
+  }
+  &__name {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    gap: 0.4rem;
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    gap: 0.4rem;
+    &--name {
+      flex-direction: row;
+    }
+  }
+
+  &__data {
+    width: 100%;
+  }
+
+  &__btn {
+    padding-bottom: 0rem;
+  }
+
+  &__button {
+    margin-top: 0.5rem;
+    border-radius: 8px;
+    color: map-get($map: $colors, $key: base);
+    background-color: #ffffff;
+    border: none;
+    font-size: 1rem;
+    transition: 0.25s;
+    cursor: pointer;
+    @include tablet {
+      padding: 0.3rem;
+    }
+    &--cancel {
+      color: map-get($map: $colors, $key: base);
+      background-color: #ffffff;
+    }
+    &--delete {
+      color: #ffffff;
+      background-color: map-get($map: $colors, $key: base);
+      padding: 0.8rem 1.7rem;
+    }
+    &__error {
+      color: red;
+      margin: 0;
+      font-size: 0.85rem;
     }
   }
 }
