@@ -8,6 +8,8 @@ import { AuthContext } from "../../contexts/AuthContext";
 
 function EditProfile({ modalIsOpen, handleCloseModal, handleOpenModal }) {
   const { setAuth, auth } = useContext(AuthContext);
+  const [usernameAvaliable, setUsernameAvaliable] = useState(true);
+
   const [data, setData] = useState({
     firstname: "",
     lastname: "",
@@ -15,8 +17,18 @@ function EditProfile({ modalIsOpen, handleCloseModal, handleOpenModal }) {
   });
   const [errors, setErrors] = useState({});
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
+    if (e.target.name === "username") {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_BASE_URL}/check-username/${e.target.value}`
+        );
+        setUsernameAvaliable(response.data.avaliable);
+      } catch (error) {
+        console.log("Error checking username", error);
+      }
+    }
   };
 
   const validateForm = () => {
@@ -61,7 +73,8 @@ function EditProfile({ modalIsOpen, handleCloseModal, handleOpenModal }) {
           }
         );
         const updatedUserData = response.data.user;
-        console.log(updatedUserData.last_name);
+        const newToken = response.data.token;
+
         setAuth({
           isAuthenticated: true,
           user: {
@@ -73,19 +86,20 @@ function EditProfile({ modalIsOpen, handleCloseModal, handleOpenModal }) {
             },
           },
         });
+
         setData({
           firstname: updatedUserData.first_name,
           lastname: updatedUserData.last_name,
           username: updatedUserData.username,
         });
+
+        localStorage.setItem("authToken", newToken);
       } catch (error) {
         console.log(error);
       }
     }
   };
 
-  // console.log("data", data);
-  console.log("auth", auth.user.user);
   return (
     <Modal
       isOpen={modalIsOpen}
@@ -115,7 +129,7 @@ function EditProfile({ modalIsOpen, handleCloseModal, handleOpenModal }) {
                 </label>
                 <input
                   className={`modal__input ${
-                    errors.firstname && "modal__input--error"
+                    errors.firstname ? "modal__input--error" : ""
                   }`}
                   type="text"
                   name="firstname"
@@ -134,7 +148,7 @@ function EditProfile({ modalIsOpen, handleCloseModal, handleOpenModal }) {
                 </label>
                 <input
                   className={`modal__input ${
-                    errors.firstname && "modal__input--error"
+                    errors.lastname && "modal__input--error"
                   }`}
                   type="text"
                   name="lastname"
@@ -153,13 +167,18 @@ function EditProfile({ modalIsOpen, handleCloseModal, handleOpenModal }) {
                 Username
               </label>
               <input
-                className="modal__input"
+                className={`modal__input ${
+                  usernameAvaliable ? "" : "modal__input--error"
+                }`}
                 type="text"
                 name="username"
                 id="username"
                 onChange={handleChange}
                 value={data.username}
               ></input>
+              {!usernameAvaliable && (
+                <p className="modal__error">Username already exists</p>
+              )}
             </div>
             <div className="modal__group">
               <label className="modal__label" htmlFor="lastname">

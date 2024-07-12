@@ -11,26 +11,8 @@ function AuthProvider({ children }) {
 
   useEffect(() => {
     const authToken = localStorage.getItem("authToken");
-    const id = localStorage.getItem("id");
     if (authToken) {
-      //login(authToken);
-      const fetchUser = async () => {
-        console.log(auth.user);
-        try {
-          const { data } = await axios.get(
-            `${process.env.REACT_APP_API_BASE_URL}/user/${id}`
-          );
-
-          console.log(data);
-          setAuth({
-            isAuthenticated: true,
-            user: data,
-          });
-        } catch (error) {
-          console.error("Error fetching user:", error);
-        }
-      };
-      fetchUser();
+      login(authToken);
     }
   }, []);
 
@@ -46,7 +28,6 @@ function AuthProvider({ children }) {
         }
       );
 
-      localStorage.setItem("id", data?.user.id);
       setAuth({
         isAuthenticated: true,
         user: data,

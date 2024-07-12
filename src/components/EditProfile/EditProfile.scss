@@ -170,11 +170,11 @@
       background-color: map-get($map: $colors, $key: base);
       padding: 0.8rem 1.7rem;
     }
-    &__error {
-      color: red;
-      margin: 0;
-      font-size: 0.85rem;
-    }
+  }
+  &__error {
+    color: red;
+    margin: 0;
+    font-size: 0.85rem;
   }
 }
 
