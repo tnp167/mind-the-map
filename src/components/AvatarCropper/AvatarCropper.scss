@@ -1,0 +1,23 @@
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables" as *;
+
+.avatar {
+  &__input {
+    font-size: 1rem;
+    color: map-get($map: $colors, $key: jubilee);
+
+    &::file-selector-button {
+      margin-right: 1rem;
+      padding: 0.35em 1rem;
+      border-radius: 9999px;
+      border: 0px;
+      font-size: 0.9rem;
+      background-color: map-get($map: $colors, $key: base);
+      color: white;
+
+      &:hover {
+        background-color: #4b5563;
+      }
+    }
+  }
+}
