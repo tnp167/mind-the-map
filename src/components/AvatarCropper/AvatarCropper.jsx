@@ -6,9 +6,12 @@ import ReactCrop, {
   convertToPixelCrop,
   makeAspectCrop,
 } from "react-image-crop";
+import setCanvasPreview from "../../setCanvasPreview";
 
 function AvatarCropper({ imageModalIsOpen }) {
   const imgRef = useRef(null);
+  const canvasRef = useRef(null);
+
   const [error, setError] = useState(null);
   const [image, setImage] = useState("");
   const [crop, setCrop] = useState();
@@ -80,9 +83,25 @@ function AvatarCropper({ imageModalIsOpen }) {
                 onLoad={onImageLoad}
               />
             </ReactCrop>
-            <button className="avatar__button">Crop Image</button>
+            <button
+              className="avatar__button"
+              onClick={() => {
+                setCanvasPreview(
+                  imgRef.current,
+                  canvasRef.current,
+                  convertToPixelCrop(
+                    crop,
+                    imgRef.current.width,
+                    imgRef.current.height
+                  )
+                );
+              }}
+            >
+              Crop Image
+            </button>
           </div>
         )}
+        {crop && <canvas className="avatar__canvas" ref={canvasRef} />}
       </Modal>
     </>
   );

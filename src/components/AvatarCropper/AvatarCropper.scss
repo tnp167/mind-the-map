@@ -71,6 +71,13 @@
       background-color: #0284c7;
     }
   }
+
+  &__canvas {
+    display: none;
+    object-fit: contain !important;
+    width: 9.375rem !important;
+    height: 9.375rem !important;
+  }
 }
 
 .ReactModal {
