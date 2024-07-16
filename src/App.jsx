@@ -6,6 +6,7 @@ import Status from "./pages/Status/Status";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import AuthProvider from "./contexts/AuthContext";
+import "react-image-crop/dist/ReactCrop.css";
 
 function App() {
   return (

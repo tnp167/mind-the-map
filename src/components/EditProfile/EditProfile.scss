@@ -209,7 +209,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: map-get($map: $colors, $key: base);
+    background-color: rgba(35, 41, 64, 0.7);
   }
 
   &__Content {

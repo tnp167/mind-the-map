@@ -6,7 +6,6 @@ import userIcon from "../../assets/icons/user.png";
 import axios from "axios";
 import { AuthContext } from "../../contexts/AuthContext";
 import editIcon from "../../assets/icons/edit-button.svg";
-import ImageModal from "../ImageModal/ImageModal";
 import AvatarCropper from "../AvatarCropper/AvatarCropper";
 
 function EditProfile({ modalIsOpen, handleCloseModal, handleOpenModal }) {
@@ -232,14 +231,14 @@ function EditProfile({ modalIsOpen, handleCloseModal, handleOpenModal }) {
             </button>
           </div>
         </form>
-        {imageModalIsOpen && (
-          <AvatarCropper
-            handleImageOpenModal={handleImageOpenModal}
-            imageModalIsOpen={imageModalIsOpen}
-            handleImageCloseModal={handleImageCloseModal}
-          />
-        )}
       </Modal>
+      {imageModalIsOpen && (
+        <AvatarCropper
+          handleImageOpenModal={handleImageOpenModal}
+          imageModalIsOpen={imageModalIsOpen}
+          handleImageCloseModal={handleImageCloseModal}
+        />
+      )}
     </>
   );
 }
