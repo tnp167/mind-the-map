@@ -61,8 +61,8 @@
     color: white;
     font-size: 1.3rem;
     padding: 0.5rem 1rem;
-    border-radius: 3rem;
-    margin-top: 1.5rem;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
     background-color: #0ea5e9;
     border: none;
     transition: background-color 0.3s ease-in-out;
@@ -77,6 +77,12 @@
     object-fit: contain !important;
     width: 9.375rem !important;
     height: 9.375rem !important;
+  }
+  &__icon {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
   }
 }
 

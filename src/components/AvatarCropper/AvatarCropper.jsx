@@ -7,11 +7,15 @@ import ReactCrop, {
   makeAspectCrop,
 } from "react-image-crop";
 import setCanvasPreview from "../../setCanvasPreview";
+import close from "../../assets/icons/close.svg";
 
-function AvatarCropper({ imageModalIsOpen }) {
+function AvatarCropper({
+  imageModalIsOpen,
+  handleImageCloseModal,
+  updateAvatar,
+}) {
   const imgRef = useRef(null);
   const canvasRef = useRef(null);
-
   const [error, setError] = useState(null);
   const [image, setImage] = useState("");
   const [crop, setCrop] = useState();
@@ -57,7 +61,15 @@ function AvatarCropper({ imageModalIsOpen }) {
   };
   return (
     <>
-      <Modal isOpen={true} className="avatar">
+      <Modal isOpen={imageModalIsOpen} className="avatar">
+        <div className="avatar__icon">
+          <img
+            src={close}
+            onClick={handleImageCloseModal}
+            alt="close-icon"
+            className="modal__close"
+          />
+        </div>
         <input
           type="file"
           accept="image/*"
@@ -95,6 +107,10 @@ function AvatarCropper({ imageModalIsOpen }) {
                     imgRef.current.height
                   )
                 );
+                const dataUrl = canvasRef.current.toDataURL();
+                console.log(dataUrl);
+                updateAvatar({ picture: dataUrl });
+                handleImageCloseModal();
               }}
             >
               Crop Image

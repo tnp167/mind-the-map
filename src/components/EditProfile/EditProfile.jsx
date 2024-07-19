@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import Modal from "react-modal";
 import "./EditProfile.scss";
 import close from "../../assets/icons/close.svg";
@@ -9,6 +9,8 @@ import editIcon from "../../assets/icons/edit-button.svg";
 import AvatarCropper from "../AvatarCropper/AvatarCropper";
 
 function EditProfile({ modalIsOpen, handleCloseModal, handleOpenModal }) {
+  const [avatarUrl, setAvatarUrl] = useState(userIcon);
+
   const { setAuth, auth } = useContext(AuthContext);
   const [usernameAvaliable, setUsernameAvaliable] = useState(true);
 
@@ -108,6 +110,56 @@ function EditProfile({ modalIsOpen, handleCloseModal, handleOpenModal }) {
     }
   };
 
+  const updateAvatar = async (dataUrl) => {
+    try {
+      const response = await axios.patch(
+        `${process.env.REACT_APP_API_BASE_URL}/user/${auth.user?.user.id}/picture`,
+        dataUrl,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        }
+      );
+      const pictureUrl = convertBinaryToDataUrl(
+        response.data.user.picture.data
+      );
+      const newToken = response.data.token;
+
+      setAuth({
+        isAuthenticated: true,
+        user: {
+          user: {
+            ...auth.user.user,
+            picture: pictureUrl,
+          },
+        },
+      });
+      localStorage.setItem("authToken", newToken);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const convertBinaryToDataUrl = (binaryData) => {
+    if (binaryData) {
+      const byteArray = new Uint8Array(binaryData);
+
+      const byteArrayToBase64 = (byteArray) => {
+        let binaryString = "";
+        for (let i = 0; i < byteArray.length; i++) {
+          binaryString += String.fromCharCode(byteArray[i]);
+        }
+        return btoa(binaryString);
+      };
+
+      const base64String = byteArrayToBase64(byteArray);
+      const imageUrl = `data:image/png;base64,${base64String}`;
+      setAvatarUrl(imageUrl);
+      return imageUrl;
+    }
+  };
+
   return (
     <>
       <Modal
@@ -130,7 +182,15 @@ function EditProfile({ modalIsOpen, handleCloseModal, handleOpenModal }) {
           </div>
           <div className="modal__main">
             <div className="modal__pic">
-              <img src={userIcon} alt="user" className="modal__user"></img>
+              <img
+                src={`${
+                  auth.user?.user.picture ? auth.user?.user.picture : userIcon
+                } `}
+                alt="user"
+                className={`modal__user ${
+                  auth.user?.user.picture ? "modal__user--update" : ""
+                }`}
+              ></img>
               <img
                 src={editIcon}
                 alt="editIcon"
@@ -237,6 +297,7 @@ function EditProfile({ modalIsOpen, handleCloseModal, handleOpenModal }) {
           handleImageOpenModal={handleImageOpenModal}
           imageModalIsOpen={imageModalIsOpen}
           handleImageCloseModal={handleImageCloseModal}
+          updateAvatar={updateAvatar}
         />
       )}
     </>

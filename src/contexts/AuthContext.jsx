@@ -28,6 +28,7 @@ function AuthProvider({ children }) {
         }
       );
 
+      console.log(data);
       setAuth({
         isAuthenticated: true,
         user: data,
@@ -39,7 +40,6 @@ function AuthProvider({ children }) {
 
   const logout = () => {
     localStorage.removeItem("authToken");
-    localStorage.removeItem("id");
     setAuth({
       isAuthenticated: false,
       user: null,

@@ -69,11 +69,13 @@ function Header({ headerColor, station }) {
           {auth.isAuthenticated && (
             <>
               <img
-                src={user}
+                src={`${
+                  auth.user?.user.picture ? auth.user?.user.picture : user
+                } `}
                 alt="user"
                 className={`header__user header__user--${
                   isToggled ? "open" : ""
-                }`}
+                } header__user--${auth.user?.user.picture ? "custom" : ""}`}
                 onClick={toggleMenu}
               ></img>
               <div
@@ -84,9 +86,15 @@ function Header({ headerColor, station }) {
                 <div className="header__sub-menu">
                   <div className="header__info">
                     <img
-                      src={user}
+                      src={`${
+                        auth.user?.user.picture ? auth.user?.user.picture : user
+                      } `}
                       alt="user"
-                      className="header__info-pic"
+                      className={`header__info-pic ${
+                        auth.user?.user.picture
+                          ? "header__info-pic--custom"
+                          : ""
+                      } `}
                     ></img>
                     <p className="header__info-text">
                       {!auth.user?.user.username && (
