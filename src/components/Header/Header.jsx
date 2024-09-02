@@ -3,7 +3,7 @@ import logo from "../../assets/logos/logo.svg";
 import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useContext, useState } from "react";
-import user from "../../assets/icons/user.png";
+import userWhiteIcon from "../../assets/icons/user-white.png";
 import EditProfile from "../EditProfile/EditProfile";
 
 function Header({ headerColor, station }) {
@@ -67,15 +67,17 @@ function Header({ headerColor, station }) {
             <li>Status Updates</li>
           </Link>
           {auth.isAuthenticated && (
-            <>
+            <div class="header__test">
               <img
                 src={`${
-                  auth.user?.user.picture ? auth.user?.user.picture : user
+                  auth.user?.user.pictureUrl
+                    ? auth.user?.user.pictureUrl
+                    : userWhiteIcon
                 } `}
                 alt="user"
                 className={`header__user header__user--${
                   isToggled ? "open" : ""
-                } header__user--${auth.user?.user.picture ? "custom" : ""}`}
+                } header__user--${auth.user?.user.pictureUrl ? "custom" : ""}`}
                 onClick={toggleMenu}
               ></img>
               <div
@@ -87,11 +89,13 @@ function Header({ headerColor, station }) {
                   <div className="header__info">
                     <img
                       src={`${
-                        auth.user?.user.picture ? auth.user?.user.picture : user
+                        auth.user?.user.pictureUrl
+                          ? auth.user?.user.pictureUrl
+                          : userWhiteIcon
                       } `}
                       alt="user"
                       className={`header__info-pic ${
-                        auth.user?.user.picture
+                        auth.user?.user.pictureUrl
                           ? "header__info-pic--custom"
                           : ""
                       } `}
@@ -109,17 +113,15 @@ function Header({ headerColor, station }) {
                     </p>
                   </div>
                   <div className="header__line"></div>
-                  <a className="header__link" onClick={handleOpenModal}>
+                  <button className="header__link" onClick={handleOpenModal}>
                     <p className="header__link-text">Edit Profile</p>
                     <span className="header__link-arrow">&gt;</span>
-                  </a>
+                  </button>
                   <EditProfile
-                    handleOpenModal={handleOpenModal}
                     modalIsOpen={modalIsOpen}
                     handleCloseModal={handleCloseModal}
                   />
-                  <a
-                    href=""
+                  <button
                     onClick={() => {
                       logout();
                     }}
@@ -127,10 +129,10 @@ function Header({ headerColor, station }) {
                   >
                     <p className="header__link-text">Logout</p>
                     <span className="header__link-arrow">&gt;</span>
-                  </a>
+                  </button>
                 </div>
               </div>
-            </>
+            </div>
           )}
           {!auth.isAuthenticated && (
             <>

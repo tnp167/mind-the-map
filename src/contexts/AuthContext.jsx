@@ -28,7 +28,6 @@ function AuthProvider({ children }) {
         }
       );
 
-      console.log(data);
       setAuth({
         isAuthenticated: true,
         user: data,

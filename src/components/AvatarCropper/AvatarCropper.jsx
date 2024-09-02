@@ -108,7 +108,6 @@ function AvatarCropper({
                   )
                 );
                 const dataUrl = canvasRef.current.toDataURL();
-                console.log(dataUrl);
                 updateAvatar({ picture: dataUrl });
                 handleImageCloseModal();
               }}

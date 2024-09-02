@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Modal from "react-modal";
 import "./EditProfile.scss";
 import close from "../../assets/icons/close.svg";
@@ -8,9 +8,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import editIcon from "../../assets/icons/edit-button.svg";
 import AvatarCropper from "../AvatarCropper/AvatarCropper";
 
-function EditProfile({ modalIsOpen, handleCloseModal, handleOpenModal }) {
-  const [avatarUrl, setAvatarUrl] = useState(userIcon);
-
+function EditProfile({ modalIsOpen, handleCloseModal }) {
   const { setAuth, auth } = useContext(AuthContext);
   const [usernameAvaliable, setUsernameAvaliable] = useState(true);
 
@@ -104,25 +102,37 @@ function EditProfile({ modalIsOpen, handleCloseModal, handleOpenModal }) {
         });
 
         localStorage.setItem("authToken", newToken);
+        handleCloseModal();
       } catch (error) {
         console.log(error);
       }
     }
   };
 
-  const updateAvatar = async (dataUrl) => {
+  const updateAvatar = async ({ picture }) => {
+    const byteString = atob(picture.split(",")[1]);
+    const mimeString = picture.split(",")[0].split(":")[1].split(";")[0];
+
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+
+    const blob = new Blob([ab], { type: mimeString });
+    const formData = new FormData();
+    formData.append("picture", blob, "profile-picture.png");
+
     try {
       const response = await axios.patch(
         `${process.env.REACT_APP_API_BASE_URL}/user/${auth.user?.user.id}/picture`,
-        dataUrl,
+        formData,
         {
           headers: {
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
         }
-      );
-      const pictureUrl = convertBinaryToDataUrl(
-        response.data.user.picture.data
       );
       const newToken = response.data.token;
 
@@ -131,32 +141,14 @@ function EditProfile({ modalIsOpen, handleCloseModal, handleOpenModal }) {
         user: {
           user: {
             ...auth.user.user,
-            picture: pictureUrl,
+            picture: response.data.user.picture,
+            pictureUrl: response.data.user.pictureUrl,
           },
         },
       });
       localStorage.setItem("authToken", newToken);
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  const convertBinaryToDataUrl = (binaryData) => {
-    if (binaryData) {
-      const byteArray = new Uint8Array(binaryData);
-
-      const byteArrayToBase64 = (byteArray) => {
-        let binaryString = "";
-        for (let i = 0; i < byteArray.length; i++) {
-          binaryString += String.fromCharCode(byteArray[i]);
-        }
-        return btoa(binaryString);
-      };
-
-      const base64String = byteArrayToBase64(byteArray);
-      const imageUrl = `data:image/png;base64,${base64String}`;
-      setAvatarUrl(imageUrl);
-      return imageUrl;
     }
   };
 
@@ -184,11 +176,13 @@ function EditProfile({ modalIsOpen, handleCloseModal, handleOpenModal }) {
             <div className="modal__pic">
               <img
                 src={`${
-                  auth.user?.user.picture ? auth.user?.user.picture : userIcon
+                  auth.user?.user.pictureUrl
+                    ? auth.user?.user.pictureUrl
+                    : userIcon
                 } `}
                 alt="user"
                 className={`modal__user ${
-                  auth.user?.user.picture ? "modal__user--update" : ""
+                  auth.user?.user.pictureUrl ? "modal__user--update" : ""
                 }`}
               ></img>
               <img

@@ -46,10 +46,12 @@
   }
 
   &__title {
+    display: flex;
     font-size: 1.5rem;
     margin: 2.5rem 0;
+    justify-content: center;
     @include tablet {
-      margin: -0.5rem 0 2.5rem;
+      margin: -0.5rem 0 2.5rem 2rem;
       font-size: 2rem;
     }
   }
@@ -91,11 +93,18 @@
     }
   }
   &__user {
-    width: 8rem;
-    height: 8rem;
-    margin-right: 0.6rem;
+    width: 9rem;
+    height: 9rem;
+    margin: 0;
     border-radius: 50%;
+    display: flex;
+    justify-content: center;
 
+    @include tablet {
+      width: 8rem;
+      height: 8rem;
+      margin-right: 0.6rem;
+    }
     &--update {
       width: 7rem;
       height: 7rem;
@@ -106,12 +115,13 @@
 
   &__pic {
     position: relative;
+    margin: 0 auto 1.3rem auto;
   }
 
   &__edit {
     height: 1.75rem;
     position: absolute;
-    bottom: 7.5rem;
+    bottom: -0.8rem;
     left: -0.5rem;
     right: 0;
     margin: auto;
@@ -122,12 +132,25 @@
     border: 1.5px solid black;
     cursor: pointer;
 
+    @include tablet {
+      bottom: 6.2rem;
+      left: -0.5rem;
+      right: 0;
+    }
     &:hover {
       filter: invert(1);
     }
   }
 
   &__main {
+    display: flex;
+    flex-direction: column;
+    @include tablet {
+      flex-direction: row;
+    }
+  }
+
+  &__pic {
     display: flex;
     flex-direction: row;
   }
@@ -173,6 +196,10 @@
 
   &__data {
     width: 100%;
+    margin: 2.5rem 0;
+    @include tablet {
+      margin: 0;
+    }
   }
 
   &__btn {
@@ -194,11 +221,22 @@
     &--cancel {
       color: map-get($map: $colors, $key: base);
       background-color: #ffffff;
+      width: 30%;
+      margin-top: 0.8rem;
+      @include tablet {
+        width: 15%;
+      }
     }
     &--delete {
       color: #ffffff;
       background-color: map-get($map: $colors, $key: base);
       padding: 0.8rem 1.7rem;
+      width: 70%;
+      height: 3.5rem;
+      @include tablet {
+        height: 2.8rem;
+        width: 15%;
+      }
     }
   }
   &__error {
