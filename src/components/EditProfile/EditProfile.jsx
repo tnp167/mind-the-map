@@ -30,7 +30,7 @@ function EditProfile({ modalIsOpen, handleCloseModal }) {
     if (e.target.name === "username") {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_BASE_URL}/check-username/${e.target.value}`
+          `${process.env.REACT_APP_API_BASE_URL}/user/check-username/${e.target.value}`
         );
         setUsernameAvaliable(response.data.avaliable);
       } catch (error) {

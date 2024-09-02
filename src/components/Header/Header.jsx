@@ -5,11 +5,14 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { useContext, useState } from "react";
 import userWhiteIcon from "../../assets/icons/user-white.png";
 import EditProfile from "../EditProfile/EditProfile";
+import SavedRoutes from "../SavedRoutes/SavedRoutes";
 
 function Header({ headerColor, station }) {
   const { auth, logout } = useContext(AuthContext);
   const [isToggled, setIsToggled] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const [bookmarkModalIsOpen, setBookmarkModalIsOpen] = useState(false);
 
   const location = useLocation();
   const currentRoute = location.pathname;
@@ -35,6 +38,10 @@ function Header({ headerColor, station }) {
   const handleOpenModal = () => setModalIsOpen(true);
 
   const handleCloseModal = () => setModalIsOpen(false);
+
+  const handleBookmarkOpenModal = () => setBookmarkModalIsOpen(true);
+
+  const handleBookmarkCloseModal = () => setBookmarkModalIsOpen(false);
 
   return (
     <nav className={`header__container header__container--${headerColor}`}>
@@ -120,6 +127,17 @@ function Header({ headerColor, station }) {
                   <EditProfile
                     modalIsOpen={modalIsOpen}
                     handleCloseModal={handleCloseModal}
+                  />
+                  <button
+                    className="header__link"
+                    onClick={handleBookmarkOpenModal}
+                  >
+                    <p className="header__link-text">Saved Routes</p>
+                    <span className="header__link-arrow">&gt;</span>
+                  </button>
+                  <SavedRoutes
+                    modalIsOpen={bookmarkModalIsOpen}
+                    handleCloseModal={handleBookmarkCloseModal}
                   />
                   <button
                     onClick={() => {
