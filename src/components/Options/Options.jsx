@@ -7,9 +7,11 @@ import { Box, Button, CircularProgress } from "@mui/material";
 import { Bookmark } from "lucide-react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { toast, Toaster } from "sonner";
+import { RoutesContext } from "../../contexts/RoutesContext";
 
 function Options({ startPoint, endPoint, setSelectedRoute }) {
   const { auth } = useContext(AuthContext);
+  const { getUserRoute } = useContext(RoutesContext);
   const [routes, setRoutes] = useState(null);
   const [disabled, setDisabled] = useState(false);
   const getRoute = async () => {
@@ -38,8 +40,9 @@ function Options({ startPoint, endPoint, setSelectedRoute }) {
       axios.post(`${process.env.REACT_APP_API_BASE_URL}/route/bookmark`, data),
       {
         loading: "Saving route...",
-        success: () => {
+        success: async () => {
           setDisabled(true);
+          await getUserRoute();
           return "Route saved successfully!";
         },
         error: "Failed to save route. Please try again.",
