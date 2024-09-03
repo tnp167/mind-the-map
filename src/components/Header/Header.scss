@@ -262,7 +262,7 @@
     &-wrap {
       position: absolute;
       width: 12rem;
-      top: 80%;
+      top: 90%;
       right: 3%;
       max-height: 0;
       overflow: hidden;
@@ -273,8 +273,11 @@
       }
 
       @include tablet {
-        top: 87%;
+        top: 90%;
         width: 16rem;
+        &--open {
+          max-height: 15rem;
+        }
       }
 
       @include desktop {

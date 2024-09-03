@@ -15,7 +15,7 @@
     top: 20%;
     left: 5%;
     max-width: 88%;
-    height: 28rem;
+    max-height: 65vh;
     padding: 1.5rem;
   }
   @include desktop {
@@ -47,13 +47,21 @@
 
   &__title {
     display: flex;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     margin: 2.5rem 0;
     justify-content: center;
     @include tablet {
-      margin: -0.5rem 0 2.5rem 2rem;
+      margin: 0;
       font-size: 2rem;
     }
+  }
+
+  &__wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 0.5rem 0 2.5rem 0;
   }
 
   &__message {
@@ -68,10 +76,26 @@
   }
 
   &__card {
-    max-height: 20rem;
+    max-height: 70vh;
     overflow-y: auto;
+    @include tablet {
+      max-height: 45vh;
+    }
   }
 
+  &__input {
+    border-radius: 3px;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 2px solid #e0e0e0;
+    letter-spacing: 0.01rem;
+    padding: 0.3rem 0.3rem 0.3rem 0.5rem;
+    height: 2.8rem;
+    font-size: 1rem;
+    &--error {
+      border: 2px solid red;
+    }
+  }
   &__content {
     display: flex;
     justify-content: space-between;
@@ -86,6 +110,17 @@
 
   &__edit {
     cursor: pointer;
+  }
+
+  &__delete {
+    cursor: pointer;
+  }
+
+  &__name {
+    font-size: 1rem;
+    @include tablet {
+      font-size: 1.1rem;
+    }
   }
 }
 
