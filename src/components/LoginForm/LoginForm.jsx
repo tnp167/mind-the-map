@@ -4,6 +4,10 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "./LoginForm.scss";
 import { AuthContext } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { CircleX } from "lucide-react";
+import { motion } from "framer-motion";
+
 function LoginForm() {
   const { login, auth } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
@@ -12,7 +16,7 @@ function LoginForm() {
     password: "",
   });
   const [errors, setErrors] = useState({});
-
+  const navigate = useNavigate();
   const validateForm = () => {
     const errors = {};
 
@@ -52,12 +56,26 @@ function LoginForm() {
           email: "",
           password: "",
         });
-        console.log(auth);
+        navigate("/", { state: { toastMessage: "Login successfully" } });
       } catch (error) {
-        console.log(error);
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          setErrors({ invalid: error.response.data.message });
+        } else {
+          setErrors({ invalid: "Login failed. Please try again" });
+        }
       }
     }
   };
+
+  useEffect(() => {
+    if (auth.user) {
+      navigate("/");
+    }
+  }, [auth.user]);
 
   return (
     <form className="login-form" onSubmit={handleSubmit}>
@@ -111,6 +129,20 @@ function LoginForm() {
           Register
         </Link>
       </p>
+      {errors.invalid && (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7 }}
+          className="login-form__error login-form__error--invalid"
+        >
+          {errors.invalid}{" "}
+          <span className="login-form__circle">
+            {" "}
+            <CircleX />
+          </span>
+        </motion.p>
+      )}
     </form>
   );
 }

@@ -8,8 +8,10 @@ import { Bookmark } from "lucide-react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { toast, Toaster } from "sonner";
 import { RoutesContext } from "../../contexts/RoutesContext";
+import { useNavigate } from "react-router-dom";
 
 function Options({ startPoint, endPoint, setSelectedRoute }) {
+  const navigate = useNavigate();
   const { auth } = useContext(AuthContext);
   const { getUserRoute } = useContext(RoutesContext);
   const [routes, setRoutes] = useState(null);
@@ -30,24 +32,34 @@ function Options({ startPoint, endPoint, setSelectedRoute }) {
   };
 
   const handleSaveRoute = async () => {
-    const data = {
-      start_point: `${startPoint[1]},${startPoint[0]}`,
-      end_point: `${endPoint[1]},${endPoint[0]}`,
-      user_id: auth.user.user.id,
-    };
+    if (!auth.user) {
+      toast.warning("You must login to save the route");
+      setTimeout(() => {
+        navigate("/login");
+      }, 1000);
+    } else {
+      const data = {
+        start_point: `${startPoint[1]},${startPoint[0]}`,
+        end_point: `${endPoint[1]},${endPoint[0]}`,
+        user_id: auth.user.user.id,
+      };
 
-    toast.promise(
-      axios.post(`${process.env.REACT_APP_API_BASE_URL}/route/bookmark`, data),
-      {
-        loading: "Saving route...",
-        success: async () => {
-          setDisabled(true);
-          await getUserRoute();
-          return "Route saved successfully!";
-        },
-        error: "Failed to save route. Please try again.",
-      }
-    );
+      toast.promise(
+        axios.post(
+          `${process.env.REACT_APP_API_BASE_URL}/route/bookmark`,
+          data
+        ),
+        {
+          loading: "Saving route...",
+          success: async () => {
+            setDisabled(true);
+            await getUserRoute();
+            return "Route saved successfully!";
+          },
+          error: "Failed to save route. Please try again.",
+        }
+      );
+    }
   };
 
   useEffect(() => {
@@ -67,7 +79,6 @@ function Options({ startPoint, endPoint, setSelectedRoute }) {
 
   return (
     <section className="options">
-      <Toaster />
       <h3 className="options__title">Suggested Routes</h3>
       {routes?.journeys?.map((route, index) => (
         <div key={uuidv4()} onClick={() => handleRouteClick(route)}>

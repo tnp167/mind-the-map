@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./RegisterForm.scss";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext";
 
 function RegisterForm() {
+  const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
   const [successMessage, setSuccessMessage] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -115,9 +117,12 @@ function RegisterForm() {
     validatePassword(data.password);
   }, [data.password]);
 
-  // useEffect(() => {
-  //   console.log(passwordValidation);
-  // });
+  useEffect(() => {
+    if (auth.user) {
+      navigate("/");
+    }
+  }, [auth.user]);
+
   return (
     <form className="signup-form" onSubmit={handleSubmit}>
       <p className="signup-form__title">Register</p>

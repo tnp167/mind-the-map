@@ -12,10 +12,21 @@ import "react-slideshow-image/dist/styles.css";
 import { Fade } from "react-slideshow-image";
 import SubHero from "../../components/SubHero/SubHero";
 import "./Home.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LogoSlider from "../../components/LogoSlider/LogoSlider";
+import { useLocation } from "react-router-dom";
+import { toast } from "sonner";
+
 function Home() {
   const [index, setIndex] = useState(0);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.toastMessage) {
+      toast.success(location.state.toastMessage);
+    }
+  }, [location.state]);
+
   const pictureSets = [
     {
       pictures: london,

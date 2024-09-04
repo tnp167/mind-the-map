@@ -8,12 +8,14 @@ import Register from "./pages/Register/Register";
 import AuthProvider from "./contexts/AuthContext";
 import "react-image-crop/dist/ReactCrop.css";
 import RoutesProvider from "./contexts/RoutesContext";
+import { Toaster } from "sonner";
 
 function App() {
   return (
     <AuthProvider>
       <RoutesProvider>
         <BrowserRouter>
+          <Toaster richColors />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/route" element={<RoutePlanner />} />

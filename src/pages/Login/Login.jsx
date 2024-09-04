@@ -9,7 +9,7 @@ function Login() {
       <div className="picture">
         <div className="container">
           <div className="login">
-            <LoginForm></LoginForm>
+            <LoginForm />
           </div>
         </div>
       </div>
