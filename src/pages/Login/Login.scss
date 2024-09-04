@@ -1,30 +1,54 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/mixins" as *;
 
-.block {
+.container {
   display: flex;
   justify-content: center;
-}
-.pic {
-  background-image: url("../../assets/images/underground-bg.jpg");
-  background-position: 62% 100%;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+  height: 100vh;
+  overflow: visible;
+  box-sizing: content-box;
   transform: scaleX(-1);
-  display: flex;
+}
+.picture {
+  transform: scaleX(-1);
+  background-repeat: no-repeat;
+  width: auto;
+  height: 100vh;
   @include tablet {
-    width: 50%;
-  }
-  @include desktop {
-    width: 60%;
+    background-image: url("../../assets/images/underground-bg.jpg");
+    display: flex;
+    margin: 0 auto;
+    width: 100vw;
+    top: 0px;
+    left: -5rem;
+    max-width: none;
+    overflow: visible;
+    background-position: 62% 100%;
+    z-index: -1;
+    box-sizing: content-box;
   }
 }
 .login {
-  width: 80%;
+  width: 100vw;
+  height: 100vh;
   margin: 1rem;
   @include tablet {
-    margin: auto 3rem;
-    width: 50%;
+    z-index: 2;
+    background-color: white;
+    padding: 3rem;
+    width: 50vw;
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3%;
   }
   @include desktop {
-    width: 40%;
+    padding: 4rem;
+    width: 40vw;
+    height: 68vh;
   }
 }

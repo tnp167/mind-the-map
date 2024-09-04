@@ -79,7 +79,7 @@
   &__items {
     color: $primary-text-color;
     text-decoration: none;
-    padding: 1.9rem 0;
+    padding: 1.6rem 0;
     display: none;
     &--circle {
       color: $secondary-text-color;
@@ -91,6 +91,15 @@
       border-bottom: 2px solid map-get($colors, circle);
     }
     @include tablet {
+      padding: 1.8rem 0;
+      display: block;
+    }
+
+    @include desktop {
+      padding: 1.9rem 0;
+    }
+
+    &--visible {
       display: block;
     }
   }

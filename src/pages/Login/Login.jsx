@@ -6,10 +6,11 @@ function Login() {
   return (
     <>
       <Header headerColor={"base"} station={"Mind the Map"} />
-      <div className="block">
-        <div className="pic"></div>
-        <div className="login">
-          <LoginForm></LoginForm>
+      <div className="picture">
+        <div className="container">
+          <div className="login">
+            <LoginForm></LoginForm>
+          </div>
         </div>
       </div>
     </>

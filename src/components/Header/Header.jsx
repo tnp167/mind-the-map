@@ -156,7 +156,7 @@ function Header({ headerColor, station }) {
             <>
               <Link
                 to="/login"
-                className={`header__items header__items--${headerColor} header__items${getNavbarColor(
+                className={`header__items header__items--visible header__items--${headerColor} header__items${getNavbarColor(
                   currentRoute,
                   2
                 )}`}
@@ -165,7 +165,7 @@ function Header({ headerColor, station }) {
               </Link>
               <Link
                 to="/register"
-                className={`header__items header__items--${headerColor} header__items${getNavbarColor(
+                className={`header__items header__items--visible header__items--${headerColor} header__items${getNavbarColor(
                   currentRoute,
                   3
                 )}`}

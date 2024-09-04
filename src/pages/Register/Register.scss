@@ -1,30 +1,50 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/mixins" as *;
 
-.block {
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.container-register {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  max-width: 1280px;
+  height: 100vh;
+  overflow: visible;
+  box-sizing: content-box;
+  transform: scaleX(-1);
+  margin: 0 auto;
 }
+
 .pic {
-  background-image: url("../../assets/images/underground-bg.jpg");
-  display: flex;
-  @include tablet {
-    width: 50%;
-    height: 115vh;
-  }
-  @include desktop {
-    width: 60%;
-  }
+  transform: scaleX(-1);
   background-repeat: no-repeat;
+  width: auto;
+  height: 100vh;
+  @include tablet {
+    background-image: url("../../assets/images/underground-bg.jpg");
+    display: flex;
+    margin: 0 auto;
+    width: 100vw;
+    max-width: none;
+    overflow: visible;
+    background-position: 62% 100%;
+  }
 }
 .register {
-  width: 80%;
-  margin: 1rem;
+  width: 100vw;
+  height: 100vh;
+  padding: 3rem;
   @include tablet {
-    margin: 3rem;
+    background-color: white;
+    padding: 4rem;
     width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   @include desktop {
-    width: 40%;
+    padding: 4rem;
   }
 }
