@@ -3,8 +3,8 @@
 
 .route {
   margin-left: 0 !important;
-  //margin-right: 1.2rem !important;
-  @include container;
+
+  padding: 0 2rem;
   &__title {
     margin-bottom: 0;
     font-size: 1.3rem;
@@ -124,7 +124,11 @@
 
   &__line {
     position: absolute;
-    top: -40%;
+    top: -29%;
+
+    //When crowding data is available
+    //top: -40%;
+
     left: -0.73rem;
     bottom: -24%;
     z-index: -1;

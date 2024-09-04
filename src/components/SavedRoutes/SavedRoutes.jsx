@@ -10,10 +10,13 @@ import { Trash2, Pencil } from "lucide-react";
 import { RoutesContext } from "../../contexts/RoutesContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { Route } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function SavedRoutes({ modalIsOpen, handleCloseModal }) {
   const { routes, setRoutes } = useContext(RoutesContext);
   const [editingId, setEditingId] = useState(null);
+  const navigate = useNavigate();
+
   const handleEditClick = (id) => {
     setEditingId(id);
   };
@@ -62,6 +65,12 @@ function SavedRoutes({ modalIsOpen, handleCloseModal }) {
     }
   };
 
+  const handleClick = (route) => {
+    const startPoint = encodeURIComponent(route.start_point);
+    const endPoint = encodeURIComponent(route.end_point);
+    navigate(`/route?start=${startPoint}&end=${endPoint}`);
+  };
+
   return (
     <Modal
       isOpen={modalIsOpen}
@@ -101,19 +110,27 @@ function SavedRoutes({ modalIsOpen, handleCloseModal }) {
                   style={{
                     backgroundColor:
                       index % 2 === 0
-                        ? "rgb(3,155,229,0.65)"
-                        : "rgb(118,208,189,0.65)",
-                    opacity: 1,
+                        ? "rgb(3,155,229,0.6)"
+                        : "rgb(118,208,189,0.6)",
                   }}
                   component={motion.div}
                   initial={{ x: 300, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ duration: 0.5 }}
+                  whileHover={{
+                    scale: 1.03,
+                    backgroundColor:
+                      index % 2 === 0
+                        ? "rgba(3,155,229,0.85)"
+                        : "rgba(118,208,189,0.85)",
+                    cursor: "pointer",
+                  }}
                   exit={{
                     x: -300,
                     opacity: 0,
                     backgroundColor: "rgba(255, 0, 0, 0.8)",
                   }}
+                  onClick={() => handleClick(route)}
                 >
                   <CardContent className="routes__content" key={index}>
                     {editingId === route.id ? (

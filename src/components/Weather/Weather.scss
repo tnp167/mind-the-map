@@ -3,15 +3,23 @@
 
 .weather {
   &__outer {
+    @include container;
     display: flex;
     flex-direction: column;
     width: 100%;
     gap: 1.5rem;
     margin: 1.5rem auto;
     @include tablet {
+      justify-content: space-between;
+      width: 100%;
+      margin: 0;
+      padding: 1.3rem;
+    }
+    @include desktop {
+      flex-direction: column;
       width: 15%;
-      gap: 3rem;
-      margin: auto 2rem;
+      padding: 0;
+      margin: 1rem 0;
     }
   }
   &__container {
@@ -20,14 +28,16 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
+    padding: 0 1rem;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     @include tablet {
-      flex-direction: column;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      padding: 1.3rem;
+    }
+    @include desktop {
+      flex-direction: column;
+      padding: 0;
     }
   }
 

@@ -226,9 +226,16 @@
 }
 
 .block {
+  display: flex;
+  flex-direction: column;
+  max-width: 1280px;
+  margin: 0 auto;
   @include tablet {
-    display: flex;
+    flex-direction: column;
     justify-content: space-between;
+  }
+  @include desktop {
+    flex-direction: row;
   }
 }
 

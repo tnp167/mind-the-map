@@ -52,6 +52,7 @@ function Options({ startPoint, endPoint, setSelectedRoute }) {
 
   useEffect(() => {
     getRoute();
+    setDisabled(false);
   }, [startPoint, endPoint]);
 
   useEffect(() => {

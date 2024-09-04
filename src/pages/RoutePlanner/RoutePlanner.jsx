@@ -16,6 +16,7 @@ import london from "../../assets/images/london.png";
 import Rating from "@mui/material/Rating";
 import ReactDOMServer from "react-dom/server";
 import Weather from "../../components/Weather/Weather";
+import { useSearchParams } from "react-router-dom";
 
 function RoutePlanner() {
   const mapRef = useRef(null);
@@ -34,6 +35,18 @@ function RoutePlanner() {
   const [ratingFilter, setRatingFilter] = useState(0);
   const [filteredToilets, setFilteredToilets] = useState([]);
   const [type, setType] = useState("Restaurants");
+  const [searchParams] = useSearchParams();
+
+  const start = searchParams.get("start");
+  const end = searchParams.get("end");
+
+  useEffect(() => {
+    if (start && end) {
+      setStartPoint(start.split(",").reverse().map(Number));
+      setEndPoint(end.split(",").reverse().map(Number));
+    }
+  }, [start, end]);
+
   const handleChange = () => {
     setType((prevType) =>
       prevType === "Restaurants" ? "Toilets" : "Restaurants"
@@ -202,17 +215,55 @@ function RoutePlanner() {
     mapRef.current = map;
 
     // return () => map.remove();
-  }, [startPoint, endPoint]);
+  }, [startPoint, endPoint, start, end]);
 
   useEffect(() => {
     const map = mapRef.current;
+
     if (map && startPoint && endPoint) {
       const bounds = new mapboxgl.LngLatBounds()
         .extend(startPoint)
         .extend(endPoint);
       map.fitBounds(bounds, { padding: 50 });
+
+      const updateMapSources = () => {
+        const startSource = map.getSource("start-point");
+        const endSource = map.getSource("end-point");
+
+        if (startSource && endSource) {
+          map.getSource("start-point").setData({
+            type: "FeatureCollection",
+            features: [
+              {
+                type: "Feature",
+                geometry: {
+                  type: "Point",
+                  coordinates: startPoint,
+                },
+              },
+            ],
+          });
+          map.getSource("end-point").setData({
+            type: "FeatureCollection",
+            features: [
+              {
+                type: "Feature",
+                geometry: {
+                  type: "Point",
+                  coordinates: endPoint,
+                },
+              },
+            ],
+          });
+        }
+      };
+      if (!map.isStyleLoaded()) {
+        map.on("load", updateMapSources);
+      } else {
+        updateMapSources();
+      }
     }
-  }, [startPoint, endPoint]);
+  }, [startPoint, endPoint, mapRef]);
 
   useEffect(() => {
     const map = mapRef.current;
