@@ -32,43 +32,48 @@ function Home() {
       pictures: london,
       headerColor: "base",
       station: "Mind the Map",
-      place: "",
     },
     {
       pictures: bigBen,
       headerColor: "circle",
       station: "Westminster",
       place: "Palace of Westminster",
+      coordinates: "51.499167,-0.124722",
     },
     {
       pictures: towerBridge,
       headerColor: "district",
       station: "Tower Hill",
       place: "Tower Bridge",
+      coordinates: "51.5055,-0.075406",
     },
     {
       pictures: stPaul,
       headerColor: "central",
       station: "St.Paul",
       place: "St.paul Cathedral",
+      coordinates: "51.5138,-0.0983",
     },
     {
       pictures: borough,
       headerColor: "northern",
       station: "London Bridge",
       place: "Borough Market",
+      coordinates: "51.505556,-0.090833",
     },
     {
       pictures: piccadilly,
       headerColor: "piccadilly",
       station: "Piccadilly Circus",
       place: "Piccadilly Circus",
+      coordinates: "51.51,-0.134444",
     },
     {
       pictures: buckingham,
       headerColor: "victoria",
       station: "Green Park",
       place: "Buckingham Palace",
+      coordinates: "51.500833,-0.141944",
     },
   ];
   const properties = {
@@ -90,7 +95,7 @@ function Home() {
               headerColor={fadeImage.headerColor}
               station={fadeImage.station}
             />
-            <Hero fadeImage={fadeImage.pictures} />
+            <Hero set={fadeImage} index={index} />
             <SubHero
               headerColor={fadeImage.headerColor}
               place={fadeImage.place}

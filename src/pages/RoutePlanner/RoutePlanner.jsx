@@ -41,9 +41,9 @@ function RoutePlanner() {
   const end = searchParams.get("end");
 
   useEffect(() => {
-    if (start && end) {
-      setStartPoint(start.split(",").reverse().map(Number));
-      setEndPoint(end.split(",").reverse().map(Number));
+    if (start || end) {
+      setStartPoint(start?.split(",").reverse().map(Number));
+      setEndPoint(end?.split(",").reverse().map(Number));
     }
   }, [start, end]);
 
@@ -125,7 +125,6 @@ function RoutePlanner() {
           const data = await response.json();
 
           const locationName = data.features[0].place_name;
-          console.log("Location Name:", locationName);
           startGeocoder.query(locationName);
         } catch (error) {
           console.error("Error retrieving location name:", error);
@@ -215,12 +214,39 @@ function RoutePlanner() {
     mapRef.current = map;
 
     // return () => map.remove();
-  }, [startPoint, endPoint, start, end]);
+  }, [startPoint, endPoint]);
+
+  useEffect(() => {
+    const fetchLocationName = async (point, geocoder) => {
+      try {
+        const response = await fetch(
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${point[0]},${point[1]}.json?access_token=${mapboxgl.accessToken}`
+        );
+        const data = await response.json();
+        if (data.features && data.features.length > 0) {
+          const locationName = data.features[0].place_name;
+          geocoder.current.query(locationName);
+        } else {
+          console.error("No location name found for the provided point.");
+        }
+      } catch (error) {
+        console.error("Failed to fetch location name:", error);
+      }
+    };
+
+    if (startPoint) {
+      fetchLocationName(startPoint, startGeo);
+    }
+
+    if (endPoint) {
+      fetchLocationName(endPoint, endGeo);
+    }
+  }, [startPoint, endPoint, startGeo, endGeo]);
 
   useEffect(() => {
     const map = mapRef.current;
 
-    if (map && startPoint && endPoint) {
+    if (map && (startPoint || endPoint)) {
       const bounds = new mapboxgl.LngLatBounds()
         .extend(startPoint)
         .extend(endPoint);
@@ -230,7 +256,7 @@ function RoutePlanner() {
         const startSource = map.getSource("start-point");
         const endSource = map.getSource("end-point");
 
-        if (startSource && endSource) {
+        if (startSource) {
           map.getSource("start-point").setData({
             type: "FeatureCollection",
             features: [
@@ -243,6 +269,8 @@ function RoutePlanner() {
               },
             ],
           });
+        }
+        if (endSource) {
           map.getSource("end-point").setData({
             type: "FeatureCollection",
             features: [
@@ -316,8 +344,6 @@ function RoutePlanner() {
                 : leg.mode.id.toLowerCase().replace(/[\s&]/g, "-")
             }`
           );
-
-        console.log(leg.routeOptions[0].name);
 
         const lineStringFeature = {
           type: "Feature",

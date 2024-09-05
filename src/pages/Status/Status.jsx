@@ -47,7 +47,11 @@ function Status() {
   return (
     <>
       <Header headerColor={"base"} station={"Mind the Map"} />
-      <Hero fadeImage={mode === "national-rail" ? railMap : map} />
+      <Hero
+        set={
+          mode === "national-rail" ? { pictures: railMap } : { pictures: map }
+        }
+      />
       <SubHero headerColor={"base"} place={mode.replace(/,/g, " - ")} />
       <div className="status__button-container">
         <button

@@ -154,7 +154,10 @@ function SavedRoutes({ modalIsOpen, handleCloseModal }) {
                       <motion.div
                         whileTap={{ scale: 0.95 }}
                         className="routes__edit"
-                        onClick={() => handleEditClick(route.id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleEditClick(route.id);
+                        }}
                       >
                         <Pencil />
                       </motion.div>
@@ -162,7 +165,10 @@ function SavedRoutes({ modalIsOpen, handleCloseModal }) {
                       <motion.div
                         whileTap={{ scale: 0.95 }}
                         className="routes__delete"
-                        onClick={() => handleDeleteClick(route.id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteClick(route.id);
+                        }}
                       >
                         <Trash2 />
                       </motion.div>

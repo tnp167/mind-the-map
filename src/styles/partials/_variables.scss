@@ -12,6 +12,8 @@ $colors: (
   piccadilly: #0019a8,
   victoria: #039be5,
   waterloo-city: #76d0bd,
+  waterloo--city: #76d0bd,
+  waterloo---city: #76d0bd,
   bus: #dc241f,
   london-overground: #fa7b05,
   overground: #fa7b05,
@@ -65,6 +67,8 @@ $nr: (
   --piccadilly: #0019a8;
   --victoria: #039be5;
   --waterloo-city: #76d0bd;
+  --waterloo--city: #76d0bd;
+  --waterloo---city: #76d0bd;
   --bus: #dc241f;
   --london-overground: #fa7b05;
   --overground: #fa7b05;
@@ -97,6 +101,10 @@ $desktop-breakpoint: 1280px;
   .sub-hero__banner--#{$line} {
     background-color: $color;
   }
+  .hero__badge--#{$line} {
+    background-color: $color;
+  }
+
   .line--#{$line} {
     background-color: $color;
     stroke: $color;
@@ -122,6 +130,8 @@ $desktop-breakpoint: 1280px;
     "hammersmith-city" or
     $line ==
     "waterloo-city" or
+    $line ==
+    "waterloo---city" or
     $line ==
     "hammersmith---city"
   {
