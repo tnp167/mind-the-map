@@ -35,7 +35,7 @@ function RouteDetails({ route }) {
   const getCrowdedStatus = async (id) => {
     try {
       const { data } = await axios.get(
-        `https://api.tfl.gov.uk/crowding/${id}/live`
+        `${process.env.REACT_APP_API_BASE_URL}/api/tfl/crowding/${id}`
       );
       return data.percentageOfBaseline <= 0.2
         ? "very quiet"
@@ -116,9 +116,10 @@ function RouteDetails({ route }) {
                 ${
                   leg.mode.name === "tube" ||
                   leg.mode.name === "dlr" ||
+                  leg.mode.name === "bus" ||
                   leg.mode.name === "overground" ||
                   leg.mode.name === "elizabeth-line"
-                    ? ` (Crowded: ${
+                    ? ` (Crowded Status: ${
                         crowdedDepartureStatuses[index] !== null
                           ? crowdedDepartureStatuses[index]
                           : "Data not available"
@@ -154,7 +155,7 @@ function RouteDetails({ route }) {
                       : `route__line--${leg.mode.name}`
                   } ${
                     leg.mode.name === "walking" ? "route__line--walking" : ""
-                  }`}
+                  } ${leg.mode.name === "bus" && "route__line--bus"}`}
                 ></div>
                 {leg.mode.name !== "walking" && (
                   <div className="route__details-text route__details-text--top">

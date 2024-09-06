@@ -10,9 +10,10 @@
     gap: 1.5rem;
     margin: 1.5rem auto;
     @include tablet {
-      justify-content: space-between;
+      justify-content: center;
       width: 100%;
       margin: 0;
+      gap: 3rem;
       padding: 1.3rem;
     }
     @include desktop {

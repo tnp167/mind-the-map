@@ -10,13 +10,14 @@ import "./RoutePlanner.scss";
 import RouteDetails from "../../components/RouteDetails/RouteDetails";
 import backChevron from "../../assets/icons/chevron-back.png";
 import "../../styles/partials/_variables.scss";
-import { Chip, Switch, Grid } from "@mui/material";
+import { Chip, Grid } from "@mui/material";
 import List from "../../components/List/List";
 import london from "../../assets/images/london.png";
 import Rating from "@mui/material/Rating";
 import ReactDOMServer from "react-dom/server";
 import Weather from "../../components/Weather/Weather";
 import { useSearchParams } from "react-router-dom";
+import axios from "axios";
 
 function RoutePlanner() {
   const mapRef = useRef(null);
@@ -119,11 +120,9 @@ function RoutePlanner() {
         const lngLat = [userLocation.longitude, userLocation.latitude];
 
         try {
-          const response = await fetch(
-            `https://api.mapbox.com/geocoding/v5/mapbox.places/${lngLat[0]},${lngLat[1]}.json?access_token=${mapboxgl.accessToken}`
+          const { data } = await axios.get(
+            `${process.env.REACT_APP_API_BASE_URL}/api/map?lat=${lngLat[1]}&lon=${lngLat[0]}`
           );
-          const data = await response.json();
-
           const locationName = data.features[0].place_name;
           startGeocoder.query(locationName);
         } catch (error) {
@@ -219,10 +218,9 @@ function RoutePlanner() {
   useEffect(() => {
     const fetchLocationName = async (point, geocoder) => {
       try {
-        const response = await fetch(
-          `https://api.mapbox.com/geocoding/v5/mapbox.places/${point[0]},${point[1]}.json?access_token=${mapboxgl.accessToken}`
+        const { data } = await axios.get(
+          `${process.env.REACT_APP_API_BASE_URL}/api/map?lat=${point[1]}&lon=${point[0]}`
         );
-        const data = await response.json();
         if (data.features && data.features.length > 0) {
           const locationName = data.features[0].place_name;
           geocoder.current.query(locationName);
@@ -247,10 +245,12 @@ function RoutePlanner() {
     const map = mapRef.current;
 
     if (map && (startPoint || endPoint)) {
-      const bounds = new mapboxgl.LngLatBounds()
-        .extend(startPoint)
-        .extend(endPoint);
-      map.fitBounds(bounds, { padding: 50 });
+      if (startPoint && endPoint) {
+        const bounds = new mapboxgl.LngLatBounds()
+          .extend(startPoint)
+          .extend(endPoint);
+        map.fitBounds(bounds);
+      }
 
       const updateMapSources = () => {
         const startSource = map.getSource("start-point");

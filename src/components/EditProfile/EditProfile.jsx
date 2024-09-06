@@ -10,7 +10,7 @@ import AvatarCropper from "../AvatarCropper/AvatarCropper";
 
 function EditProfile({ modalIsOpen, handleCloseModal }) {
   const { setAuth, auth } = useContext(AuthContext);
-  const [usernameAvaliable, setUsernameAvaliable] = useState(true);
+  const [usernameAvailable, setUsernameAvailable] = useState(true);
 
   const [imageModalIsOpen, setImageModalIsOpen] = useState(false);
 
@@ -32,7 +32,7 @@ function EditProfile({ modalIsOpen, handleCloseModal }) {
         const response = await axios.get(
           `${process.env.REACT_APP_API_BASE_URL}/user/check-username/${e.target.value}`
         );
-        setUsernameAvaliable(response.data.avaliable);
+        setUsernameAvailable(response.data.available);
       } catch (error) {
         console.log("Error checking username", error);
       }
@@ -188,7 +188,9 @@ function EditProfile({ modalIsOpen, handleCloseModal }) {
               <img
                 src={editIcon}
                 alt="editIcon"
-                className="modal__edit"
+                className={`${
+                  !usernameAvailable && "modal__edit--error"
+                } modal__edit`}
                 onClick={handleImageOpenModal}
               />
             </div>
@@ -239,7 +241,7 @@ function EditProfile({ modalIsOpen, handleCloseModal }) {
                 </label>
                 <input
                   className={`modal__input ${
-                    usernameAvaliable ? "" : "modal__input--error"
+                    usernameAvailable ? "" : "modal__input--error"
                   }`}
                   type="text"
                   name="username"
@@ -247,7 +249,7 @@ function EditProfile({ modalIsOpen, handleCloseModal }) {
                   onChange={handleChange}
                   value={data.username}
                 ></input>
-                {!usernameAvaliable && (
+                {!usernameAvailable && (
                   <p className="modal__error">Username already exists</p>
                 )}
               </div>
@@ -280,6 +282,7 @@ function EditProfile({ modalIsOpen, handleCloseModal }) {
             <button
               type="submit"
               className="modal__button modal__button--delete"
+              disabled={!usernameAvailable}
             >
               Save
             </button>

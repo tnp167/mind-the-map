@@ -4,25 +4,37 @@ import "./Weather.scss";
 function Weather({ startPoint, endPoint }) {
   const [weather, setWeather] = useState(null);
   const [endWeather, setEndWeather] = useState(null);
-  const openweather_accesstoken =
-    process.env.REACT_APP_OPENWEATHER_ACCESS_TOKEN;
+  // const openweather_accesstoken =
+  //   process.env.REACT_APP_OPENWEATHER_ACCESS_TOKEN;
   const getWeather = async () => {
     try {
+      // const { data } = await axios.get(
+      //   `https://api.openweathermap.org/data/2.5/weather?lat=${startPoint[1]}&lon=${startPoint[0]}&appid=${openweather_accesstoken}
+      //   `
+      // );
       const { data } = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${startPoint[1]}&lon=${startPoint[0]}&appid=${openweather_accesstoken}
+        `${process.env.REACT_APP_API_BASE_URL}/api/weather?lat=${startPoint[1]}&lon=${startPoint[0]}
         `
       );
       setWeather(data);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
   const getEndWeather = async () => {
     try {
+      // const { data } = await axios.get(
+      //   `https://api.openweathermap.org/data/2.5/weather?lat=${endPoint[1]}&lon=${endPoint[0]}&appid=${openweather_accesstoken}
+      //     `
+      // );
       const { data } = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${endPoint[1]}&lon=${endPoint[0]}&appid=${openweather_accesstoken}
-          `
+        `${process.env.REACT_APP_API_BASE_URL}/api/weather?lat=${endPoint[1]}&lon=${endPoint[0]}
+        `
       );
       setEndWeather(data);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
     getWeather();

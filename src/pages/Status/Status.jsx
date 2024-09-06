@@ -19,7 +19,7 @@ function Status() {
     try {
       const currentDate = new Date();
       const { data } = await axios.get(
-        `https://api.tfl.gov.uk/line/mode/${mode}/status`
+        `${process.env.REACT_APP_API_BASE_URL}/api/tfl/status/${mode}`
       );
       setStatus(data);
       setStatusDate(currentDate);

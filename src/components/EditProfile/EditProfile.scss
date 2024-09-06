@@ -132,6 +132,9 @@
     border: 1.5px solid black;
     cursor: pointer;
 
+    &--error {
+      top: 4.5rem !important;
+    }
     @include tablet {
       bottom: 6.2rem;
       left: -0.5rem;

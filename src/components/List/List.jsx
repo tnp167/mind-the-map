@@ -28,7 +28,6 @@ function List({
   handlePlaceClick,
   type,
 }) {
-  const rapid_accessToken = process.env.REACT_APP_RAPID_API_ACCESS_TOKEN;
   let selectedRouteCoordinates = [];
   const [convertedPlaceData, setConvertedPlaceData] = useState("");
   const [convertedToiletData, setConvertedToiletData] = useState("");
@@ -50,25 +49,19 @@ function List({
 
   const [filteredPlaces, setFilteredPlaces] = useState([]);
 
-  const URL_place =
-    "https://travel-advisor.p.rapidapi.com/restaurants/list-by-latlng";
-  const optionsRestaurants = selectedRouteCoordinates.map((option) => ({
-    params: {
-      latitude: option[0],
-      longitude: option[1],
-      distance: "0.5",
-    },
-    headers: {
-      "X-RapidAPI-Key": rapid_accessToken,
-      "X-RapidAPI-Host": "travel-advisor.p.rapidapi.com",
-    },
-  }));
-
   const getRestaurant = async () => {
     const placesArray = [];
     try {
-      for (let i = 0; i < optionsRestaurants.length; i++) {
-        const { data } = await axios(URL_place, optionsRestaurants[i]);
+      for (let i = 0; i < selectedRouteCoordinates.length; i++) {
+        const { data } = await axios.get(
+          `${process.env.REACT_APP_API_BASE_URL}/api/facilities/restaurants`,
+          {
+            params: {
+              lat: selectedRouteCoordinates[i][0],
+              lon: selectedRouteCoordinates[i][1],
+            },
+          }
+        );
         placesArray.push(data);
       }
       setConvertedPlaceData(placesArray);
@@ -98,23 +91,19 @@ function List({
     }
   }, [convertedPlaceData]);
 
-  const URL_Toilet = "https://public-bathrooms.p.rapidapi.com/location";
-  const optionsToilet = selectedRouteCoordinates.map((option) => ({
-    params: {
-      lat: option[0],
-      lng: option[1],
-    },
-    headers: {
-      "X-RapidAPI-Key": rapid_accessToken,
-      "X-RapidAPI-Host": "public-bathrooms.p.rapidapi.com",
-    },
-  }));
-
   const getToilet = async () => {
     const placesArray = [];
     try {
-      for (let i = 0; i < optionsToilet.length; i++) {
-        const { data } = await axios(URL_Toilet, optionsToilet[i]);
+      for (let i = 0; i < selectedRouteCoordinates.length; i++) {
+        const { data } = await axios(
+          `${process.env.REACT_APP_API_BASE_URL}/api/facilities/toilets`,
+          {
+            params: {
+              lat: selectedRouteCoordinates[i][0],
+              lon: selectedRouteCoordinates[i][1],
+            },
+          }
+        );
         placesArray.push(data);
       }
       setConvertedToiletData(placesArray);

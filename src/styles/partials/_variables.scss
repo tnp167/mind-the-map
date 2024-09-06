@@ -30,8 +30,10 @@ $nr: (
   c2c: #b7007c,
   chiltern-railways: #00bfff,
   cross-country: #660f21,
+  crosscountry: #660f21,
   east-midlands-railway: #713563,
   first-hull-trains: #de005c,
+  hull-trains: #de005c,
   first-transpennine-express: #010385,
   gatwick-express: #eb1e2d,
   grand-central: #1d1d1b,
@@ -49,6 +51,7 @@ $nr: (
   southern: #8cc63e,
   south-western-railway: #24398c,
   thameslink: #ff5aa4,
+  transpennine-express: #09a4ec,
   transport-for-wales: #ff0000,
   west-midlands-trains: #ff8300,
 );
@@ -151,6 +154,8 @@ $desktop-breakpoint: 1280px;
       "avanti-west-coast" or
       $line ==
       "cross-country" or
+      $line ==
+      "crosscountry" or
       $line ==
       "east-midlands-railway" or
       $line ==

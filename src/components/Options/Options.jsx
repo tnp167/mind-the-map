@@ -18,8 +18,19 @@ function Options({ startPoint, endPoint, setSelectedRoute }) {
   const [disabled, setDisabled] = useState(false);
   const getRoute = async () => {
     try {
+      // const { data } = await axios.get(
+      //   `https://api.tfl.gov.uk/Journey/JourneyResults/${startPoint[1]},${startPoint[0]}/to/${endPoint[1]},${endPoint[0]}`
+      // );
       const { data } = await axios.get(
-        `https://api.tfl.gov.uk/Journey/JourneyResults/${startPoint[1]},${startPoint[0]}/to/${endPoint[1]},${endPoint[0]}`
+        `${process.env.REACT_APP_API_BASE_URL}/api/tfl/journey`,
+        {
+          params: {
+            startLat: startPoint[1],
+            startLon: startPoint[0],
+            endLat: endPoint[1],
+            endLon: endPoint[0],
+          },
+        }
       );
       setRoutes(data);
     } catch (error) {
