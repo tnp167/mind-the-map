@@ -24,7 +24,11 @@ function SavedRoutes({ modalIsOpen, handleCloseModal }) {
   const handleDeleteClick = async (id) => {
     try {
       setRoutes((prevRoutes) => prevRoutes.filter((route) => route.id !== id));
-      await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/route/${id}`);
+      await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/route/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      });
     } catch (error) {
       console.log(error);
     }
@@ -45,7 +49,12 @@ function SavedRoutes({ modalIsOpen, handleCloseModal }) {
         const updatedName = { name: name };
         await axios.patch(
           `${process.env.REACT_APP_API_BASE_URL}/route/${id}`,
-          updatedName
+          updatedName,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+          }
         );
       } catch (error) {
         console.log(error);
@@ -136,7 +145,7 @@ function SavedRoutes({ modalIsOpen, handleCloseModal }) {
                     {editingId === route.id ? (
                       <input
                         type="text"
-                        value={route.name || `Untitled-${route.id}`}
+                        value={route.name}
                         onChange={(e) =>
                           handleNameChange(route.id, e.target.value)
                         }
@@ -146,9 +155,7 @@ function SavedRoutes({ modalIsOpen, handleCloseModal }) {
                         className="routes__input"
                       />
                     ) : (
-                      <h3 className="routes__name">
-                        {route.name || `Untitled-${route.id}`}
-                      </h3>
+                      <h3 className="routes__name">{route.name}</h3>
                     )}
                     <div className="routes__icons">
                       <motion.div

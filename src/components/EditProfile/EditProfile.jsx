@@ -184,7 +184,7 @@ function EditProfile({ modalIsOpen, handleCloseModal }) {
                 className={`modal__user ${
                   auth.user?.user.pictureUrl ? "modal__user--update" : ""
                 }`}
-              ></img>
+              />
               <img
                 src={editIcon}
                 alt="editIcon"

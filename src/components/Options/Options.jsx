@@ -6,7 +6,7 @@ import Route from "../Route/Route";
 import { Box, Button, CircularProgress } from "@mui/material";
 import { Bookmark } from "lucide-react";
 import { AuthContext } from "../../contexts/AuthContext";
-import { toast, Toaster } from "sonner";
+import { toast } from "sonner";
 import { RoutesContext } from "../../contexts/RoutesContext";
 import { useNavigate } from "react-router-dom";
 
@@ -18,9 +18,6 @@ function Options({ startPoint, endPoint, setSelectedRoute }) {
   const [disabled, setDisabled] = useState(false);
   const getRoute = async () => {
     try {
-      // const { data } = await axios.get(
-      //   `https://api.tfl.gov.uk/Journey/JourneyResults/${startPoint[1]},${startPoint[0]}/to/${endPoint[1]},${endPoint[0]}`
-      // );
       const { data } = await axios.get(
         `${process.env.REACT_APP_API_BASE_URL}/api/tfl/journey`,
         {
@@ -52,13 +49,17 @@ function Options({ startPoint, endPoint, setSelectedRoute }) {
       const data = {
         start_point: `${startPoint[1]},${startPoint[0]}`,
         end_point: `${endPoint[1]},${endPoint[0]}`,
-        user_id: auth.user.user.id,
       };
 
       toast.promise(
         axios.post(
           `${process.env.REACT_APP_API_BASE_URL}/route/bookmark`,
-          data
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+          }
         ),
         {
           loading: "Saving route...",

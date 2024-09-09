@@ -12,7 +12,13 @@ export const RoutesProvider = ({ children }) => {
     if (auth) {
       try {
         const { data } = await axios.get(
-          `${process.env.REACT_APP_API_BASE_URL}/route/userId/${auth.user.user.id}`
+          `${process.env.REACT_APP_API_BASE_URL}/route/userId
+          `,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+          }
         );
         setRoutes(data);
       } catch (error) {
