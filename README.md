@@ -27,14 +27,14 @@ npm install
 
 3. Set up a PostgreSQL database. Refer to your database provider's documentation for creating a database.
 
-Apply the database migrations to set up the schema.
+Apply the database migrations to set up the schema:
 
 ```bash
 //For the server
 npm run migrate
 ```
 
-Populate the database with initial data.
+Populate the database with initial data:
 
 ```bash
 //For the server
