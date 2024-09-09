@@ -37,15 +37,19 @@ function RouteDetails({ route }) {
       const { data } = await axios.get(
         `${process.env.REACT_APP_API_BASE_URL}/api/tfl/crowding/${id}`
       );
-      return data.percentageOfBaseline <= 0.2
-        ? "very quiet"
-        : data.percentageOfBaseline <= 0.4
-        ? "quite"
-        : data.percentageOfBaseline <= 0.6
-        ? "moderate"
-        : data.percentageOfBaseline <= 0.8
-        ? "busy"
-        : "very busy";
+      if (data.dataAvailable) {
+        return data.percentageOfBaseline <= 0.2
+          ? "very quiet"
+          : data.percentageOfBaseline <= 0.4
+          ? "quite"
+          : data.percentageOfBaseline <= 0.6
+          ? "moderate"
+          : data.percentageOfBaseline <= 0.8
+          ? "busy"
+          : "very busy";
+      } else if (!data.dataAvailable) {
+        return null;
+      }
     } catch (error) {
       console.log(error);
     }
@@ -122,7 +126,7 @@ function RouteDetails({ route }) {
                     ? ` (Crowded Status: ${
                         crowdedDepartureStatuses[index] !== null
                           ? crowdedDepartureStatuses[index]
-                          : "Data not available"
+                          : "Data is not available"
                       })`
                     : ""
                 } 
@@ -204,11 +208,15 @@ function RouteDetails({ route }) {
                   : ""}{" "}
                 <span style={{ display: "block" }}>
                   {" "}
-                  {leg.arrivalPoint.naptanId
+                  {leg.mode.name === "tube" ||
+                  leg.mode.name === "dlr" ||
+                  leg.mode.name === "bus" ||
+                  leg.mode.name === "overground" ||
+                  leg.mode.name === "elizabeth-line"
                     ? ` (Crowded Status: ${
                         crowdedArrivalStatuses[index] !== null
                           ? crowdedArrivalStatuses[index]
-                          : "Data not available"
+                          : "Data is not available"
                       })`
                     : ""}
                 </span>

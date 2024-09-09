@@ -1,0 +1,111 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+@keyframes rotate {
+  0% {
+    transform: rotate(-45deg);
+  }
+  25% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(45deg);
+  }
+  75% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-45deg);
+  }
+}
+
+@keyframes first {
+  0% {
+    color: map-get($map: $colors, $key: piccadilly);
+  }
+
+  50% {
+    color: black;
+  }
+
+  100% {
+    color: map-get($map: $colors, $key: piccadilly);
+  }
+}
+
+@keyframes second {
+  0% {
+    color: black;
+  }
+
+  50% {
+    color: map-get($map: $colors, $key: piccadilly);
+  }
+
+  100% {
+    color: black;
+  }
+}
+
+.notfound {
+  width: 100vw;
+  height: 100vh;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &__status {
+    font-size: 11rem;
+    margin: 3rem auto;
+
+    @include tablet {
+      font-size: 20rem;
+      margin: 3rem auto;
+    }
+  }
+
+  &__text {
+    text-align: center;
+    line-height: 1.5;
+  }
+  &__logo {
+    width: 9rem;
+    height: 9rem;
+    animation: rotate 2s linear infinite;
+    @include tablet {
+      width: 16rem;
+      height: 16rem;
+    }
+  }
+
+  &__link {
+    margin-top: 1.2rem;
+    font-weight: 700;
+    padding: 1rem;
+    background-color: map-get($map: $colors, $key: overground);
+    text-decoration: none;
+    border-radius: 1.5rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      background-color: map-get($map: $colors, $key: circle);
+      color: map-get($map: $colors, $key: piccadilly);
+      border-radius: 0;
+    }
+  }
+
+  &__number {
+    &--first {
+      animation: first 2s ease-in-out infinite;
+    }
+    &--second {
+      animation: second 2s ease-in-out infinite;
+    }
+  }
+}
